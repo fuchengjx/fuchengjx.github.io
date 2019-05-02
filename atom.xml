@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="flura.cn/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2019-04-26T14:23:49.145Z</updated>
-  <id>flura.cn/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>fucheng</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>浅谈http</title>
-    <link href="flura.cn/2019/04/26/%E6%B5%85%E8%B0%88http/"/>
-    <id>flura.cn/2019/04/26/浅谈http/</id>
+    <link href="http://yoursite.com/2019/04/26/%E6%B5%85%E8%B0%88http/"/>
+    <id>http://yoursite.com/2019/04/26/浅谈http/</id>
     <published>2019-04-26T09:22:48.000Z</published>
     <updated>2019-04-26T14:23:49.145Z</updated>
     
@@ -35,14 +35,14 @@
     </summary>
     
     
-      <category term="计算机网络" scheme="flura.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
   <entry>
     <title>浅谈java与JavaScript的一些特性</title>
-    <link href="flura.cn/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/"/>
-    <id>flura.cn/2019/04/22/浅谈java与JavaScript的一些特性/</id>
+    <link href="http://yoursite.com/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/"/>
+    <id>http://yoursite.com/2019/04/22/浅谈java与JavaScript的一些特性/</id>
     <published>2019-04-22T08:16:06.000Z</published>
     <updated>2019-04-26T14:25:07.177Z</updated>
     
@@ -58,14 +58,14 @@
     </summary>
     
     
-      <category term="java、JavaScript" scheme="flura.cn/tags/java%E3%80%81JavaScript/"/>
+      <category term="java、JavaScript" scheme="http://yoursite.com/tags/java%E3%80%81JavaScript/"/>
     
   </entry>
   
   <entry>
     <title>前端知识体系概览</title>
-    <link href="flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/"/>
-    <id>flura.cn/2019/04/06/前端知识体系概览/</id>
+    <link href="http://yoursite.com/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/"/>
+    <id>http://yoursite.com/2019/04/06/前端知识体系概览/</id>
     <published>2019-04-06T01:45:10.000Z</published>
     <updated>2019-04-07T13:54:26.379Z</updated>
     
@@ -81,14 +81,14 @@
     </summary>
     
     
-      <category term="杂项" scheme="flura.cn/tags/%E6%9D%82%E9%A1%B9/"/>
+      <category term="杂项" scheme="http://yoursite.com/tags/%E6%9D%82%E9%A1%B9/"/>
     
   </entry>
   
   <entry>
     <title>js判断数据类型</title>
-    <link href="flura.cn/2019/03/31/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
-    <id>flura.cn/2019/03/31/js判断数据类型/</id>
+    <link href="http://yoursite.com/2019/03/31/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://yoursite.com/2019/03/31/js判断数据类型/</id>
     <published>2019-03-31T03:20:46.000Z</published>
     <updated>2019-04-05T01:11:17.478Z</updated>
     
@@ -104,14 +104,14 @@
     </summary>
     
     
-      <category term="js" scheme="flura.cn/tags/js/"/>
+      <category term="js" scheme="http://yoursite.com/tags/js/"/>
     
   </entry>
   
   <entry>
     <title>DOM详解</title>
-    <link href="flura.cn/2019/03/25/DOM%E8%AF%A6%E8%A7%A3/"/>
-    <id>flura.cn/2019/03/25/DOM详解/</id>
+    <link href="http://yoursite.com/2019/03/25/DOM%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://yoursite.com/2019/03/25/DOM详解/</id>
     <published>2019-03-25T08:05:11.000Z</published>
     <updated>2019-03-31T06:31:33.048Z</updated>
     
@@ -127,7 +127,7 @@
     </summary>
     
     
-      <category term="js" scheme="flura.cn/tags/js/"/>
+      <category term="js" scheme="http://yoursite.com/tags/js/"/>
     
   </entry>
   
