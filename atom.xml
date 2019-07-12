@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.flura.cn/"/>
-  <updated>2019-07-11T12:53:59.787Z</updated>
+  <updated>2019-07-12T12:36:51.706Z</updated>
   <id>http://www.flura.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TypeScript学习笔记(二))</title>
+    <link href="http://www.flura.cn/2019/07/12/TypeScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/"/>
+    <id>http://www.flura.cn/2019/07/12/TypeScript学习笔记-二/</id>
+    <published>2019-07-12T12:28:03.000Z</published>
+    <updated>2019-07-12T12:36:51.706Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><p>TypeScript的核心原则之一是对值所具有的<em>结构</em>进行类型检查。 它有时被称做“鸭式辨型法”或“结构性子类型化”。 在TypeScript里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约。</p><h2 id="什么是接口"><a href="#什么是接口" class="headerlink" title="什么是接口"></a>什么是接口</h2><p>在面向对象语言中，接口（Interfaces）是一个很重要的概念，它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implement）。</p><p>TypeScript 中的接口是一个非常灵活的概念，除了可用于<a href="https://github.com/xcatliu/typescript-tutorial/blob/master/advanced/class-and-interfaces.md#类实现接口" target="_blank" rel="noopener">对类的一部分行为进行抽象</a>以外，也常用于对「对象的形状（Shape）」进行描述。</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Person &#123;</span><br><span class="line">    name: <span class="built_in">string</span>;</span><br><span class="line">    age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> tom: Person = &#123;</span><br><span class="line">    name: <span class="string">'Tom'</span>,</span><br><span class="line">    age: <span class="number">25</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//我们定义了一个接口 Person，接着定义了一个变量 tom，它的类型是 Person。这样，我们就约束了 tom 的形状必须和接口 Person 一致。</span></span><br></pre></td></tr></table></figure><p>定义的变量比接口少了一些属性是不允许的。多一些属性也是不允许的。可见，<strong>赋值的时候，变量的形状必须和接口的形状保持一致</strong>。</p><h2 id="可选属性"><a href="#可选属性" class="headerlink" title="可选属性"></a>可选属性</h2><p>有时我们希望不要完全匹配一个形状，那么可以用可选属性：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    age?: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>可选属性的含义是该属性可以不存在。这时<strong>仍然不允许添加未定义的属性</strong>。</p><h2 id="任意属性"><a href="#任意属性" class="headerlink" title="任意属性"></a>任意属性</h2><p>有时候我们希望一个接口允许有任意的属性，可以使用如下方式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    age?: number;</span><br><span class="line">    [propName: string]: any;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>使用 <code>[propName: string]</code> 定义了任意属性取 <code>string</code> 类型的值。</p><p>需要注意的是，<strong>一旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集</strong>：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    age?: number;</span><br><span class="line">    [propName: string]: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let tom: Person = &#123;</span><br><span class="line">    name: &apos;Tom&apos;,</span><br><span class="line">    age: 25,</span><br><span class="line">    gender: &apos;male&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// index.ts(3,5): error TS2411: Property &apos;age&apos; of type &apos;number&apos; is not assignable to string index type &apos;string&apos;.</span><br><span class="line">// index.ts(7,5): error TS2322: Type &apos;&#123; [x: string]: string | number; name: string; age: number; gender: string; &#125;&apos; is not assignable to type &apos;Person&apos;.</span><br><span class="line">//   Index signatures are incompatible.</span><br><span class="line">//     Type &apos;string | number&apos; is not assignable to type &apos;string&apos;.</span><br><span class="line">//       Type &apos;number&apos; is not assignable to type &apos;string&apos;.</span><br></pre></td></tr></table></figure><p>上例中，任意属性的值允许是 <code>string</code>，但是可选属性 <code>age</code> 的值却是 <code>number</code>，<code>number</code> 不是 <code>string</code> 的子属性，所以报错了。</p><p>另外，在报错信息中可以看出，此时 <code>{ name: &#39;Tom&#39;, age: 25, gender: &#39;male&#39; }</code> 的类型被推断成了 <code>{ [x: string]: string | number; name: string; age: number; gender: string; }</code>，这是联合类型和接口的结合。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot; title=&quot;接口&quot;&gt;&lt;/a&gt;接口&lt;/h1&gt;&lt;p&gt;TypeScript的核心原则之一是对值所具有的&lt;em&gt;结构&lt;/em&gt;进行类型检查。 它有时被称做“鸭式辨型法”或“结构性子类型化”。 在T
+      
+    
+    </summary>
+    
+    
+      <category term="TS" scheme="http://www.flura.cn/tags/TS/"/>
+    
+  </entry>
   
   <entry>
     <title>TypeScript学习笔记(一)</title>
