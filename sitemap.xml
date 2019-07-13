@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.flura.cn/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.flura.cn/2019/05/28/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/</loc>
+    
+    <lastmod>2019-07-13T14:20:02.310Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.flura.cn/2019/07/12/TypeScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/</loc>
     
-    <lastmod>2019-07-12T12:36:51.706Z</lastmod>
+    <lastmod>2019-07-13T13:40:44.360Z</lastmod>
     
   </url>
   
@@ -96,13 +103,6 @@
     <loc>http://www.flura.cn/2019/03/31/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
     
     <lastmod>2019-07-05T12:04:56.900Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.flura.cn/2019/05/28/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/</loc>
-    
-    <lastmod>2019-07-05T12:03:42.309Z</lastmod>
     
   </url>
   
