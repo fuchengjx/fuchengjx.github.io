@@ -97,18 +97,18 @@
 
 
 
-<meta name="description" content="Promise的含义所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。 Promise对象有以下两个特点  对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。">
+<meta name="description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 = &amp;#">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js浅谈promise">
-<meta property="og:url" content="http://www.flura.cn/2019/05/03/js浅谈promise/index.html">
+<meta property="og:title" content="js对象拷贝">
+<meta property="og:url" content="http://www.flura.cn/2019/07/16/js对象拷贝/index.html">
 <meta property="og:site_name" content="flura的博客">
-<meta property="og:description" content="Promise的含义所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。 Promise对象有以下两个特点  对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。">
+<meta property="og:description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 = &amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-05T12:05:23.196Z">
+<meta property="og:updated_time" content="2019-07-17T02:52:01.299Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js浅谈promise">
-<meta name="twitter:description" content="Promise的含义所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。 Promise对象有以下两个特点  对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。">
+<meta name="twitter:title" content="js对象拷贝">
+<meta name="twitter:description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 = &amp;#">
 
 
 
@@ -138,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://www.flura.cn/2019/05/03/js浅谈promise/">
+  <link rel="canonical" href="http://www.flura.cn/2019/07/16/js对象拷贝/">
 
 
 
 
 
-  <title>js浅谈promise | flura的博客</title>
+  <title>js对象拷贝 | flura的博客</title>
   
 
 
@@ -345,7 +345,7 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/05/03/js浅谈promise/">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/07/16/js对象拷贝/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flura">
@@ -362,7 +362,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">js浅谈promise</h1>
+          <h1 class="post-title" itemprop="name headline">js对象拷贝</h1>
         
 
         <div class="post-meta">
@@ -374,8 +374,8 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T19:19:20+08:00">
-                2019-05-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-16T15:28:47+08:00">
+                2019-07-16
               </time>
             
 
@@ -414,7 +414,7 @@ var _hmt = _hmt || [];
 
           
           
-             <span id="/2019/05/03/js浅谈promise/" class="leancloud_visitors" data-flag-title="js浅谈promise">
+             <span id="/2019/07/16/js对象拷贝/" class="leancloud_visitors" data-flag-title="js对象拷贝">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -439,7 +439,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  840 字
+                  1.4k 字
                 </span>
               
 
@@ -455,7 +455,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -476,26 +476,36 @@ var _hmt = _hmt || [];
       
 
       
-        <h2 id="Promise的含义"><a href="#Promise的含义" class="headerlink" title="Promise的含义"></a>Promise的含义</h2><p>所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。</p>
-<p><strong>Promise对象有以下两个特点</strong></p>
-<ol>
-<li>对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。</li>
-<li>一旦状态改变就不会改变，任何时候都可以得到这个结果。Promise对象的状态改变只能有两种可能：从Pending变化为Fulfilled和从Pending变为Rejected。 </li>
-</ol>
-<p><strong>有了Promise对象，就可以将异步操作以同步操作的流程表达出来，以避免了层层嵌套的回调函数。</strong></p>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;...&#125; <span class="comment">/* executor */</span>  );</span><br></pre></td></tr></table></figure>
-<p>Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject。</p>
-<p><strong>resolve函数的作用</strong>是将Promise对象从”未完成”变为”成功”(即从Pending变为Resolved)，在异步操作成功时调用，并将异步操作的结果作为参数传递出去；</p>
-<p>reject函数的作用也类似， 不过是(从Pending变为Rejected)，在异步操作失败时调用，并将异步操作的错误作为参数传递出去。</p>
-<p>Promise实例生成后，可以用then方法分别指定Resolved和Rejected状态的回调函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">let promise = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    console.time(&apos;st&apos;)</span><br><span class="line">    console.log(&apos;start&apos;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;Promise&apos;)</span><br><span class="line">        resolve(&apos;par&apos;); //resolve将参数传给回调函数</span><br><span class="line">        console.timeEnd(&apos;st&apos;) //2500ms左右</span><br><span class="line">    &#125;,2500)</span><br><span class="line">&#125;)</span><br><span class="line">promise.then(function (res) &#123;</span><br><span class="line">    console.time(&apos;then&apos;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&quot;Resolved&quot;)</span><br><span class="line">        console.log(res) //par 打印接受到的参数</span><br><span class="line">        console.timeEnd(&apos;then&apos;) //1000ms</span><br><span class="line">    &#125;,1000)</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&apos;hi&apos;) </span><br><span class="line"></span><br><span class="line">以上分别输出</span><br><span class="line">start</span><br><span class="line">hi</span><br><span class="line">Promise //2.5s后输出</span><br><span class="line">st: 2500ms</span><br><span class="line">Resolved //1s之后再输出</span><br><span class="line">par</span><br><span class="line">then: 1000ms</span><br></pre></td></tr></table></figure>
-<p>上面代码中执行： Promise新建后就会立即执行，所以首先输出start、 然后setTimeout异步执行，然后then方法指定的回调函数将在当前脚本所有同步任务执行完成后才会执行 ，所以Resolved最后输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var p1 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    setTimeout( () =&gt; reject(new Error(&apos;fail&apos;)), 3000)</span><br><span class="line">&#125;)</span><br><span class="line">console.log(p1) //Promise &#123; &lt;pending&gt; &#125; 直接打印输出p1实例可以输出当前Promise所处状态</span><br><span class="line">var p2 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    resolve(p1)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p2.then( () =&gt; &#123;</span><br><span class="line">    console.log(&quot;i am p2 callback&quot;)</span><br><span class="line">&#125;, (err) =&gt; &#123;</span><br><span class="line"> 	console.log(err) //Promise &#123; &lt;rejected&gt; &#125;</span><br><span class="line">    console.log(err) //Error: fail 因为p1是Rejected，所以p2直接执行rejected函数</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>上面代码中p1，p2都是Promise的实例，此时p1的状态会传给p2。也就是说，p1的状态决定了p2的状态。</p>
-<p><strong>promise.all()</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">var r1 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    console.time(&apos;start&apos;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;this is a request1&apos;)</span><br><span class="line">        console.timeEnd(&apos;start&apos;)</span><br><span class="line">    &#125;,3000)</span><br><span class="line">&#125;)</span><br><span class="line">var r2 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;this is a request2&apos;)</span><br><span class="line">    &#125;,3000)</span><br><span class="line">&#125;)</span><br><span class="line">Promise.all([</span><br><span class="line">    r1,</span><br><span class="line">    r2</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">// this is a request1</span><br><span class="line">// start: 3000ms</span><br><span class="line">// this is a request2</span><br></pre></td></tr></table></figure>
-<p>上面代码中r1，r2都是同时输出。 </p>
-<p>这个方法返回一个新的promise对象，该promise对象在数组参数里所有的promise对象都成功的时候才会触发成功，一旦数组里面有任何一个的promise对象失败则立即触发该promise对象的失败。</p>
+        <h2 id="对象介绍"><a href="#对象介绍" class="headerlink" title="对象介绍"></a>对象介绍</h2><p>js中包含两种不同数据类型的值: 基本类型值和引用类型值。 <strong>基本类型值</strong>指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。</p>
+<p>js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。</p>
+<h3 id="按引用赋值"><a href="#按引用赋值" class="headerlink" title="按引用赋值"></a>按引用赋值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let obj1 = &#123;</span><br><span class="line">	name : &apos;jack&apos;,</span><br><span class="line">	number: 10</span><br><span class="line">&#125;</span><br><span class="line">let obj2 = obj1 // 将obj1的引用赋值给obj2 此时obj1、obj2指向同一块内存空间</span><br><span class="line">obj2.name = &apos;tom&apos;</span><br><span class="line">console.log(obj1.name) // tom</span><br></pre></td></tr></table></figure>
+<p>但从一个变量像另一个变量复制引用类型的值时，同样也会将存储在变量对象中的值复制一份放到位新的变量分配的空间中。不同的是，这个值的副本实际是一个指针，而这个指针指向存储在堆中的一个对象。复制操作结束后，两个变量实际上将引用同一个对象。因此改变其中一个变量就会改变另一个变量。</p>
+<h3 id="对象的拷贝方式"><a href="#对象的拷贝方式" class="headerlink" title="对象的拷贝方式"></a>对象的拷贝方式</h3><h4 id="1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"><a href="#1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。" class="headerlink" title="1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"></a>1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">let objCopy = &#123;&#125;; // objCopy 将存储 mainObj 的副本</span><br><span class="line"></span><br><span class="line">function copy(mainObj) &#123;</span><br><span class="line">  let key;</span><br><span class="line"> </span><br><span class="line">  for (key in mainObj) &#123;</span><br><span class="line">    objCopy[key] = mainObj[key]; // 将每个属性复制到objCopy对象</span><br><span class="line">  &#125;</span><br><span class="line">  return objCopy;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">const mainObj = &#123;</span><br><span class="line">  a: 2,</span><br><span class="line">  b: 5,</span><br><span class="line">  c: &#123;</span><br><span class="line">    x: 7,</span><br><span class="line">    y: 4,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">console.log(copy(mainObj));</span><br><span class="line">objCopy.c.x = 10086</span><br><span class="line">console.log(&quot;mainObj.c.x&quot;, mainObj.c.x)  // 10086</span><br></pre></td></tr></table></figure>
+<p>上面的代码只复制了 <code>mainObj</code> 的可枚举属性。</p>
+<p>如果原始对象中的一个属性本身就是一个对象，那么副本和原始对象之间将共享这个对象，从而使其各自的属性指向同一个对象。</p>
+<h4 id="2-浅拷贝"><a href="#2-浅拷贝" class="headerlink" title="2.浅拷贝"></a>2.<strong>浅拷贝</strong></h4><p>浅拷贝是对象共用一个内存地址，对象的变化相互影响。比如常见的赋值引用就是浅拷贝:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let obj1 = &#123;</span><br><span class="line">	name : &apos;jack&apos;,</span><br><span class="line">	number: 10</span><br><span class="line">&#125;</span><br><span class="line">let obj2 = obj1 // 将obj1的引用赋值给obj2 此时obj1、obj2指向同一块内存空间</span><br><span class="line">obj2.name = &apos;tom&apos;</span><br><span class="line">console.log(obj1.name) // tom</span><br></pre></td></tr></table></figure>
+<h5 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a><strong>Object.assign()</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: 1,</span><br><span class="line">  b: &#123;</span><br><span class="line">    c: 2,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">let newObj = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(newObj); // &#123; a: 1, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">obj.a = 10;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 2&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 1, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">newObj.a = 20;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 2&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 20, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">newObj.b.c = 30;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 30&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 20, b: &#123; c: 30&#125; &#125;</span><br><span class="line"> </span><br><span class="line">// 注意: newObj.b.c = 30; 为什么呢..</span><br></pre></td></tr></table></figure>
+<p><code>bject.assign</code> 只是浅拷贝。 <code>newObj.b</code> 和 <code>obj.b</code> 都引用同一个对象，没有单独拷贝，而是复制了对该对象的引用。任何对对象属性的更改都适用于使用该对象的所有引用。</p>
+<p>注意：原型链上的属性和不可枚举的属性不能复制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let someObj = &#123;</span><br><span class="line">  a: 2,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">let obj = Object.create(someObj, &#123; </span><br><span class="line">  b: &#123;</span><br><span class="line">    value: 2,  </span><br><span class="line">  &#125;,</span><br><span class="line">  c: &#123;</span><br><span class="line">    value: 3,</span><br><span class="line">    enumerable: true,  </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">let objCopy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(objCopy); // &#123; c: 3 &#125;</span><br></pre></td></tr></table></figure>
+<p><code>someObj</code> 是在 <code>obj</code> 的原型链，所以它不会被复制。<br>属性 <code>b</code> 是不可枚举属性。<br>属性 <code>c</code> 具有 可枚举(enumerable) 属性描述符，所以它可以枚举。 这就是为什么它会被复制。</p>
+<h5 id="使用展开操作符-…"><a href="#使用展开操作符-…" class="headerlink" title="使用展开操作符(…)"></a>使用展开操作符(…)</h5><p>ES6已经有了用于数组解构赋值的 rest 元素，和实现的数组字面展开的操作符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const array = [</span><br><span class="line">&quot;a&quot;, &quot;c&quot;, &quot;d&quot;, &#123; four: 4 &#125;,</span><br><span class="line">];</span><br><span class="line">const newArray = [...array];</span><br><span class="line">console.log(newArray);</span><br><span class="line">// 结果 </span><br><span class="line">// [&quot;a&quot;, &quot;c&quot;, &quot;d&quot;, &#123; four: 4 &#125;]</span><br></pre></td></tr></table></figure>
+<p>只对浅拷贝有效</p>
+<h4 id="3-深拷贝"><a href="#3-深拷贝" class="headerlink" title="3.深拷贝"></a>3.<strong>深拷贝</strong></h4><p>简单理解深拷贝是将对象放到一个新的内存中，两个对象的改变不会相互影响。</p>
+<h5 id="JSON-parse-和-JSON-stringify"><a href="#JSON-parse-和-JSON-stringify" class="headerlink" title="JSON.parse() 和 JSON.stringify()"></a>JSON.parse() 和 JSON.stringify()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;&apos;name&apos;: &apos;明&apos;, grade: &#123;&apos;chi&apos;: &apos;50&apos;, &apos;eng&apos;: &apos;50&apos;&#125; &#125;;</span><br><span class="line">// copyObj2 = Object.assign(&#123;&#125;, srcObj);</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &apos;红&apos;;</span><br><span class="line">copyObj2.grade.chi = &apos;60&apos;;</span><br><span class="line">console.log(&apos;JSON srcObj&apos;, srcObj); // &#123; name: &apos;明&apos;, grade: &#123; chi: &apos;50&apos;, eng: &apos;50&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到改变copyObj2并没有改变原始对象，实现了基本的深拷贝。<br>但是用JSON.parse()和JSON.stringify()会有一个问题。<br>JSON.parse()和JSON.stringify()能正确处理的对象只有Number、String、Array等能够被json表示的数据结构，因此函数这种不能被json表示的类型将不能被正确处理。比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;&apos;name&apos;: &apos;明&apos;, grade: &#123;&apos;chi&apos;: &apos;50&apos;, &apos;eng&apos;: &apos;50&apos;&#125;,</span><br><span class="line">    &apos;hello&apos;: function() &#123;console.log(&apos;hello&apos;)&#125;&#125;;</span><br><span class="line">// copyObj2 = Object.assign(&#123;&#125;, srcObj);</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &apos;红&apos;;</span><br><span class="line">copyObj2.grade.chi = &apos;60&apos;;</span><br><span class="line">console.log(&apos;JSON srcObj&apos;, copyObj2); //&#123; name: &apos;红&apos;, grade: &#123; chi: &apos;60&apos;, eng: &apos;50&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，经过转换之后，function丢失了，因此JSON.parse()和JSON.stringify()还是需要谨慎使用。</p>
+<h2 id="数组的深拷贝和浅拷贝"><a href="#数组的深拷贝和浅拷贝" class="headerlink" title="数组的深拷贝和浅拷贝"></a>数组的深拷贝和浅拷贝</h2><p>最后在补充一点数组的深拷贝和浅拷贝，同对象一样数组的浅拷贝也是改变其中一个会相互影响，比如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let srcArr = [1, 2, 3];</span><br><span class="line">let copyArr = srcArr;</span><br><span class="line">copyArr[0] = &apos;0&apos;;</span><br><span class="line">console.log(&apos;srcArr&apos;, srcArr); // [&apos;0&apos;, 2, 3]</span><br></pre></td></tr></table></figure>
+<p>但是数组的深拷贝方法要相对简单一些可以理解为数组方法中那些会改变原数组的方法，比如</p>
+<ul>
+<li>concat</li>
+<li>slice</li>
+<li>es6 的Array.from</li>
+</ul>
 
       
     </div>
@@ -534,8 +544,8 @@ var _hmt = _hmt || [];
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/26/浅谈http/" rel="next" title="浅谈http">
-                <i class="fa fa-chevron-left"></i> 浅谈http
+              <a href="/2019/07/12/TypeScript学习笔记-二/" rel="next" title="TypeScript学习笔记(二))">
+                <i class="fa fa-chevron-left"></i> TypeScript学习笔记(二))
               </a>
             
           </div>
@@ -543,10 +553,6 @@ var _hmt = _hmt || [];
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/24/浅谈async函数/" rel="prev" title="浅谈async函数">
-                浅谈async函数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -709,7 +715,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise的含义"><span class="nav-number">1.</span> <span class="nav-text">Promise的含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象介绍"><span class="nav-number">1.</span> <span class="nav-text">对象介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按引用赋值"><span class="nav-number">1.1.</span> <span class="nav-text">按引用赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的拷贝方式"><span class="nav-number">1.2.</span> <span class="nav-text">对象的拷贝方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-浅拷贝"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-assign"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Object.assign()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用展开操作符-…"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">使用展开操作符(…)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-深拷贝"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSON-parse-和-JSON-stringify"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">JSON.parse() 和 JSON.stringify()</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的深拷贝和浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">数组的深拷贝和浅拷贝</span></a></li></ol></div>
             
 
           </div>
