@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.flura.cn/2019/09/05/vue%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E8%AF%A6%E8%A7%A3/</loc>
+    <lastmod>2019-09-05</lastmod>
+  </url>  <url>
     <loc>http://www.flura.cn/2019/08/28/webpack%E9%85%8D%E7%BD%AE%E8%BF%9B%E9%98%B6/</loc>
-    <lastmod>2019-08-28</lastmod>
+    <lastmod>2019-09-03</lastmod>
   </url>  <url>
     <loc>http://www.flura.cn/2019/08/05/webpack4%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAvue%E9%A1%B9%E7%9B%AE/</loc>
-    <lastmod>2019-08-27</lastmod>
+    <lastmod>2019-08-28</lastmod>
   </url>  <url>
     <loc>http://www.flura.cn/2019/08/25/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B01px/</loc>
     <lastmod>2019-08-25</lastmod>
