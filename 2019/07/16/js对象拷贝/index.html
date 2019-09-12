@@ -105,7 +105,7 @@
 <meta property="og:site_name" content="flura的博客">
 <meta property="og:description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 = &amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-17T02:54:46.295Z">
+<meta property="og:updated_time" content="2019-09-12T14:56:57.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js对象拷贝">
 <meta name="twitter:description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 = &amp;#">
@@ -439,7 +439,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.4k 字
+                  1.8k 字
                 </span>
               
 
@@ -455,7 +455,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -496,8 +496,25 @@ var _hmt = _hmt || [];
 <h4 id="3-深拷贝"><a href="#3-深拷贝" class="headerlink" title="3.深拷贝"></a>3.<strong>深拷贝</strong></h4><p>简单理解深拷贝是将对象放到一个新的内存中，两个对象的改变不会相互影响。</p>
 <h5 id="JSON-parse-和-JSON-stringify"><a href="#JSON-parse-和-JSON-stringify" class="headerlink" title="JSON.parse() 和 JSON.stringify()"></a>JSON.parse() 和 JSON.stringify()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;&apos;name&apos;: &apos;明&apos;, grade: &#123;&apos;chi&apos;: &apos;50&apos;, &apos;eng&apos;: &apos;50&apos;&#125; &#125;;</span><br><span class="line">// copyObj2 = Object.assign(&#123;&#125;, srcObj);</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &apos;红&apos;;</span><br><span class="line">copyObj2.grade.chi = &apos;60&apos;;</span><br><span class="line">console.log(&apos;JSON srcObj&apos;, srcObj); // &#123; name: &apos;明&apos;, grade: &#123; chi: &apos;50&apos;, eng: &apos;50&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到改变copyObj2并没有改变原始对象，实现了基本的深拷贝。<br>但是用JSON.parse()和JSON.stringify()会有一个问题。<br>JSON.parse()和JSON.stringify()能正确处理的对象只有Number、String、Array等能够被json表示的数据结构，因此函数这种不能被json表示的类型将不能被正确处理。比如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;&apos;name&apos;: &apos;明&apos;, grade: &#123;&apos;chi&apos;: &apos;50&apos;, &apos;eng&apos;: &apos;50&apos;&#125;,</span><br><span class="line">    &apos;hello&apos;: function() &#123;console.log(&apos;hello&apos;)&#125;&#125;;</span><br><span class="line">// copyObj2 = Object.assign(&#123;&#125;, srcObj);</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &apos;红&apos;;</span><br><span class="line">copyObj2.grade.chi = &apos;60&apos;;</span><br><span class="line">console.log(&apos;JSON srcObj&apos;, copyObj2); //&#123; name: &apos;红&apos;, grade: &#123; chi: &apos;60&apos;, eng: &apos;50&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;</span><br><span class="line">		 &apos;name&apos;: &apos;明&apos;, </span><br><span class="line">		  grade: &#123;&apos;chi&apos;: &apos;50&apos;, &apos;eng&apos;: &apos;50&apos;&#125;,</span><br><span class="line">         &apos;hello&apos;: function() &#123;console.log(&apos;hello&apos;)&#125;</span><br><span class="line">         &#125;;</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &apos;红&apos;;</span><br><span class="line">copyObj2.grade.chi = &apos;60&apos;;</span><br><span class="line">console.log(&apos;JSON srcObj&apos;, copyObj2); //&#123; name: &apos;红&apos;, grade: &#123; chi: &apos;60&apos;, eng: &apos;50&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出，经过转换之后，function丢失了，因此JSON.parse()和JSON.stringify()还是需要谨慎使用。</p>
+<p>所以我们需要自己写一个可以进行深拷贝的代码。</p>
+<h5 id="自定义的深拷贝方法"><a href="#自定义的深拷贝方法" class="headerlink" title="自定义的深拷贝方法"></a>自定义的深拷贝方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function clone(target) &#123;</span><br><span class="line">  if (typeof target === &apos;object&apos;) &#123;</span><br><span class="line">    let newObject = &#123;&#125;</span><br><span class="line">    for (key in target) &#123;</span><br><span class="line">      newObject[key] = clone(target[key])</span><br><span class="line">    &#125;</span><br><span class="line">    return newObject</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return target</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为在深拷贝里，我们不知道要拷贝的对象是多少深度的，所以我们用递归来解决。</p>
+<ul>
+<li>如果是基本类型，就无需拷贝直接返回</li>
+<li>如果是引用类型就创建一个新的对象，遍历需要拷贝的对象，如果有更深层次的对象就继续递归到其为基本数据类型。这样我们就完成了一个很简单的深拷贝。</li>
+</ul>
+<h6 id="考虑数组"><a href="#考虑数组" class="headerlink" title="考虑数组"></a>考虑数组</h6><p>上面的方法，我们只考虑了object，如果要拷贝数组的话，只要在新建对象那边加一个判断就行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function clone(target) &#123;</span><br><span class="line">  if (typeof target === &apos;object&apos;) &#123;</span><br><span class="line">    let newTarget = Array.isArray(target) ? [] : &#123;&#125; // 判断这个引用类型是不是数组，如果是新建一个数组，再往数组内添加属性。如果不是新建一个对象，往对象内添加属性</span><br><span class="line">    for (key in target) &#123;</span><br><span class="line">      newTarget[key] = clone(target[key])</span><br><span class="line">    &#125;</span><br><span class="line">    return newTarget</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return target</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="如果考虑函数。。。"><a href="#如果考虑函数。。。" class="headerlink" title="如果考虑函数。。。"></a>如果考虑函数。。。</h6><ul>
+<li><p><strong>箭头函数</strong>： 将它转为字符串，再将字符串转换为方法。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">constconst arrowFunction = () =&gt; &#123;&#125;</span><br><span class="line">eval(arrowFunction.toString)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>普通函数</strong>：可以使用正则来处理普通函数</p>
+<p>分别使用正则取出函数体和函数参数，然后使用<code>new Function ([arg1[, arg2[, ...argN]],] functionBody)</code>构造函数重新构造一个新的函数。</p>
+</li>
+</ul>
 <h2 id="数组的深拷贝和浅拷贝"><a href="#数组的深拷贝和浅拷贝" class="headerlink" title="数组的深拷贝和浅拷贝"></a>数组的深拷贝和浅拷贝</h2><p>最后在补充一点数组的深拷贝和浅拷贝，同对象一样数组的浅拷贝也是改变其中一个会相互影响，比如:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let srcArr = [1, 2, 3];</span><br><span class="line">let copyArr = srcArr;</span><br><span class="line">copyArr[0] = &apos;0&apos;;</span><br><span class="line">console.log(&apos;srcArr&apos;, srcArr); // [&apos;0&apos;, 2, 3]</span><br></pre></td></tr></table></figure>
 <p>但是数组的深拷贝方法要相对简单一些可以理解为数组方法中那些会改变原数组的方法，比如</p>
@@ -719,7 +736,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象介绍"><span class="nav-number">1.</span> <span class="nav-text">对象介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按引用赋值"><span class="nav-number">1.1.</span> <span class="nav-text">按引用赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的拷贝方式"><span class="nav-number">1.2.</span> <span class="nav-text">对象的拷贝方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-浅拷贝"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-assign"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Object.assign()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用展开操作符-…"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">使用展开操作符(…)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-深拷贝"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSON-parse-和-JSON-stringify"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">JSON.parse() 和 JSON.stringify()</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的深拷贝和浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">数组的深拷贝和浅拷贝</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象介绍"><span class="nav-number">1.</span> <span class="nav-text">对象介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按引用赋值"><span class="nav-number">1.1.</span> <span class="nav-text">按引用赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的拷贝方式"><span class="nav-number">1.2.</span> <span class="nav-text">对象的拷贝方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-浅拷贝"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-assign"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Object.assign()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用展开操作符-…"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">使用展开操作符(…)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-深拷贝"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSON-parse-和-JSON-stringify"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">JSON.parse() 和 JSON.stringify()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义的深拷贝方法"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">自定义的深拷贝方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#考虑数组"><span class="nav-number">1.2.3.2.1.</span> <span class="nav-text">考虑数组</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#如果考虑函数。。。"><span class="nav-number">1.2.3.2.2.</span> <span class="nav-text">如果考虑函数。。。</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的深拷贝和浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">数组的深拷贝和浅拷贝</span></a></li></ol></div>
             
 
           </div>
@@ -749,7 +766,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共41.8k字</span>
+  <span class="post-count">博客全站共42.2k字</span>
 </div>
 
 
