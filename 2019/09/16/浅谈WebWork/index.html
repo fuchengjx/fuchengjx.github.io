@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="WebWork,">
 
 
 
@@ -97,14 +97,23 @@
 
 
 
-<meta name="keywords" content="前端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="flura的博客">
-<meta property="og:url" content="http://www.flura.cn/categories/杂项/index.html">
+<meta name="description" content="使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应">
+<meta name="keywords" content="WebWork">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈WebWork">
+<meta property="og:url" content="http://www.flura.cn/2019/09/16/浅谈WebWork/index.html">
 <meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.flura.cn/1568774603784.png">
+<meta property="og:image" content="http://img.flura.cn/1568774001322.png">
+<meta property="og:image" content="http://img.flura.cn/1568774930762.png">
+<meta property="og:image" content="http://img.flura.cn/1568775141089.png">
+<meta property="og:updated_time" content="2019-09-18T03:37:40.052Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flura的博客">
+<meta name="twitter:title" content="浅谈WebWork">
+<meta name="twitter:description" content="使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应">
+<meta name="twitter:image" content="http://img.flura.cn/1568774603784.png">
 
 
 
@@ -134,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://www.flura.cn/categories/杂项/">
+  <link rel="canonical" href="http://www.flura.cn/2019/09/16/浅谈WebWork/">
 
 
 
 
 
-  <title>分类: 杂项 | flura的博客</title>
+  <title>浅谈WebWork | flura的博客</title>
   
 
 
@@ -172,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/fuchengjx" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -327,53 +336,255 @@ var _hmt = _hmt || [];
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>杂项<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/09/16/浅谈WebWork/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://img.flura.cn/myAvatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/22/浅谈java与JavaScript的一些特性/" itemprop="url">
-              
-                <span itemprop="name">浅谈java与JavaScript的一些特性</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">浅谈WebWork</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-22T16:16:06+08:00" content="2019-04-22">
-          04-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-16T11:02:22+08:00">
+                2019-09-16
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/16/浅谈WebWork/" class="leancloud_visitors" data-flag-title="浅谈WebWork">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4 分钟
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应的情况。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Web-Worker的作用"><a href="#Web-Worker的作用" class="headerlink" title="Web Worker的作用"></a>Web Worker的作用</h2><p>Web Worker的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。这样的好处是，一些计算密集型或高延迟的任务，被 Worker 线程负担了，主线程（通常负责 UI 交互）就会很流畅，不会被阻塞或拖慢。</p>
+<h2 id="Web-Worker-有以下几个使用注意点。"><a href="#Web-Worker-有以下几个使用注意点。" class="headerlink" title="Web Worker 有以下几个使用注意点。"></a>Web Worker 有以下几个使用注意点。</h2><h3 id="（1）同源限制"><a href="#（1）同源限制" class="headerlink" title="（1）同源限制"></a>（1）<strong>同源限制</strong></h3><p>分配给 Worker 线程运行的脚本文件，必须与主线程的脚本文件同源。</p>
+<h3 id="（2）DOM-限制"><a href="#（2）DOM-限制" class="headerlink" title="（2）DOM 限制"></a>（2）<strong>DOM 限制</strong></h3><p>Worker 线程所在的全局对象，与主线程不一样，无法读取主线程所在网页的 DOM 对象，也无法使用<code>document</code>、<code>window</code>、<code>parent</code>这些对象。但是，Worker 线程可以<code>navigator</code>对象和<code>location</code>对象。</p>
+<h3 id="（3）通信联系"><a href="#（3）通信联系" class="headerlink" title="（3）通信联系"></a>（3）<strong>通信联系</strong></h3><p>Worker 线程和主线程不在同一个上下文环境，它们不能直接通信，必须通过消息完成。</p>
+<h3 id="（4）脚本限制"><a href="#（4）脚本限制" class="headerlink" title="（4）脚本限制"></a>（4）<strong>脚本限制</strong></h3><p>Worker 线程不能执行<code>alert()</code>方法和<code>confirm()</code>方法，但可以使用 XMLHttpRequest 对象发出 AJAX 请求。</p>
+<h3 id="（5）文件限制"><a href="#（5）文件限制" class="headerlink" title="（5）文件限制"></a>（5）<strong>文件限制</strong></h3><p>Worker 线程无法读取本地文件，即不能打开本机的文件系统（<code>file://</code>），它所加载的脚本，必须来自网络。</p>
+<p>小结：Web Worker中执行的脚本不能访问该页面的window对象，因此不能直接访问web页面和DOM API，虽然Web Worker不会导致浏览器的主线程停止响应，但是仍会消耗CPU周期，导致系统反应速度变慢。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;title&gt;worker&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;button onclick=&quot;start()&quot;&gt;Start Worker&lt;/button&gt;</span><br><span class="line">&lt;p id=&quot;result&quot;&gt;这是没有值&lt;/p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  function start() &#123;</span><br><span class="line">    console.log(&quot;你有触发start&quot;)</span><br><span class="line">    if (typeof (Worker) !== &quot;undefined&quot;) &#123;</span><br><span class="line">    console.log(&apos;支持worker&apos;)</span><br><span class="line">    // 创建一个Worker对象并向它传递将在新线程中执行的脚步的URL</span><br><span class="line">    var worker = new Worker(&quot;worker.js&quot;)</span><br><span class="line">    worker.postMessage(&quot;hello world&quot;) // 向worker发送数据</span><br><span class="line">    worker.onmessage = function (res) &#123; // 接受worker传过来的数据函数</span><br><span class="line">      document.getElementById(&quot;result&quot;).innerHTML = res.data</span><br><span class="line">      console.log(&quot;输出从worker发送过来的数据: &quot;, res.data)</span><br><span class="line">     &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      alert(&apos;不支持worker&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">onmessage = function (params) &#123;</span><br><span class="line">  let data = params.data // 获取主线程发送过来的数据</span><br><span class="line">  console.log(&apos;worker收到的data &apos;, data) </span><br><span class="line">  postMessage(data)  // 将获取到的数据发送回主线程</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>…这里遇到了些问题, google浏览器一直报错</p>
+<p><img src="http://img.flura.cn/1568774603784.png" alt="google报错"></p>
+<p>stackoverflow解答： google有文件保护，导致我不能直接读取本地文件。。。(其实我有尝试过吧worker.js放在cdn上，用http方式引入，但是还是这样的报错)</p>
+<figure class="highlight plain"><figcaption><span>Overflow</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">From this answer, Loading a local file, even with a relative URL, is the same as loading a file with the file: protocol. -- and it&apos;s not cool for web pages to be able to just access your file system on a whim</span><br></pre></td></tr></table></figure>
+<p>解决方法</p>
+<p><img src="http://img.flura.cn/1568774001322.png" alt="1568774001322"></p>
+<p>我采用了这种方法，但是还是没有什么用。。。可能我什么地方搞错了吧。所以我尝试换了一个火狐浏览器，发现火狐连报错都没有，work根本就没有执行(太坑人了)。</p>
+<p><img src="http://img.flura.cn/1568774930762.png" alt="火狐报错"></p>
+<p>最后换了edge，发现才有用(꒦_꒦) 。</p>
+<p><img src="http://img.flura.cn/1568775141089.png" alt="1568775124601"></p>
+<h2 id="基本API"><a href="#基本API" class="headerlink" title="基本API"></a>基本API</h2><p><code>Worker()</code>构造函数返回一个 Worker 线程对象，用来供主线程操作 Worker。Worker 线程对象的属性和方法：</p>
+<ul>
+<li><p>Worker.onerror：指定 error 事件的监听函数。</p>
+</li>
+<li><p>Worker.onmessage：指定 message 事件的监听函数，发送过来的数据在<code>Event.data</code>属性中。</p>
+</li>
+<li>Worker.onmessageerror：指定 messageerror 事件的监听函数。发送的数据无法序列化成字符串时，会触发这个事件。</li>
+<li>Worker.postMessage()：向 Worker 线程发送消息。</li>
+<li>Worker.terminate()：立即终止 Worker 线程。</li>
+</ul>
+<h3 id="注意的地方"><a href="#注意的地方" class="headerlink" title="注意的地方"></a>注意的地方</h3><p>主线程与Worker之间的通信内容是拷贝内容，就是说postMessage传值，传的是深拷贝的值，也就是说work.js里对通信内容的修改不会影响到主线程。事实上，浏览器内部的运行机制是，先将通信内容串行化，然后把串行化后的字符串发给 Worker，后者再将它还原。</p>
+<p> Worker 不能读取本地文件，所以这个脚本必须来自网络。如果下载没有成功（比如404错误），Worker 就会默默地失败。emmmm，所以应该部署到服务器上。。。不然浏览器不认，还有同源限制。所以本地调试最好用edge ie浏览器。</p>
+<p>最后更详细的使用 最好参考阮一峰老师的<a href="http://www.ruanyifeng.com/blog/2018/07/web-worker.html" target="_blank" rel="noopener">Web Worker 使用教程</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">MDN关于web workers使用</a></p>
 
       
     </div>
+    
+    
+    
+		<div>
+		
+			<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+		
+		</div>
+    
 
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WebWork/" rel="tag"># WebWork</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/08/vue-bus使用遇到的坑/" rel="next" title="vue-bus使用遇到的坑">
+                <i class="fa fa-chevron-left"></i> vue-bus使用遇到的坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -381,6 +592,10 @@ var _hmt = _hmt || [];
 
 
           
+
+  
+
+
 
         </div>
         
@@ -401,8 +616,17 @@ var _hmt = _hmt || [];
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -493,6 +717,22 @@ var _hmt = _hmt || [];
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Worker的作用"><span class="nav-number">1.</span> <span class="nav-text">Web Worker的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Worker-有以下几个使用注意点。"><span class="nav-number">2.</span> <span class="nav-text">Web Worker 有以下几个使用注意点。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）同源限制"><span class="nav-number">2.1.</span> <span class="nav-text">（1）同源限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）DOM-限制"><span class="nav-number">2.2.</span> <span class="nav-text">（2）DOM 限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）通信联系"><span class="nav-number">2.3.</span> <span class="nav-text">（3）通信联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（4）脚本限制"><span class="nav-number">2.4.</span> <span class="nav-text">（4）脚本限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（5）文件限制"><span class="nav-number">2.5.</span> <span class="nav-text">（5）文件限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">3.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本API"><span class="nav-number">4.</span> <span class="nav-text">基本API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意的地方"><span class="nav-number">4.1.</span> <span class="nav-text">注意的地方</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -638,6 +878,10 @@ var _hmt = _hmt || [];
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
