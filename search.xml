@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[JavaScript中的this]]></title>
+    <url>%2F2019%2F09%2F19%2FJavaScript%E4%B8%AD%E7%9A%84this%2F</url>
+    <content type="text"><![CDATA[JavaScript中的this指向有很多琢磨不透的地方，很多时候有种莫名其妙的感觉。这次想系统的理解一下js中的this。 this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 以下我将举出非常多的示例来理解this指向。 123456789101112131415function a() &#123; let user = &apos;flura&apos; console.log(this.use) // undefined console.log(this) // Window&#125;a()// 根据这个例子，我们按照上面说的this最终指向的是调用它的对象，这里的函数a实际是Window对象所点出来的。以上代码等价于function a() &#123; let user = &apos;flura&apos; console.log(this.use) // undefined console.log(this) // Window&#125;window.a() 12345678let obj = &#123; user: &apos;flura&apos;, method: function() &#123; console.log(this.user) // flura console.log(this) // &#123;user: &quot;flura&quot;, method: ƒ&#125; 这里this指向的是obj &#125;&#125;obj.method() 这里的this是指向对象obj的，调用这个method是通过obj.method()执行的，所以自然指向的就是对象obj。this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 在来一个更加明确的例子]]></content>
+      <categories>
+        <category>web前端</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[浅谈WebWork]]></title>
     <url>%2F2019%2F09%2F16%2F%E6%B5%85%E8%B0%88WebWork%2F</url>
     <content type="text"><![CDATA[Web Worker的作用Web Worker的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。这样的好处是，一些计算密集型或高延迟的任务，被 Worker 线程负担了，主线程（通常负责 UI 交互）就会很流畅，不会被阻塞或拖慢。 Web Worker 有以下几个使用注意点。（1）同源限制分配给 Worker 线程运行的脚本文件，必须与主线程的脚本文件同源。 （2）DOM 限制Worker 线程所在的全局对象，与主线程不一样，无法读取主线程所在网页的 DOM 对象，也无法使用document、window、parent这些对象。但是，Worker 线程可以navigator对象和location对象。 （3）通信联系Worker 线程和主线程不在同一个上下文环境，它们不能直接通信，必须通过消息完成。 （4）脚本限制Worker 线程不能执行alert()方法和confirm()方法，但可以使用 XMLHttpRequest 对象发出 AJAX 请求。 （5）文件限制Worker 线程无法读取本地文件，即不能打开本机的文件系统（file://），它所加载的脚本，必须来自网络。 小结：Web Worker中执行的脚本不能访问该页面的window对象，因此不能直接访问web页面和DOM API，虽然Web Worker不会导致浏览器的主线程停止响应，但是仍会消耗CPU周期，导致系统反应速度变慢。 基本用法12345678910111213141516171819202122232425262728&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;worker&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;button onclick=&quot;start()&quot;&gt;Start Worker&lt;/button&gt;&lt;p id=&quot;result&quot;&gt;这是没有值&lt;/p&gt;&lt;script&gt; function start() &#123; console.log(&quot;你有触发start&quot;) if (typeof (Worker) !== &quot;undefined&quot;) &#123; console.log(&apos;支持worker&apos;) // 创建一个Worker对象并向它传递将在新线程中执行的脚步的URL var worker = new Worker(&quot;worker.js&quot;) worker.postMessage(&quot;hello world&quot;) // 向worker发送数据 worker.onmessage = function (res) &#123; // 接受worker传过来的数据函数 document.getElementById(&quot;result&quot;).innerHTML = res.data console.log(&quot;输出从worker发送过来的数据: &quot;, res.data) &#125; &#125; else &#123; alert(&apos;不支持worker&apos;) &#125; &#125;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt; 12345onmessage = function (params) &#123; let data = params.data // 获取主线程发送过来的数据 console.log(&apos;worker收到的data &apos;, data) postMessage(data) // 将获取到的数据发送回主线程&#125; …这里遇到了些问题, google浏览器一直报错 stackoverflow解答： google有文件保护，导致我不能直接读取本地文件。。。(其实我有尝试过吧worker.js放在cdn上，用http方式引入，但是还是这样的报错) Overflow1From this answer, Loading a local file, even with a relative URL, is the same as loading a file with the file: protocol. -- and it&apos;s not cool for web pages to be able to just access your file system on a whim 解决方法 我采用了这种方法，但是还是没有什么用。。。可能我什么地方搞错了吧。所以我尝试换了一个火狐浏览器，发现火狐连报错都没有，work根本就没有执行(太坑人了)。 最后换了edge，发现才有用(꒦_꒦) 。 基本APIWorker()构造函数返回一个 Worker 线程对象，用来供主线程操作 Worker。Worker 线程对象的属性和方法： Worker.onerror：指定 error 事件的监听函数。 Worker.onmessage：指定 message 事件的监听函数，发送过来的数据在Event.data属性中。 Worker.onmessageerror：指定 messageerror 事件的监听函数。发送的数据无法序列化成字符串时，会触发这个事件。 Worker.postMessage()：向 Worker 线程发送消息。 Worker.terminate()：立即终止 Worker 线程。 注意的地方主线程与Worker之间的通信内容是拷贝内容，就是说postMessage传值，传的是深拷贝的值，也就是说work.js里对通信内容的修改不会影响到主线程。事实上，浏览器内部的运行机制是，先将通信内容串行化，然后把串行化后的字符串发给 Worker，后者再将它还原。 Worker 不能读取本地文件，所以这个脚本必须来自网络。如果下载没有成功（比如404错误），Worker 就会默默地失败。emmmm，所以应该部署到服务器上。。。不然浏览器不认，还有同源限制。所以本地调试最好用edge ie浏览器。 最后更详细的使用 最好参考阮一峰老师的Web Worker 使用教程 MDN关于web workers使用]]></content>
@@ -9,6 +20,7 @@
       </categories>
       <tags>
         <tag>WebWork</tag>
+        <tag>h5</tag>
       </tags>
   </entry>
   <entry>
