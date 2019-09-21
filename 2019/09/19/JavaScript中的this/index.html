@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="flura的博客">
 <meta property="og:description" content="JavaScript中的this指向有很多琢磨不透的地方，很多时候有种莫名其妙的感觉。这次想系统的理解一下js中的this。 this指向举例this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 以下我将举出非常多的示例来理解this指向。 123456789101112131415function a() &amp;#12">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-20T13:58:59.789Z">
+<meta property="og:updated_time" content="2019-09-21T09:52:00.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript中的this">
 <meta name="twitter:description" content="JavaScript中的this指向有很多琢磨不透的地方，很多时候有种莫名其妙的感觉。这次想系统的理解一下js中的this。 this指向举例this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 以下我将举出非常多的示例来理解this指向。 123456789101112131415function a() &amp;#12">
@@ -449,7 +449,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.5k 字
+                  2.9k 字
                 </span>
               
 
@@ -465,7 +465,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10 分钟
+                  11 分钟
                 </span>
               
             </div>
@@ -536,30 +536,48 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">  console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj2 = &#123;</span><br><span class="line">  a: 22,</span><br><span class="line">  foo: foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var obj1 = &#123;</span><br><span class="line">  a: 11,</span><br><span class="line">  obj2: obj2</span><br><span class="line">&#125;</span><br><span class="line">obj1.obj2.foo()  // 22</span><br></pre></td></tr></table></figure>
 <p>对象属性引用链只有上一层或者说最后一层在调用位置中起作用。 如果一个函数中有this，<strong>这个函数中包含多个对象，尽管这个函数是被最外层的对象所调用，this指向的也只是它上一级的对象</strong></p>
 <h3 id="显式绑定"><a href="#显式绑定" class="headerlink" title="显式绑定"></a>显式绑定</h3><p>显式绑定，通过函数call apply bind 可以修改函数this的指向。call 与 apply 方法都是挂载在 Function 原型下的方法，所有的函数都能使用。</p>
+<p>它们的第一个参数都是一个对象，是给this准备的，接着在调用函数时将其绑定到this。因为可以直接指定this的绑定对象，因此我们称之为显式绑定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">  console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line">var obj = &#123;</span><br><span class="line">  a : 2</span><br><span class="line">&#125;</span><br><span class="line">foo.call(obj)  // 2</span><br></pre></td></tr></table></figure>
 <h4 id="call-和-apply-的区别"><a href="#call-和-apply-的区别" class="headerlink" title="call 和 apply 的区别"></a>call 和 apply 的区别</h4><ol>
 <li>call和apply的第一个参数会绑定到函数体的this上，如果<code>不传参数</code>，例如<code>fun.call()</code>，非严格模式，this默认还是绑定到全局对象</li>
 <li>call函数接收的是一个参数列表，apply函数接收的是一个参数数组。</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unc.call(thisArg, arg1, arg2, ...)        // call 用法</span><br><span class="line">func.apply(thisArg, [arg1, arg2, ...])     // apply 用法</span><br></pre></td></tr></table></figure>
-<h4 id="call和apply的注意点"><a href="#call和apply的注意点" class="headerlink" title="call和apply的注意点"></a>call和apply的注意点</h4><p>这两个方法在调用的时候，如果我们传入数字或者字符串，这两个方法会把传入的参数转成对象类型。</p>
+<h4 id="call和apply的注意点"><a href="#call和apply的注意点" class="headerlink" title="call和apply的注意点"></a>call和apply的注意点</h4><p>这两个方法在调用的时候，如果我们传入数字、布尔类型或者字符串来当做this的绑定对象，这两个方法会把传入的参数转成它的对象类型(也就是new Number(…)、 new Boolean(…)、new String(…) )。这通常被称为”装箱”。</p>
 <h4 id="bind函数"><a href="#bind函数" class="headerlink" title="bind函数"></a>bind函数</h4><blockquote>
 <p>bind 方法 会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(定义内容来自于 MDN )</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func.bind(thisArg[, arg1[, arg2[, ...]]])    // bind 用法</span><br></pre></td></tr></table></figure>
-<h3 id="new-绑定"><a href="#new-绑定" class="headerlink" title="new 绑定"></a>new 绑定</h3><p>使用new调用函数的时候，会执行怎样的流程：</p>
+<h3 id="new-绑定"><a href="#new-绑定" class="headerlink" title="new 绑定"></a>new 绑定</h3><p>使用new调用函数的时候，或者说发生构造函数调用时，会自动执行下面几个操作：</p>
 <ol>
-<li>创建一个空对象</li>
+<li>创建一个全新的空对象</li>
 <li>将空对象的 <em>proto</em> 指向原对象的 prototype</li>
-<li><code>执行构造函数中的代码</code></li>
-<li>返回这个新对象</li>
-<li><p>注意:如果创建新的对象，构造函数不传值的话，新对象中的属性不会有值，但是新的对象中会有这个属性。</p>
+<li>这个新对象会绑定到函数调用的this</li>
+<li><p>如果函数没有返回其他对象，那么new表达式中的函数调用会自动返回这个新对象。</p>
+<p>注意:如果创建新的对象，构造函数不传值的话，新对象中的属性不会有值，但是新的对象中会有这个属性。</p>
 </li>
 </ol>
-<h4 id="手动实现一个new创建对象代码-多种实现方式哦"><a href="#手动实现一个new创建对象代码-多种实现方式哦" class="headerlink" title="手动实现一个new创建对象代码(多种实现方式哦)"></a>手动实现一个new创建对象代码(多种实现方式哦)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function New(func) &#123;</span><br><span class="line">    var res = &#123;&#125;;</span><br><span class="line">    if (func.prototype !== null) &#123;</span><br><span class="line">        res.__proto__ = func.prototype;</span><br><span class="line">    &#125;</span><br><span class="line">    var ret = func.apply(res, Array.prototype.slice.call(arguments, 1));</span><br><span class="line">    if ((typeof ret === &quot;object&quot; || typeof ret === &quot;function&quot;) &amp;&amp; ret !== null) &#123;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line">var obj = New(A, 1, 2);</span><br><span class="line">// equals to</span><br><span class="line">var obj = new A(1, 2);</span><br></pre></td></tr></table></figure>
+<h4 id="手动实现一个new创建对象代码"><a href="#手动实现一个new创建对象代码" class="headerlink" title="手动实现一个new创建对象代码"></a>手动实现一个new创建对象代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function New(func) &#123;</span><br><span class="line">    var res = &#123;&#125;;</span><br><span class="line">    if (func.prototype !== null) &#123;</span><br><span class="line">        res.__proto__ = func.prototype;</span><br><span class="line">    &#125;</span><br><span class="line">    var ret = func.apply(res, Array.prototype.slice.call(arguments, 1));</span><br><span class="line">    if ((typeof ret === &quot;object&quot; || typeof ret === &quot;function&quot;) &amp;&amp; ret !== null) &#123;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line">var obj = New(A, 1, 2);</span><br><span class="line">// equals to</span><br><span class="line">var obj = new A(1, 2);</span><br></pre></td></tr></table></figure>
 <h2 id="this绑定优先级"><a href="#this绑定优先级" class="headerlink" title="this绑定优先级"></a>this绑定优先级</h2><p>上面介绍了 this 的四种绑定规则，但是一段代码有时候会同时应用多种规则，这时候 this 应该如何指向呢？其实它们也是有一个先后顺序的，具体规则如下:</p>
 <p><strong>new绑定 &gt; 显式绑定 &gt; 隐式绑定 &gt; 默认绑定</strong></p>
-<p><a href="https://www.cnblogs.com/pssp/p/5216085.html" target="_blank" rel="noopener">参考博客1</a></p>
-<p><a href="https://juejin.im/post/5d6e5f77f265da03e05b2fd9?utm_source=gold_browser_extension#heading-6" target="_blank" rel="noopener">参考博客2</a></p>
+<h2 id="判断this"><a href="#判断this" class="headerlink" title="判断this"></a>判断this</h2><p>我们可以根据优先级来判断函数在某个调用位置引用的是哪条规则。可以按照下面的顺序来进行判断：</p>
+<ol>
+<li><p>函数是否在new中调用(new绑定)？ 如果是的话this绑定的是新建的对象。</p>
+<p>var bar = new foo()</p>
+</li>
+<li><p>函数是否通过call、apply(显示绑定)调用？如果是的话，this绑定的是指定的对象.</p>
+<p>var bar = foo(obj2)</p>
+</li>
+<li><p>函数是否在某个上下文对象中调用(隐式绑定)？如果是的话，this绑定的是那个上下文对象。</p>
+<p>var bar = obj1.foo()</p>
+</li>
+<li><p>如果不是的话，使用默认绑定。</p>
+<p>var bar = foo()</p>
+</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://www.cnblogs.com/pssp/p/5216085.html" target="_blank" rel="noopener">彻底理解js中this的指向</a></p>
+<p><a href="https://juejin.im/post/5d6e5f77f265da03e05b2fd9?utm_source=gold_browser_extension#heading-6" target="_blank" rel="noopener">重学 this 关键字</a></p>
+<p>参考书目： 你不知道的JavaScript</p>
 
       
     </div>
@@ -769,7 +787,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#this指向举例"><span class="nav-number">1.</span> <span class="nav-text">this指向举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this绑定规则"><span class="nav-number">2.</span> <span class="nav-text">this绑定规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认绑定"><span class="nav-number">2.1.</span> <span class="nav-text">默认绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认绑定的另一种情况"><span class="nav-number">2.1.1.</span> <span class="nav-text">默认绑定的另一种情况</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式绑定"><span class="nav-number">2.2.</span> <span class="nav-text">隐式绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式绑定"><span class="nav-number">2.3.</span> <span class="nav-text">显式绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#call-和-apply-的区别"><span class="nav-number">2.3.1.</span> <span class="nav-text">call 和 apply 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#call和apply的注意点"><span class="nav-number">2.3.2.</span> <span class="nav-text">call和apply的注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bind函数"><span class="nav-number">2.3.3.</span> <span class="nav-text">bind函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-绑定"><span class="nav-number">2.4.</span> <span class="nav-text">new 绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手动实现一个new创建对象代码-多种实现方式哦"><span class="nav-number">2.4.1.</span> <span class="nav-text">手动实现一个new创建对象代码(多种实现方式哦)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this绑定优先级"><span class="nav-number">3.</span> <span class="nav-text">this绑定优先级</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#this指向举例"><span class="nav-number">1.</span> <span class="nav-text">this指向举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this绑定规则"><span class="nav-number">2.</span> <span class="nav-text">this绑定规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认绑定"><span class="nav-number">2.1.</span> <span class="nav-text">默认绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认绑定的另一种情况"><span class="nav-number">2.1.1.</span> <span class="nav-text">默认绑定的另一种情况</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式绑定"><span class="nav-number">2.2.</span> <span class="nav-text">隐式绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式绑定"><span class="nav-number">2.3.</span> <span class="nav-text">显式绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#call-和-apply-的区别"><span class="nav-number">2.3.1.</span> <span class="nav-text">call 和 apply 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#call和apply的注意点"><span class="nav-number">2.3.2.</span> <span class="nav-text">call和apply的注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bind函数"><span class="nav-number">2.3.3.</span> <span class="nav-text">bind函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-绑定"><span class="nav-number">2.4.</span> <span class="nav-text">new 绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手动实现一个new创建对象代码"><span class="nav-number">2.4.1.</span> <span class="nav-text">手动实现一个new创建对象代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this绑定优先级"><span class="nav-number">3.</span> <span class="nav-text">this绑定优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断this"><span class="nav-number">4.</span> <span class="nav-text">判断this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>
@@ -799,7 +817,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共46.2k字</span>
+  <span class="post-count">博客全站共46.5k字</span>
 </div>
 
 
