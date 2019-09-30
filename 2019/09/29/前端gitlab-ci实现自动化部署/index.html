@@ -115,13 +115,17 @@
 <meta property="og:site_name" content="flura的博客">
 <meta property="og:description" content="本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。 背景为什么要去配置这么一个自动化部署CI，这个需求是什么？我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="c:/Users/32761/AppData/Roaming/Typora/typora-user-images/1569760156912.png">
-<meta property="og:image" content="c:/Users/32761/AppData/Roaming/Typora/typora-user-images/1569815810780.png">
-<meta property="og:updated_time" content="2019-09-30T03:58:42.584Z">
+<meta property="og:image" content="http://img.flura.cn/1569760156912.png">
+<meta property="og:image" content="http://img.flura.cn/1569815810780.png">
+<meta property="og:image" content="http://img.flura.cn/1569816937998.png">
+<meta property="og:image" content="http://img.flura.cn/1569817315527.png">
+<meta property="og:image" content="http://img.flura.cn/1569816937998.png">
+<meta property="og:image" content="http://img.flura.cn/1569817028804.png">
+<meta property="og:updated_time" content="2019-09-30T04:38:38.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端gitlab-ci实现自动化部署">
 <meta name="twitter:description" content="本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。 背景为什么要去配置这么一个自动化部署CI，这个需求是什么？我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置">
-<meta name="twitter:image" content="c:/Users/32761/AppData/Roaming/Typora/typora-user-images/1569760156912.png">
+<meta name="twitter:image" content="http://img.flura.cn/1569760156912.png">
 
 
 
@@ -452,7 +456,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k 字
+                  2.6k 字
                 </span>
               
 
@@ -468,7 +472,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8 分钟
+                  10 分钟
                 </span>
               
             </div>
@@ -504,7 +508,7 @@ var _hmt = _hmt || [];
 <h3 id="gitlab-ci-yml"><a href="#gitlab-ci-yml" class="headerlink" title=".gitlab-ci.yml"></a>.gitlab-ci.yml</h3><p>在git项目的根目录下的一个文件，记录了一系列的阶段和执行规则。GitLab-CI在push后会解析它，根据里面的内容调用runner来运行。</p>
 <p>简单来说就是，你利用Git版本管理Push了本地代码到你的gitlab.com上，然后Gitlab，就通知你的服务器(runner服务器)，也就是Gitlab-runner来运行构建任务。然后跑测试用例，测试用例通过了就生成Build出相应的环境的代码，自动部署上不同的环境服务器上面去。</p>
 <h3 id="GitLab-Runner"><a href="#GitLab-Runner" class="headerlink" title="GitLab-Runner"></a>GitLab-Runner</h3><p>这个是脚本执行的承载者，.gitlab-ci.yml的script部分的运行就是由runner来负责的。GitLab-CI浏览过项目里的.gitlab-ci.yml文件之后，根据里面的规则，分配到各个Runner来运行相应的脚本script。这些脚本有的是测试项目用的，有的是部署用的。</p>
-<p><img src="C:\Users\32761\AppData\Roaming\Typora\typora-user-images\1569760156912.png" alt="1569760156912"></p>
+<p><img src="http://img.flura.cn/1569760156912.png" alt="1569760156912"></p>
 <h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>简而言之，CI所需要的步骤可以归结为：</p>
 <ol>
 <li><p>添加<code>.gitlab-ci.yml</code>到项目的根目录</p>
@@ -524,55 +528,43 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">image: node  # 选用docker镜像</span><br><span class="line"></span><br><span class="line">stages: # Stages 表示构建阶段，这里有两个阶段 install, deploy</span><br><span class="line">- install</span><br><span class="line">- deploy</span><br><span class="line"></span><br><span class="line">install-staging:dep: # Jobs 表示构建工作，表示某个 Stage 里面执行的工作。</span><br><span class="line">  stage: install</span><br><span class="line">  only: # 定义了只有在被merge到了master分支上 才会执行部署脚本。</span><br><span class="line">  - master</span><br><span class="line">  script:</span><br><span class="line">  - echo &quot;=====start install======&quot;</span><br><span class="line">  - npm install --registry=https://registry.npm.taobao.org  #安装依赖</span><br><span class="line">  - echo &quot;=====end install======&quot;</span><br><span class="line">  artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies</span><br><span class="line">    expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了</span><br><span class="line">    paths:  # 需要被传递给下一个job的目录。</span><br><span class="line">    - node_modules/</span><br><span class="line">    </span><br><span class="line">deploy-staging:dep:</span><br><span class="line">  stage: deploy</span><br><span class="line">  only:</span><br><span class="line">  - master</span><br><span class="line">  script:</span><br><span class="line">  - echo &quot;=====start build======&quot;</span><br><span class="line">  - npm run build  # 将项目打包</span><br><span class="line">  - echo &quot;=====end build======&quot;</span><br><span class="line">  - echo &quot;=====start deploy======&quot;</span><br><span class="line">  - npm run deploy # 此处执行部署脚本，将打包好的静态文件上传到阿里云的oss上，为了保护项目安全，使抽象成deploy步骤。</span><br><span class="line">  - echo &quot;=====end deploy!!!!!!======&quot;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>这是我的<code>.gitlab-ci.yml</code>脚本。(# 为<code>.gitlab-ci.yml</code>脚本注释)</p>
-<ol>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image: node  # 选用docker镜像</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>   我项目的 CI 任务是选的在 Docker 上运行，所以每次执行 CI 任务的时候，都会新启动一个 Docker 容器。因为是前端项目，所以需要node环境。所以选用的是node镜像。也可以选择自己的docker镜像。</p>
-<ol start="2">
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stages: # Stages 表示构建阶段，这里有两个阶段 install, deploy</span><br><span class="line">- install</span><br><span class="line">- deploy</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="Stages"><a href="#Stages" class="headerlink" title="Stages"></a>Stages</h4><p>   Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，每个Stage可以完成不同的任务。 Stages有下面的特点：</p>
-<pre><code>- 所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始
-- 只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功
-</code></pre><ul>
+<p>这是我的<strong><code>.gitlab-ci.yml</code>脚本</strong>。(# 为<code>.gitlab-ci.yml</code>脚本注释)</p>
+<h4 id="image"><a href="#image" class="headerlink" title="image"></a>image</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image: node  # 选用docker镜像</span><br></pre></td></tr></table></figure>
+<pre><code>我项目的 CI 任务是选的在 Docker 上运行，所以每次执行 CI 任务的时候，都会新启动一个 Docker 容器。因     为是前端项目，所以需要node环境。所以选用的是node镜像。也可以选择自己的docker镜像。
+</code></pre><h4 id="stages"><a href="#stages" class="headerlink" title="stages"></a>stages</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stages: # Stages 表示构建阶段，这里有两个阶段 install, deploy</span><br><span class="line">- install</span><br><span class="line">- deploy</span><br></pre></td></tr></table></figure>
+<p>   Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，每个Stage可以完成不同的任务。 Stages有下面的特点：</p>
+<ul>
+<li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
+<li><p>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</p>
+<ul>
 <li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
 </ul>
-<ol start="3">
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">only:</span><br><span class="line"> - master</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<pre><code>只有maser分支才会触发这个脚本，因为我们采用的git-flow工作流，开发人员可能把自己未完善的分支(没有经过上级code review)提交到线上仓库，那么只要有push就会触发部署到线上环境，这样的后果是不堪设想的，所以必须加一个only，只有经过了code review的代码 被merge进入了maser分支才会实现部署到线上环境。
-</code></pre><ol start="4">
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">install-staging:dep: # Jobs 表示构建工作，表示某个 Stage 里面执行的工作。</span><br><span class="line">  stage: install</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="Jobs"><a href="#Jobs" class="headerlink" title="Jobs"></a>Jobs</h4><p>   Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
-<pre><code>- 相同 Stage 中的 Jobs 会并行执行
-- 相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功
-</code></pre><ul>
+</ul>
+<h4 id="only"><a href="#only" class="headerlink" title="only"></a>only</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">only:</span><br><span class="line">- master</span><br></pre></td></tr></table></figure>
+<p>只有maser分支才会触发这个脚本，因为我们采用的git-flow工作流，开发人员可能把自己未完善的分支(没有经过上级code review)提交到线上仓库，那么只要有push就会触发部署到线上环境，这样的后果是不堪设想的，所以必须加一个only，只有经过了code review的代码 被merge进入了maser分支才会实现部署到线上环境。</p>
+<h4 id="Jobs"><a href="#Jobs" class="headerlink" title="Jobs"></a>Jobs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">install-staging:dep: # Jobs 表示构建工作，表示某个 Stage 里面执行的工作。</span><br><span class="line">  stage: install</span><br></pre></td></tr></table></figure>
+<p>   Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+<ul>
+<li>相同 Stage 中的 Jobs 会并行执行</li>
+<li><p>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</p>
+<ul>
 <li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
 </ul>
-<ol start="5">
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">script:</span><br><span class="line"> - echo &quot;=====start install======&quot;</span><br><span class="line"> - npm install --registry=https://registry.npm.taobao.org</span><br><span class="line"> - echo &quot;=====end install======&quot;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<pre><code>**script**是一段由Runner执行的shell脚本
-</code></pre><ol start="6">
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies</span><br><span class="line">  expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了</span><br><span class="line">  paths:</span><br><span class="line">  - node_modules/</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<pre><code>artifacts 被用于在job作业成功后将制定列表里的文件或文件夹附加到job上，传递给下一个job，如果要在两个job之间传递artifacts，你必须设置[dependencies](https://docs.gitlab.com/ce/ci/yaml/README.html#dependencies)
-</code></pre><p><strong>总结</strong>： 这个脚本的作用是 将merge进入master分支的代码打包并部署到阿里云的oss上。这里最值得注意的就是artifact，因为定义了两个job，其实每个job都是用的新的镜像，所以这样就会导致install阶段与deploy阶段没有任何关系，但是实际上deploy阶段是依赖install阶段安装的node_module的。所以必须将install阶段安装的 node_modules传递给下一个job(deploy)，这就需要用到artifact或者cache了(这里我用的是artifact)。ps:我还其实还把这两个job整合成一个了，但是不知道为什么明明两个分开执行就只要10min，而合在一个job就要超过1h，最后导致超时Pipeline失败。</p>
+</ul>
+<h4 id="script"><a href="#script" class="headerlink" title="script"></a>script</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">script:</span><br><span class="line"> - echo &quot;=====start install======&quot;</span><br><span class="line"> - npm install --registry=https://registry.npm.taobao.org</span><br><span class="line"> - echo &quot;=====end install======&quot;</span><br></pre></td></tr></table></figure>
+<p>   <strong>script</strong>是一段由Runner执行的shell脚本</p>
+<h4 id="artifact"><a href="#artifact" class="headerlink" title="artifact"></a>artifact</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies</span><br><span class="line">  expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了</span><br><span class="line">  paths:</span><br><span class="line">  - node_modules/</span><br></pre></td></tr></table></figure>
+<p>   artifacts 被用于在job作业成功后将制定列表里的文件或文件夹附加到job上，传递给下一个job，如果要在两个job之间传递artifacts，你必须设置<a href="https://docs.gitlab.com/ce/ci/yaml/README.html#dependencies" target="_blank" rel="noopener">dependencies</a></p>
+<h4 id="脚本总结"><a href="#脚本总结" class="headerlink" title="脚本总结"></a>脚本总结</h4><p><strong>总结</strong>： 这个脚本的作用是 将merge进入master分支的代码打包并部署到阿里云的oss上。这里最值得注意的就是artifact，因为定义了两个job，其实每个job都是用的新的镜像，所以这样就会导致install阶段与deploy阶段没有任何关系，但是实际上deploy阶段是依赖install阶段安装的node_module的。所以必须将install阶段安装的 node_modules传递给下一个job(deploy)，这就需要用到artifact或者cache了(这里我用的是artifact)。ps:我还其实还把这两个job整合成一个了，但是不知道为什么明明两个分开执行就只要10min，而合在一个job就要超过1h，最后导致超时Pipeline失败。</p>
 <p>更多详细配置可以看这篇博客<a href="https://segmentfault.com/a/1190000011890710" target="_blank" rel="noopener">gitlab-ci配置详解</a></p>
 <p>或者参考官方文档 <a href="https://docs.gitlab.com/ee/ci/yaml/README.html" target="_blank" rel="noopener">官方配置文档</a></p>
 <ol start="2">
 <li><p>推送<code>.gitlab-ci.yml</code>到GitLab</p>
 <p>一旦创建了<code>.gitlab-ci.yml</code>，你应该及时添加到Git仓库并推送到GitLab。</p>
 <p>现在到<strong>Pipelines</strong>页面查看，将会看到该Pipline处于等待状态。</p>
-<p><img src="C:\Users\32761\AppData\Roaming\Typora\typora-user-images\1569815810780.png" alt="1569815810780"></p>
+<p><img src="http://img.flura.cn/1569815810780.png" alt="1569815810780"></p>
 </li>
 </ol>
 <h3 id="配置Runner"><a href="#配置Runner" class="headerlink" title="配置Runner"></a>配置Runner</h3><p>在GitLab中，Runners将会运行你在<code>.gitlab-ci.yml</code>中定义的jobs。Runner可以是虚拟机，VPS，裸机，docker容器，甚至一堆容器。GitLab和Runners通过API通信，所以唯一的要求就是运行Runners的机器可以联网。</p>
@@ -580,19 +572,34 @@ var _hmt = _hmt || [];
 <p>在<a href="https://docs.gitlab.com/ee/ci/runners/README.html" target="_blank" rel="noopener">Runners</a>文档中查阅更多关于不同Runners的信息。</p>
 <p>你可以通过<strong>Settings-&gt;CI/CD</strong>查找是否有Runners分配到你的项目中。创建一个Runner是简单且直接的。官方支持的Runner是用GO语言写的，它的文档在这里<a href="https://docs.gitlab.com/runner/。" target="_blank" rel="noopener">https://docs.gitlab.com/runner/。</a></p>
 <p>为了有一个功能性的Runner，你需要遵循以下步骤：</p>
-<ol>
-<li><a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">安装</a></li>
-<li><a href="https://docs.gitlab.com/ee/ci/runners/README.html#registering-a-specific-runner" target="_blank" rel="noopener">配置</a></li>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a><a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="noopener">安装</a></h4><ol>
+<li><p>添加Gitlab的官方源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># For Debian/Ubuntu</span><br><span class="line">curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.deb.sh | sudo bash</span><br><span class="line"></span><br><span class="line"># For CentOS</span><br><span class="line">curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.rpm.sh | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># For Debian/Ubuntu</span><br><span class="line">sudo apt-get install gitlab-ci-multi-runner</span><br><span class="line"></span><br><span class="line"># For CentOS</span><br><span class="line">sudo yum install gitlab-ci-multi-runner</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册Runner<br>Runner需要注册到Gitlab才可以被项目所使用，一个gitlab-ci-multi-runner服务可以注册多个Runner。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gitlab-ci-multi-runner register</span><br><span class="line"></span><br><span class="line">Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )</span><br><span class="line">https://mygitlab.com/ci</span><br><span class="line">Please enter the gitlab-ci token for this runner</span><br><span class="line">xxx-xxx-xxx</span><br><span class="line">Please enter the gitlab-ci description for this runner</span><br><span class="line">my-runner</span><br><span class="line">INFO[0034] fcf5c619 Registering runner... succeeded</span><br><span class="line">Please enter the executor: shell, docker, docker-ssh, ssh?</span><br><span class="line">Please enter the Docker image (eg. ruby:2.1):</span><br><span class="line">node</span><br><span class="line">INFO[0037] Runner registered successfully. Feel free to start it, but if it&apos;s</span><br><span class="line">running already the config should be automatically reloaded!</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>按照上面的连接设置你自己的Runne，我这边因为这是专用对于一个项目的runner，所以我配置的是specific runner。</p>
+<p>ps: 这里面的gitlab-ci coordinator URL 与token</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )</span><br><span class="line">https://mygitlab.com/ci</span><br><span class="line">Please enter the gitlab-ci token for this runner</span><br><span class="line">xxx-xxx-xxx</span><br></pre></td></tr></table></figure>
+<p>是在gitlab配置对应的runner里可以查看的。</p>
+<p><img src="http://img.flura.cn/1569816937998.png" alt="1569816937998"></p>
+<p><img src="http://img.flura.cn/1569817315527.png" alt="1569817315527"></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a><a href="https://docs.gitlab.com/ee/ci/runners/README.html#registering-a-specific-runner" target="_blank" rel="noopener">配置</a></h4><p>按照上面的连接设置你自己的Runner，我这边因为这是专用对于一个项目的runner，所以我配置的是specific runner。</p>
 <p>一旦Runner安装好，你可以从项目的<strong>Settings-&gt;CI/CD</strong>找到Runner页面。</p>
-<p>## </p>
+<p><img src="http://img.flura.cn/1569816937998.png" alt="1569816937998"></p>
+<p><img src="http://img.flura.cn/1569817028804.png" alt="1569817028804"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><p><a href="http://www.ttlsa.com/auto/gitlab-cicd-quick-start/" target="_blank" rel="noopener">GitLab CI/CD快速入门</a></p>
 </li>
 <li><p><a href="https://juejin.im/post/5c015f4ae51d453244120d86" target="_blank" rel="noopener">前端项目基于GitLab-CI的持续集成/持续部署（CI/CD）</a></p>
 </li>
 <li><p><a href="https://juejin.im/post/5b03963a51882542821ca56a" target="_blank" rel="noopener">前端的gitlab的ci初尝试</a></p>
+</li>
+<li><p><a href="https://docs.gitlab.com/ee/ci/yaml/README.html" target="_blank" rel="noopener"><a href="https://segmentfault.com/a/1190000007180257" target="_blank" rel="noopener">GitLab-CI 从安装到差点放弃</a></a></p>
 </li>
 </ul>
 
@@ -808,7 +815,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要去配置这么一个自动化部署CI，这个需求是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要去配置这么一个自动化部署CI，这个需求是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab"><span class="nav-number">2.1.</span> <span class="nav-text">Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是持续集成-持续部署（CI-CD"><span class="nav-number">2.2.</span> <span class="nav-text">什么是持续集成/持续部署（CI/CD)?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab的CI"><span class="nav-number">2.3.</span> <span class="nav-text">Gitlab的CI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-ci-yml"><span class="nav-number">2.4.</span> <span class="nav-text">.gitlab-ci.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitLab-Runner"><span class="nav-number">2.5.</span> <span class="nav-text">GitLab-Runner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速开始"><span class="nav-number">3.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-gitlab-ci-yml"><span class="nav-number">3.1.</span> <span class="nav-text">配置.gitlab-ci.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Stages"><span class="nav-number">3.1.1.</span> <span class="nav-text">Stages</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jobs"><span class="nav-number">3.1.2.</span> <span class="nav-text">Jobs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Runner"><span class="nav-number">3.2.</span> <span class="nav-text">配置Runner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要去配置这么一个自动化部署CI，这个需求是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要去配置这么一个自动化部署CI，这个需求是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab"><span class="nav-number">2.1.</span> <span class="nav-text">Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是持续集成-持续部署（CI-CD"><span class="nav-number">2.2.</span> <span class="nav-text">什么是持续集成/持续部署（CI/CD)?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab的CI"><span class="nav-number">2.3.</span> <span class="nav-text">Gitlab的CI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-ci-yml"><span class="nav-number">2.4.</span> <span class="nav-text">.gitlab-ci.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitLab-Runner"><span class="nav-number">2.5.</span> <span class="nav-text">GitLab-Runner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速开始"><span class="nav-number">3.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-gitlab-ci-yml"><span class="nav-number">3.1.</span> <span class="nav-text">配置.gitlab-ci.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#image"><span class="nav-number">3.1.1.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stages"><span class="nav-number">3.1.2.</span> <span class="nav-text">stages</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#only"><span class="nav-number">3.1.3.</span> <span class="nav-text">only</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jobs"><span class="nav-number">3.1.4.</span> <span class="nav-text">Jobs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#script"><span class="nav-number">3.1.5.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#artifact"><span class="nav-number">3.1.6.</span> <span class="nav-text">artifact</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本总结"><span class="nav-number">3.1.7.</span> <span class="nav-text">脚本总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Runner"><span class="nav-number">3.2.</span> <span class="nav-text">配置Runner</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">3.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">3.2.2.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -838,7 +845,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共48.8k字</span>
+  <span class="post-count">博客全站共49.1k字</span>
 </div>
 
 
