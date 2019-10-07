@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="TS,webpack,react,前端工程化,">
 
 
 
@@ -107,14 +107,18 @@
 
 
 
-<meta name="keywords" content="前端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="flura的博客">
-<meta property="og:url" content="http://www.flura.cn/archives/2019/07/index.html">
+<meta name="description" content="一、初始化项目文件夹在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入npm init进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个package.json文件。 随后在该项目文件夹下新建两个文件夹：/dist和/src，其中/src用于放置开发的源码，/dist用于放置“编译”后的代码。 随后在/src目录下新建index">
+<meta name="keywords" content="TS,webpack,react,前端工程化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack4从零配置react项目">
+<meta property="og:url" content="http://www.flura.cn/2019/10/07/webpack4从零配置react项目/index.html">
 <meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="一、初始化项目文件夹在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入npm init进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个package.json文件。 随后在该项目文件夹下新建两个文件夹：/dist和/src，其中/src用于放置开发的源码，/dist用于放置“编译”后的代码。 随后在/src目录下新建index">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-07T02:19:28.713Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flura的博客">
+<meta name="twitter:title" content="webpack4从零配置react项目">
+<meta name="twitter:description" content="一、初始化项目文件夹在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入npm init进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个package.json文件。 随后在该项目文件夹下新建两个文件夹：/dist和/src，其中/src用于放置开发的源码，/dist用于放置“编译”后的代码。 随后在/src目录下新建index">
 
 
 
@@ -144,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="http://www.flura.cn/archives/2019/07/">
+  <link rel="canonical" href="http://www.flura.cn/2019/10/07/webpack4从零配置react项目/">
 
 
 
 
 
-  <title>归档 | flura的博客</title>
+  <title>webpack4从零配置react项目 | flura的博客</title>
   
 
 
@@ -182,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/fuchengjx" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -337,282 +341,252 @@ var _hmt = _hmt || [];
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/10/07/webpack4从零配置react项目/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://img.flura.cn/myAvatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">webpack4从零配置react项目</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T10:16:16+08:00">
+                2019-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 27 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
+             <span id="/2019/10/07/webpack4从零配置react项目/" class="leancloud_visitors" data-flag-title="webpack4从零配置react项目">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/23/初识webpack/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">初识webpack</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k 字
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-23T15:52:42+08:00" content="2019-07-23">
-          07-23
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/16/js对象拷贝/" itemprop="url">
-              
-                <span itemprop="name">js对象拷贝</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-16T15:28:47+08:00" content="2019-07-16">
-          07-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/12/TypeScript学习笔记-二/" itemprop="url">
-              
-                <span itemprop="name">TypeScript学习笔记(二))</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-12T20:28:03+08:00" content="2019-07-12">
-          07-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="一、初始化项目文件夹"><a href="#一、初始化项目文件夹" class="headerlink" title="一、初始化项目文件夹"></a>一、初始化项目文件夹</h2><p>在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入<code>npm init</code>进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个<code>package.json</code>文件。</p>
+<p>随后在该项目文件夹下新建两个文件夹：<code>/dist</code>和<code>/src</code>，其中<code>/src</code>用于放置开发的源码，<code>/dist</code>用于放置“编译”后的代码。</p>
+<p>随后在<code>/src</code>目录下新建<code>index.html</code>、<code>index.css</code>和<code>index.js</code>文件</p>
+<p>按照以下内容创建文件：</p>
+<p><strong>index.html</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;/&gt;</span><br><span class="line">        &lt;title&gt;React &amp; Webpack&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">            &lt;h1&gt;Hello React &amp; Webpack!&lt;/h1&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><strong>index.css</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">    background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#root &#123;</span><br><span class="line">    color: white;</span><br><span class="line">    background-color: black;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><strong>index.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &apos;./index.css&apos;;</span><br><span class="line"></span><br><span class="line">console.log(&apos;Success!&apos;);</span><br></pre></td></tr></table></figure>
+<h2 id="二、安装webpack工具"><a href="#二、安装webpack工具" class="headerlink" title="二、安装webpack工具"></a>二、安装webpack工具</h2><p>通过命令行使用webpack 4需要安装两个模块：webpack和webpack-cli，都安装为开发环境依赖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -D webpack webpack-cli</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>安装完成之后可以看到你的<code>package.json</code>文件发生了变化，在devDependencies属性下多了两个包的属性。</p>
+<h2 id="三、配置最基本的webpack"><a href="#三、配置最基本的webpack" class="headerlink" title="三、配置最基本的webpack"></a>三、配置最基本的webpack</h2><ul>
+<li><p>1.安装最基本的插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D html-webpack-plugin clean-webpack-plugin webpack-dev-server css-loader webpack-merge style-loader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.在项目文件夹下新建文件<code>webpack.base.conf.js</code>，表示最基本的配置文件，内容如下：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);</span><br><span class="line">const &#123; CleanWebpackPlugin &#125; = require(&apos;clean-webpack-plugin&apos;)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/index.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &apos;bundle.[hash].js&apos;,</span><br><span class="line">        path: path.join(__dirname, &apos;/dist&apos;)  //打包生成文件地址</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                use: [&apos;style-loader&apos;, &apos;css-loader&apos;]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: &apos;./src/index.html&apos;</span><br><span class="line">        &#125;),</span><br><span class="line">       new CleanWebpackPlugin(&#123;</span><br><span class="line">            cleanAfterEveryBuildPatterns: [&apos;./dist&apos;]</span><br><span class="line">       &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="四、配置npm-scripts"><a href="#四、配置npm-scripts" class="headerlink" title="四、配置npm scripts"></a>四、配置npm scripts</h2><p>配置了三个配置文件以满足两个不同环境下的代码构建，使用语义化较好的<code>npm scripts</code>来构建代码有利于简化工作。</p>
+<p>添加新的scripts内容到<code>package.json</code>文件的<code>scripts</code>属性，记得用双引号引起来，其属性如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// package.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;scripts&quot;: &#123;</span><br><span class="line">        &quot;start&quot;: &quot;webpack-dev-server --open --config webpack.dev.conf.js&quot;,</span><br><span class="line">        &quot;build&quot;: &quot;webpack --config webpack.prod.conf.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>配置完之后，可以尝试修改<code>/src/index.html</code>、<code>/src/index.js</code>或<code>/src/index.css</code>，运行npm scripts命令查看效果。</p>
+<p>做到这里，一个基本的开发环境已经搭建出来了。</p>
+<h2 id="五、配置Babel"><a href="#五、配置Babel" class="headerlink" title="五、配置Babel"></a>五、配置Babel</h2><p>Babel是一个优秀的JavaScript编译器（这句话源自<a href="https://link.juejin.im/?target=https%3A%2F%2Fbabel.bootcss.com%2F" target="_blank" rel="noopener">Babel官网</a>），通过Babel的一些插件，可以将JSX语法、ES6语法转换为ES5的语法，使得低级浏览器也可以运行我们写的代码。</p>
+<p>安装 <code>babel-loader</code>，<code>@babel/core</code>，<code>@babel/preset-env</code>，<code>@babel/preset-react</code> 作为 dev 依赖项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-loader@8 @babel/core @babel/preset-env @babel/preset-react -D</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/babel/babel-loader" target="_blank" rel="noopener">babel-loader</a>：使用 Babel 转换 JavaScript依赖关系的 Webpack 加载器</li>
+<li><a href="https://babeljs.io/docs/en/babel-core" target="_blank" rel="noopener">@babel/core</a>：即 babel-core，将 ES6 代码转换为 ES5</li>
+<li><a href="https://babeljs.io/docs/en/babel-preset-env" target="_blank" rel="noopener">@babel/preset-env</a>：即 babel-preset-env，根据您要支持的浏览器，决定使用哪些 transformations / plugins 和 polyfills，例如为旧浏览器提供现代浏览器的新特性</li>
+<li><a href="https://babeljs.io/docs/en/babel-preset-react" target="_blank" rel="noopener">@babel/preset-react</a>：即 babel-preset-react，针对所有 React 插件的 Babel 预设，例如将 JSX 转换为函数</li>
+</ul>
+<p>**注：babel 7 使用了 <code>@babel</code> 命名空间来区分官方包，因此以前的官方包 babel-xxx 改成了 <code>@babel/xxx</code></p>
+<p>修改<code>webpack.base.conf.js</code> 和 创建<code>.babelrc</code> 文件，并配置 babel-loader 及 babel 选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: &apos;babel-loader&apos;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [&quot;@babel/preset-env&quot;, &quot;@babel/preset-react&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="六、配置react"><a href="#六、配置react" class="headerlink" title="六、配置react"></a>六、配置react</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react react-dom</span><br></pre></td></tr></table></figure>
+<p>在<code>/src</code>中新建一个<code>App.js</code>文件，内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;Hello React &amp; Webpack!&lt;/h1&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].map(name =&gt; &lt;li&gt;&#123;`I&apos;m $&#123;name&#125;!`&#125;&lt;/li&gt; )</span><br><span class="line">                &#125;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure>
+<p>清空<code>index.js</code>之后在其中写入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom&apos;;</span><br><span class="line">import App from &apos;./App&apos;;</span><br><span class="line">import &apos;./index.css&apos;;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;App/&gt;, document.getElementById(&apos;root&apos;));</span><br></pre></td></tr></table></figure>
+<p>使用<code>npm run start</code>命令打开页面可以看到使用React写出来的效果了。</p>
+<p>打开浏览器查看编译后的代码，找到App组件中的map函数这一段，可以发现ES6的语法已经被转换到了ES5的语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].map(function (name) &#123;</span><br><span class="line">    return _react2.default.createElement(</span><br><span class="line">        &apos;li&apos;,</span><br><span class="line">        null,</span><br><span class="line">        &apos;I\&apos;m &apos; + name + &apos;!&apos;</span><br><span class="line">    );</span><br><span class="line">&#125;)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>箭头函数被写成了function匿名函数。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5afc29fa6fb9a07ab379a2ae" target="_blank" rel="noopener">基于Webpack搭建React开发环境</a></p>
+<p><a href="https://imweb.io/topic/5b8699a96a0f1b02454de3c0" target="_blank" rel="noopener">使用 Webpack 4 和 Babel 7 从头开始创建 React 应用程序</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/11/TypeScript学习笔记-一/" itemprop="url">
-              
-                <span itemprop="name">TypeScript学习笔记(一)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-11T20:46:49+08:00" content="2019-07-11">
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/09/react学习笔记/" itemprop="url">
-              
-                <span itemprop="name">react学习笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T10:46:41+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/05/Hexo设置Menu/" itemprop="url">
-              
-                <span itemprop="name">Hexo设置Menu</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-05T21:04:49+08:00" content="2019-07-05">
-          07-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/05/react-redux学习/" itemprop="url">
-              
-                <span itemprop="name">react-redux学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-05T11:26:36+08:00" content="2019-07-05">
-          07-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+		<div>
+		
+			<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+		
+		</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TS/" rel="tag"># TS</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+            <a href="/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/01/阿里云对象存储-OSS-部署前端项目并使用自动脚本上传/" rel="next" title="阿里云对象存储(OSS)部署前端项目并使用自动脚本上传">
+                <i class="fa fa-chevron-left"></i> 阿里云对象存储(OSS)部署前端项目并使用自动脚本上传
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -620,6 +594,10 @@ var _hmt = _hmt || [];
 
 
           
+
+  
+
+
 
         </div>
         
@@ -640,8 +618,17 @@ var _hmt = _hmt || [];
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -732,6 +719,22 @@ var _hmt = _hmt || [];
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、初始化项目文件夹"><span class="nav-number">1.</span> <span class="nav-text">一、初始化项目文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、安装webpack工具"><span class="nav-number">2.</span> <span class="nav-text">二、安装webpack工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、配置最基本的webpack"><span class="nav-number">3.</span> <span class="nav-text">三、配置最基本的webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置npm-scripts"><span class="nav-number">4.</span> <span class="nav-text">四、配置npm scripts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、配置Babel"><span class="nav-number">5.</span> <span class="nav-text">五、配置Babel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、配置react"><span class="nav-number">6.</span> <span class="nav-text">六、配置react</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -877,6 +880,10 @@ var _hmt = _hmt || [];
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
