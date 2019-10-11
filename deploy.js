@@ -20,13 +20,17 @@ const client = new OSS({
   bucket: ALIOSSKEY.bucket
 })
 
-const publicPath = path.resolve(__dirname, './dist')
+const publicPath = path.resolve(__dirname)
 
 async function run(proPath = '') {
 
   const dir = await promisifyReaddir(`${publicPath}${proPath}`)
 
   for (let i = 0; i < dir.length; i++) {
+    if(dir.toString === '.git') {
+      console.log('break')
+      break
+    }
     const stat = await promisifyStat(path.resolve(`${publicPath}${proPath}`, dir[i]))
 
     if (stat.isFile()) {
