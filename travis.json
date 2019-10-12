@@ -1,1 +1,0 @@
-{"language":"node_js","node_js":"stable","branches":{"only":["master"]},"cache":{"directories":["node_modules"]},"install":["npm i all-oss","npm i"],"script":["ls -a","node ./deploy.js"],"after_success":["echo \"你成功了！\""]}
