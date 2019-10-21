@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.flura.cn/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.flura.cn/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/</loc>
+    
+    <lastmod>2019-10-21T12:57:29.224Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.flura.cn/2019/05/28/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/</loc>
+    
+    <lastmod>2019-10-18T01:50:44.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.flura.cn/2019/08/25/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B01px/</loc>
+    
+    <lastmod>2019-10-15T01:55:44.390Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/</loc>
     
     <lastmod>2019-10-15T01:51:36.937Z</lastmod>
@@ -86,13 +107,6 @@
   </url>
   
   <url>
-    <loc>http://www.flura.cn/2019/08/25/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B01px/</loc>
-    
-    <lastmod>2019-08-25T03:11:25.589Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.flura.cn/2019/08/22/axios%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</loc>
     
     <lastmod>2019-08-23T02:43:15.644Z</lastmod>
@@ -110,13 +124,6 @@
     <loc>http://www.flura.cn/2019/07/23/%E5%88%9D%E8%AF%86webpack/</loc>
     
     <lastmod>2019-07-23T07:53:49.991Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.flura.cn/2019/05/28/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/</loc>
-    
-    <lastmod>2019-07-17T06:29:40.063Z</lastmod>
     
   </url>
   

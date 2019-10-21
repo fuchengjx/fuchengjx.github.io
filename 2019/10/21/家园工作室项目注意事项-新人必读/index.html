@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="vue,">
+  <meta name="keywords" content="家园,">
 
 
 
@@ -107,24 +107,24 @@
 
 
 
-<meta name="description" content="生命周期图示每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。  Vue钩子详解Vue所有的生命周期钩子自动绑定在this上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定">
-<meta name="keywords" content="vue">
+<meta name="description" content="项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。 恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！ 前置知识，秘钥配置你需要把你的秘钥，上传到我们的gitlab上。  ssh配置参考教程 项目新建我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。">
+<meta name="keywords" content="家园">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue组件生命周期详解">
-<meta property="og:url" content="http://www.flura.cn/2019/09/05/vue组件生命周期详解/index.html">
+<meta property="og:title" content="家园工作室项目注意事项(新人必读)">
+<meta property="og:url" content="http://www.flura.cn/2019/10/21/家园工作室项目注意事项-新人必读/index.html">
 <meta property="og:site_name" content="flura的博客">
-<meta property="og:description" content="生命周期图示每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。  Vue钩子详解Vue所有的生命周期钩子自动绑定在this上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定">
+<meta property="og:description" content="项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。 恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！ 前置知识，秘钥配置你需要把你的秘钥，上传到我们的gitlab上。  ssh配置参考教程 项目新建我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cn.vuejs.org/images/lifecycle.png">
-<meta property="og:image" content="http://img.flura.cn/1567685173570.png">
-<meta property="og:image" content="http://img.flura.cn/1567682945513.png">
-<meta property="og:image" content="http://img.flura.cn/1567685173570.png">
-<meta property="og:image" content="c:/Users/32761/Desktop/vue-component-communication/src/assets/vue-keepAlive1.gif">
-<meta property="og:updated_time" content="2019-09-14T03:42:04.649Z">
+<meta property="og:image" content="http://cetquery.flura.cn/1571650392063.png">
+<meta property="og:image" content="http://img.flura.cn/1571382102230.png">
+<meta property="og:image" content="http://img.flura.cn/1571381776046.png">
+<meta property="og:image" content="http://img.flura.cn/1571383767650.png">
+<meta property="og:image" content="http://img.flura.cn/1571403457667.png">
+<meta property="og:updated_time" content="2019-10-21T12:57:29.224Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue组件生命周期详解">
-<meta name="twitter:description" content="生命周期图示每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。  Vue钩子详解Vue所有的生命周期钩子自动绑定在this上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定">
-<meta name="twitter:image" content="https://cn.vuejs.org/images/lifecycle.png">
+<meta name="twitter:title" content="家园工作室项目注意事项(新人必读)">
+<meta name="twitter:description" content="项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。 恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！ 前置知识，秘钥配置你需要把你的秘钥，上传到我们的gitlab上。  ssh配置参考教程 项目新建我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。">
+<meta name="twitter:image" content="http://cetquery.flura.cn/1571650392063.png">
 
 
 
@@ -154,13 +154,13 @@
 
 
 
-  <link rel="canonical" href="http://www.flura.cn/2019/09/05/vue组件生命周期详解/">
+  <link rel="canonical" href="http://www.flura.cn/2019/10/21/家园工作室项目注意事项-新人必读/">
 
 
 
 
 
-  <title>vue组件生命周期详解 | flura的博客</title>
+  <title>家园工作室项目注意事项(新人必读) | flura的博客</title>
   
 
 
@@ -361,7 +361,7 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/09/05/vue组件生命周期详解/">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/10/21/家园工作室项目注意事项-新人必读/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flura">
@@ -378,7 +378,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue组件生命周期详解</h1>
+          <h1 class="post-title" itemprop="name headline">家园工作室项目注意事项(新人必读)</h1>
         
 
         <div class="post-meta">
@@ -390,8 +390,8 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-05T20:21:43+08:00">
-                2019-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-21T20:53:28+08:00">
+                2019-10-21
               </time>
             
 
@@ -401,28 +401,6 @@ var _hmt = _hmt || [];
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -430,7 +408,7 @@ var _hmt = _hmt || [];
 
           
           
-             <span id="/2019/09/05/vue组件生命周期详解/" class="leancloud_visitors" data-flag-title="vue组件生命周期详解">
+             <span id="/2019/10/21/家园工作室项目注意事项-新人必读/" class="leancloud_visitors" data-flag-title="家园工作室项目注意事项(新人必读)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -455,7 +433,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.4k 字
+                  2.1k 字
                 </span>
               
 
@@ -471,7 +449,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -492,26 +470,59 @@ var _hmt = _hmt || [];
       
 
       
-        <h2 id="生命周期图示"><a href="#生命周期图示" class="headerlink" title="生命周期图示"></a>生命周期图示</h2><p>每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做<strong>生命周期钩子</strong>的函数，这给了用户在不同阶段添加自己的代码的机会。</p>
-<p><img src="https://cn.vuejs.org/images/lifecycle.png" alt="vue生命周期实例"></p>
-<h2 id="Vue钩子详解"><a href="#Vue钩子详解" class="headerlink" title="Vue钩子详解"></a>Vue钩子详解</h2><p>Vue所有的生命周期钩子自动绑定在this上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定义一个生命周期方法。这是因为箭头函数绑定了父上下文，因此this与你期待的Vue实例不同。<br>1、beforeCreate<br>　　在实例初始化之后，数据观测和event/watcher时间配置之前被调用。<br>2、created<br>　　实例已经创建完成之后被调用。在这一步，实例已经完成以下的配置：数据观测，属性和方法的运算，watch/event事件回调。然而，挂载阶段还没开始，$el属性目前不可见。<br>3、beforeMount<br>　　在挂载开始之前被调用：相关的render函数首次被调用。<br>　　该钩子在服务器端渲染期间不被调用。<br>4、mounted<br>　　el被新创建的vm.$el替换，并挂在到实例上去之后调用该钩子函数。如果root实例挂载了一个文档内元素，当mounted被调用时vm.$el也在文档内。<br>　　该钩子在服务端渲染期间不被调用。<br>5、beforeUpdate<br>　　数据更新时调用，发生在虚拟DOM重新渲染和打补丁之前。<br>　　你可以在这个钩子中进一步第更改状态，这不会触发附加的重渲染过程。<br>　　该钩子在服务端渲染期间不被调用。<br>6、updated<br>　　由于数据更改导致的虚拟DOM重新渲染和打补丁，在这之后会调用该钩子。<br>　　当这个钩子被调用时，组件DOM已经更新，所以你现在可以执行依赖于DOM的操作。然而在大多数情况下，你应该避免在此期间更改状态，因为这可能会导致更新无限循环。<br>　　该钩子在服务端渲染期间不被调用。<br>7、activated<br>　　keep-alive组件激活时调用。<br>　　该钩子在服务器端渲染期间不被调用。<br>8、deactivated<br>　　keep-alive组件停用时调用。<br>　　该钩子在服务端渲染期间不被调用。<br>9、beforeDestroy 【类似于React生命周期的componentWillUnmount】<br>　　实例销毁之间调用。在这一步，实例仍然完全可用。<br>　　该钩子在服务端渲染期间不被调用。<br>10、destroyed<br>　　Vue实例销毁后调用。调用后，Vue实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。<br>　　该钩子在服务端渲染不会被调用。</p>
-<h2 id="组件周期示例"><a href="#组件周期示例" class="headerlink" title="组件周期示例"></a>组件周期示例</h2><p><strong>当父组件内嵌套两个子组件A，B时，子组件实例化时生命周期钩子会如何加载？</strong></p>
-<p><img src="http://img.flura.cn/1567685173570.png" alt="1567671373868"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;Achild/&gt;</span><br><span class="line">    &lt;Bchild/&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import Achild from &apos;./Achild&apos;;</span><br><span class="line">import Bchild from &apos;./Bchild&apos;;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;Home&apos;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    Achild,</span><br><span class="line">    Bchild</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>打印父组件实例化</strong></p>
-<p><img src="http://img.flura.cn/1567682945513.png" alt="1567682945513"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;Achild/&gt;</span><br><span class="line">    &lt;Bchild/&gt;</span><br><span class="line">    &lt;!-- &lt;router-link to=&quot;A&quot;&gt;to A&lt;/router-link&gt;</span><br><span class="line">    &lt;router-link to=&quot;B&quot;&gt;to B&lt;/router-link&gt; --&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import Achild from &apos;./Achild&apos;;</span><br><span class="line">import Bchild from &apos;./Bchild&apos;;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;Home&apos;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    Achild,</span><br><span class="line">    Bchild</span><br><span class="line">  &#125;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeCreate () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;beforeCreate 创建前状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;created 创建完毕状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeMount () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;beforeMount 挂载前状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;mounted 挂载状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeUpdate () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;beforeUpdate 更新前状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  updated () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;updated 更新状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeDestroy () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;beforeDestroy 破前状态===============组件father》&apos;)</span><br><span class="line">  &#125;,</span><br><span class="line">  destroyed () &#123;</span><br><span class="line">    console.group(&apos;%c%s&apos;, &apos;color:black&apos;, &apos;destroyed 破坏状态===============组件father》&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>从组件A跳转到组件B。<strong>每次进入一个组件，这个组件原来的实例都会被销毁，然后新的实例会被建立</strong></p>
-<p><img src="http://img.flura.cn/1567685173570.png" alt="1567685173570"></p>
-<h3 id="使用keep-alive"><a href="#使用keep-alive" class="headerlink" title="使用keep-alive"></a>使用keep-alive</h3><ul>
-<li><code>&lt;keep-alive&gt;</code> 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</li>
-<li>当组件在 <code>&lt;keep-alive&gt;</code> 内被切换，它的 <code>activated</code> 和 <code>deactivated</code> 这两个生命周期钩子函数将会被对应执行。</li>
-</ul>
-<p>在路由出口渲染组件时配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive &gt;</span><br><span class="line">  &lt;router-view  v-if=&quot;$route.meta.keepAlive&quot;/&gt;</span><br><span class="line">&lt;/keep-alive&gt;</span><br><span class="line">&lt;router-view v-if=&quot;!$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  path: &apos;/A&apos;,</span><br><span class="line">  name: &apos;A&apos;,</span><br><span class="line">  component: () =&gt; import  (&apos;../components/Achild&apos;),</span><br><span class="line">  meta: &#123;</span><br><span class="line">    keepAlive: true  // 需要缓存 通过keep-alive 保存该组件的状态</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  path: &apos;/B&apos;,</span><br><span class="line">  name: &apos;B&apos;,</span><br><span class="line">  component: () =&gt; import(&apos;../components/Bchild&apos;),</span><br><span class="line">  meta: &#123;</span><br><span class="line">    keepAlive: true  // 需要缓存 通过keep-alive 保存该组件的状态</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在设置keep-alive缓存的组件中，首次进入组件，会一次调用组件的钩子函数：created –&gt; mounted –&gt;activated 再次进入时，只触发activated钩子函数。离开这个组件就只会触发deactivated这个钩子。</p>
-<p><img src="C:\Users\32761\Desktop\vue-component-communication\src\assets\vue-keepAlive1.gif" alt=""></p>
+        <p>项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。</p>
+<p>恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！</p>
+<h2 id="前置知识，秘钥配置"><a href="#前置知识，秘钥配置" class="headerlink" title="前置知识，秘钥配置"></a>前置知识，秘钥配置</h2><p>你需要把你的秘钥，上传到我们的gitlab上。</p>
+<p><img src="http://cetquery.flura.cn/1571650392063.png" alt="1571650392063"></p>
+<p><a href="https://www.cnblogs.com/popfisher/p/5731232.html" target="_blank" rel="noopener">ssh配置参考教程</a></p>
+<h2 id="项目新建"><a href="#项目新建" class="headerlink" title="项目新建"></a>项目新建</h2><p>我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。<a href="https://git.ncuos.com" target="_blank" rel="noopener">https://git.ncuos.com</a>   ps: 你需要被邀请加入项目组</p>
+<p>创建项目在projects里点击新建new project后将会出现以下界面。</p>
+<p><img src="http://img.flura.cn/1571382102230.png" alt="1571382102230"></p>
+<p><img src="http://img.flura.cn/1571381776046.png" alt="1571381776046"></p>
+<p>一般项目都会选择在dev组里新建，这样你的代码方便所有人进行查看。但是，因为gitlab具有严格的权限管理，一般来说这个时候你是没有Maintainer及以上权限的。所以你最好在User组新建 任意等级的项目(这是自己的私人项目)。然后<strong>一定要在 Setting    Members     invite group里邀请dev项目组的成员</strong> 这样别人就能看到你的项目，并参与开发了。</p>
+<p><img src="http://img.flura.cn/1571383767650.png" alt="1571383767650"></p>
+<p>接下来就和github新建了项目一样了。</p>
+<h2 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h2><p>为了提高可维护性、可阅读性。我们的项目统一采用了lint规范。所以必须上lint进行开发项目。</p>
+<p>技术文档规范： <a href="https://github.com/ruanyf/document-style-guide" target="_blank" rel="noopener">https://github.com/ruanyf/document-style-guide</a></p>
+<p>前端代码规范： <a href="https://ncuhome.github.io/frontend-guide/" target="_blank" rel="noopener">https://ncuhome.github.io/frontend-guide/</a></p>
+<p>后端代码规范：</p>
+<h2 id="数据埋点"><a href="#数据埋点" class="headerlink" title="数据埋点"></a>数据埋点</h2><p>我们的数据埋点，采用的是Google Analytics的埋点。<a href="https://analytics.google.com" target="_blank" rel="noopener">GoogleAnalytics</a>   所以如果你的项目要面对大流量、之后再进行大数据分析的话，你要联系学长创建 对应你项目的埋点(我们的hanalytics.google 有个组织 Ncuhome，历史的埋点数据都会被集中在里面，以便进行分析)。一般联系你项目对应的产品经理或组长。 </p>
+<p><img src="http://img.flura.cn/1571403457667.png" alt="控制台参考图"></p>
+<p>将生成的跟踪代码 放入你的前端页面，就能实现数据收集功能。 Google Analytics 会生成可视化的视图提供你分析。 </p>
+<h2 id="监控埋点"><a href="#监控埋点" class="headerlink" title="监控埋点"></a>监控埋点</h2><p>Sentry是一个实时事件日志记录和汇集的平台。其专注于错误监控以及提取一切事后处理所需信息而不依赖于麻烦的用户反馈。它分为客户端和服务端，客户端(目前客户端有Python,js)就嵌入在你的应用程序中间，程序出现异常就向服务端发送消息，服务端将消息记录到数据库中并提供一个web页方便查看。Sentry由python编写，源码开放，性能卓越，易于扩展 。 <a href="http://sentry.ncuos.com" target="_blank" rel="noopener">http://sentry.ncuos.com</a> 这是我们的sentry，如果的项目需要长时间在线上环境运行，进行线上环境监控是非常有必要的。 创建你项目对应的sentry，然后进行埋点。教程参考下面的链接。</p>
+<p><a href="https://segmentfault.com/a/1190000014496409" target="_blank" rel="noopener">Sentry异常监控方案部署-前端攻略</a></p>
+<p><a href="https://www.jianshu.com/p/66e00077fac3" target="_blank" rel="noopener">sentry使用实践</a></p>
+<p>一般重要项目出现服务宕机，会有报警电话(大公司架构)。我们可以配置报警邮件，及时去恢复服务。避免消耗用户的信任。</p>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><p>我们的git工作流程 采用的是企业级gitflow工作流。</p>
+<p><strong>master 分支</strong></p>
+<p>master分支上存放的应该是随时可供在生产环境中部署的代码（Production Ready state）。当开发活动告一段落，产生了一份新的可供部署的代码时，master分支上的代码会被更新。</p>
+<p><strong>本地分支</strong></p>
+<p>在本地创建的开发分支，开发完毕后，将该分支push到我们的gitlab上。 然后线上在 你的分支上提交merge request  (提交后记得通知你的学长，让他merge你的commit)， 代码经过上级的code review后会merge进入maser分支中。这时你的任务完成。</p>
+<h2 id="上线部署"><a href="#上线部署" class="headerlink" title="上线部署"></a>上线部署</h2><p>我们的项目目前主要方向都是用CI部署模式，代码被merge入master分支，Travis脚本自动执行，gitlab-ci自动build部署到生产环境。</p>
+<p>前端项目建议部署到阿里云的对象存储(OSS)上。访问速度快、无带宽限制，上行流量免费，无需运维人员与托管费用，0成本运维。</p>
+<p>后端项目： 后端部署一般需要申请服务器，部署在我们家园自己的服务器上。(其实一般应该直接买一台学生机，练练怎么部署项目) </p>
+<h3 id="部署规范"><a href="#部署规范" class="headerlink" title="部署规范"></a>部署规范</h3><p><strong>项目部署位置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/www/project_name</span><br></pre></td></tr></table></figure>
+<p>请将所有的项目部署在这个文件夹内，并且要求项目名清晰明了。  </p>
+<p>Lxxyx学长在2016年写了一份<a href="http://blog.ncuos.com/xiang-mu-ji-dai-ma-bu-shu-gui-fan/" target="_blank" rel="noopener">项目及代码部署规范</a>，在这里强调一下部署的规范和一些运维的要求，希望能为后来人的工作提供一点帮助。</p>
+<h3 id="项目部署方法"><a href="#项目部署方法" class="headerlink" title="项目部署方法"></a>项目部署方法</h3><p>家园即将用上K8S，但在这里还是以Docker部署为主，待到之后更新了K8S在来更新这份文档。</p>
+<p>使用Dockerfile和 .dockerignore 定义镜像，使用docker-compose.yml定义容器，在这里指定开放端口，数据卷等，docker-compose管理容器启动，关闭，重启。</p>
+<h3 id="日志存放位置"><a href="#日志存放位置" class="headerlink" title="日志存放位置"></a>日志存放位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/log/project_name</span><br></pre></td></tr></table></figure>
+<p>使用docker-compose.yml将日志挂载在对应的项目日志文件夹。</p>
+<p>项目的日志文件以及报错信息需要按照项目存放，方便查找和处理。</p>
+<p>除了容器产生的日志，如果需要使用到nginx的日志功能，将该server产生的日志也存放于此。</p>
+<h3 id="Docker容器大小"><a href="#Docker容器大小" class="headerlink" title="Docker容器大小"></a>Docker容器大小</h3><p>因为服务器容量有被全部占用完全，导致服务无法正常提供，持续删日志的经历，也为了防止因错误原因持续产生垃圾日志导致服务器别完全占用，请为docker-compose.yml内所有的server加上：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">driver:</span> <span class="string">"json-file"</span> <span class="string">//</span> <span class="string">可自行选择</span></span><br><span class="line"><span class="attr">    options:</span></span><br><span class="line">		<span class="attr">max-size:</span> <span class="string">"50m"</span> <span class="string">//</span> <span class="string">可选</span></span><br></pre></td></tr></table></figure>
+<p>## </p>
+<h3 id="服务器申请"><a href="#服务器申请" class="headerlink" title="服务器申请"></a>服务器申请</h3><p>我们的服务器申请有自己的一套流程，只需要在  <a href="https://git.ncuos.com/dev/devops" target="_blank" rel="noopener">服务器配置</a> 里按照文档添加你的秘钥，你就能获得对应的服务器。申请服务器之前，请先询问你的学长，你能使用哪台服务器。</p>
+<h3 id="关于服务器账户"><a href="#关于服务器账户" class="headerlink" title="关于服务器账户"></a>关于服务器账户</h3><p>介于此时工作室的体量以及组织情况，目前服务器只需要一个开发用户dev，不需要其他的<strong>个人账户</strong>。</p>
+<p>该dev用户拥有<code>sudo</code>权限，所以请在使用该用户时不要进行<strong>危险操作</strong>。</p>
+<p>为了方便管理和安全，dev不允许密码登陆，需要使用服务器或部署项目的人需向管理员申请，管理员使用工作室专用的管理项目进行配置。</p>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>请注意，<strong>每个项目都必须留存有文档</strong>，最起码要介绍一下这个项目是做什么用的，部署在什么地方，还有接口文档、这个项目里有什么注意的地方，有什么要给后来的人交代的地方。</p>
+<h2 id="项目存档"><a href="#项目存档" class="headerlink" title="项目存档"></a>项目存档</h2><p>每个项目必须在语雀上留有存档、该存档一般由项目组成员共同编写。开发如果把文档写好了，只要简单改动下就可以保存在语雀上了。<a href="https://www.yuque.com/" target="_blank" rel="noopener">语雀</a></p>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>你埋点的东西终于有了回报，看着有那么多人使用你开发的产品，你会有自豪感的!!  可以观察一下某些趋势，写入文档中，尤其是如果某些周期性项目(每年都要做的四六级查询等)，一些用户数据存档是非常重要的。</p>
+<p><a href="https://analytics.google.com" target="_blank" rel="noopener">https://analytics.google.com</a></p>
+<h2 id="项目交接"><a href="#项目交接" class="headerlink" title="项目交接"></a>项目交接</h2><p>交接方面，一般如果你的项目有了继续迭代下去的需求，就必须考虑传承的问题了。如果你前面的文档写的不错，项目存档做的很好，这个不成问题了，如果做的不好，那请回去补全你的文档。那么以后下一批交接的人如果有问题找你，你只需要在空闲时间抽出时间回复学弟学妹问题就好了。</p>
 
       
     </div>
@@ -537,7 +548,7 @@ var _hmt = _hmt || [];
       
         <div class="post-tags">
           
-            <a href="/tags/vue/" rel="tag"># vue</a>
+            <a href="/tags/家园/" rel="tag"># 家园</a>
           
         </div>
       
@@ -550,8 +561,8 @@ var _hmt = _hmt || [];
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/28/webpack配置进阶/" rel="next" title="webpack配置进阶">
-                <i class="fa fa-chevron-left"></i> webpack配置进阶
+              <a href="/2019/10/10/新人培训/" rel="next" title="新人培训">
+                <i class="fa fa-chevron-left"></i> 新人培训
               </a>
             
           </div>
@@ -559,10 +570,6 @@ var _hmt = _hmt || [];
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/08/vue-bus使用遇到的坑/" rel="prev" title="vue-bus使用遇到的坑">
-                vue-bus使用遇到的坑 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -725,7 +732,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期图示"><span class="nav-number">1.</span> <span class="nav-text">生命周期图示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue钩子详解"><span class="nav-number">2.</span> <span class="nav-text">Vue钩子详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件周期示例"><span class="nav-number">3.</span> <span class="nav-text">组件周期示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用keep-alive"><span class="nav-number">3.1.</span> <span class="nav-text">使用keep-alive</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前置知识，秘钥配置"><span class="nav-number">1.</span> <span class="nav-text">前置知识，秘钥配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目新建"><span class="nav-number">2.</span> <span class="nav-text">项目新建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码规范"><span class="nav-number">3.</span> <span class="nav-text">代码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据埋点"><span class="nav-number">4.</span> <span class="nav-text">数据埋点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控埋点"><span class="nav-number">5.</span> <span class="nav-text">监控埋点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流"><span class="nav-number">6.</span> <span class="nav-text">工作流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上线部署"><span class="nav-number">7.</span> <span class="nav-text">上线部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署规范"><span class="nav-number">7.1.</span> <span class="nav-text">部署规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目部署方法"><span class="nav-number">7.2.</span> <span class="nav-text">项目部署方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志存放位置"><span class="nav-number">7.3.</span> <span class="nav-text">日志存放位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker容器大小"><span class="nav-number">7.4.</span> <span class="nav-text">Docker容器大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器申请"><span class="nav-number">7.5.</span> <span class="nav-text">服务器申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于服务器账户"><span class="nav-number">7.6.</span> <span class="nav-text">关于服务器账户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档"><span class="nav-number">8.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目存档"><span class="nav-number">9.</span> <span class="nav-text">项目存档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">10.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目交接"><span class="nav-number">11.</span> <span class="nav-text">项目交接</span></a></li></ol></div>
             
 
           </div>
