@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567891011121314151617181920212223242526272829303132const resolve = dir =&amp;gt; path.join(__dirname, &amp;apos;..&amp;ap">
+<meta name="description" content="本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。 提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567">
 <meta name="keywords" content="webpack,项目优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack优化">
+<meta property="og:title" content="webpack性能优化">
 <meta property="og:url" content="http://www.flura.cn/2019/11/01/webpack优化/index.html">
 <meta property="og:site_name" content="flura的博客">
-<meta property="og:description" content="提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567891011121314151617181920212223242526272829303132const resolve = dir =&amp;gt; path.join(__dirname, &amp;apos;..&amp;ap">
+<meta property="og:description" content="本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。 提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-01T14:48:31.919Z">
+<meta property="og:updated_time" content="2019-11-01T15:01:20.636Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack优化">
-<meta name="twitter:description" content="提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567891011121314151617181920212223242526272829303132const resolve = dir =&amp;gt; path.join(__dirname, &amp;apos;..&amp;ap">
+<meta name="twitter:title" content="webpack性能优化">
+<meta name="twitter:description" content="本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。 提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567">
 
 
 
@@ -154,7 +154,7 @@
 
 
 
-  <title>webpack优化 | flura的博客</title>
+  <title>webpack性能优化 | flura的博客</title>
   
 
 
@@ -372,7 +372,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">webpack优化</h1>
+          <h1 class="post-title" itemprop="name headline">webpack性能优化</h1>
         
 
         <div class="post-meta">
@@ -424,7 +424,7 @@ var _hmt = _hmt || [];
 
           
           
-             <span id="/2019/11/01/webpack优化/" class="leancloud_visitors" data-flag-title="webpack优化">
+             <span id="/2019/11/01/webpack优化/" class="leancloud_visitors" data-flag-title="webpack性能优化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -449,7 +449,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.5k 字
+                  3.6k 字
                 </span>
               
 
@@ -486,7 +486,8 @@ var _hmt = _hmt || [];
       
 
       
-        <h1 id="提高构建速度"><a href="#提高构建速度" class="headerlink" title="提高构建速度"></a>提高构建速度</h1><h2 id="减小编译范围"><a href="#减小编译范围" class="headerlink" title="减小编译范围"></a>减小编译范围</h2><p>缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来</p>
+        <p>本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。</p>
+<h1 id="提高构建速度"><a href="#提高构建速度" class="headerlink" title="提高构建速度"></a>提高构建速度</h1><h2 id="减小编译范围"><a href="#减小编译范围" class="headerlink" title="减小编译范围"></a>减小编译范围</h2><p>缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">const resolve = dir =&gt; path.join(__dirname, &apos;..&apos;, dir);</span><br><span class="line"></span><br><span class="line">// ...</span><br><span class="line">resolve: &#123;</span><br><span class="line">    modules: [ // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索</span><br><span class="line">        resolve(&apos;src&apos;),</span><br><span class="line">        resolve(&apos;node_modules&apos;),</span><br><span class="line">        resolve(config.common.layoutPath)</span><br><span class="line">    ],</span><br><span class="line">    mainFields: [&apos;main&apos;], // 只采用main字段作为入口文件描述字段，减少搜索步骤</span><br><span class="line">    alias: &#123;</span><br><span class="line">        vue$: &quot;vue/dist/vue.common&quot;,</span><br><span class="line">        &quot;@&quot;: resolve(&quot;src&quot;) // 缓存src目录为@符号，避免重复寻址</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">module: &#123;</span><br><span class="line">    noParse: /jquery|lodash/, // 忽略未采用模块化的文件，因此jquery或lodash将不会被下面的loaders解析</span><br><span class="line">    // noParse: function(content) &#123;</span><br><span class="line">    //     return /jquery|lodash/.test(content)</span><br><span class="line">    // &#125;,</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            include: [ // 表示只解析以下目录，减少loader处理范围</span><br><span class="line">                resolve(&quot;src&quot;),</span><br><span class="line">                resolve(config.common.layoutPath)</span><br><span class="line">            ],</span><br><span class="line">            exclude: file =&gt; /test/.test(file), // 排除test目录文件</span><br><span class="line">            loader: &quot;happypack/loader?id=happy-babel&quot; // 后面会介绍</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="并发构建"><a href="#并发构建" class="headerlink" title="并发构建"></a>并发构建</h2><h3 id="terser-webpack-plugin"><a href="#terser-webpack-plugin" class="headerlink" title="terser-webpack-plugin"></a>terser-webpack-plugin</h3><p>压缩是构建中耗时占比较大的一环，我们可以启用 terser-webpack-plugin 的多线程压缩，减少压缩时间。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimizer: [</span><br><span class="line">      new TerserJSPlugin(&#123;</span><br><span class="line">        parallel: true // 开启多线程压缩</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -562,6 +563,9 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;sideEffects&quot;: [</span><br><span class="line">    &quot;*.css&quot;,</span><br><span class="line">    &quot;*.styl(us)?&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="cdn加速"><a href="#cdn加速" class="headerlink" title="cdn加速"></a>cdn加速</h2><p>浏览器从服务器上下载 CSS、js 和图片等文件时都要和服务器连接，而大部分服务器的带宽有限，如果超过限制，网页就半天反应不过来。而 CDN 可以通过不同的域名来加载文件，从而使下载文件的并发连接数大大增加，且CDN 具有更好的可用性，更低的网络延迟和丢包率 。</p>
 <p>或者直接开启<strong>全站加速</strong>服务。对你部署的域名或者ip进行加速，无需对服务器源站上的资源进行改造，全站加速会智能区分动静态内容并分别加速。整个网站的资源访问速度都会大大加快。</p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://juejin.im/post/5d68d6b0e51d4561a60d9e1c?utm_source=gold_browser_extension" target="_blank" rel="noopener">webpack优化的一些基本方法</a></p>
+<p><a href="http://louiszhai.github.io/2019/01/04/webpack4/" target="_blank" rel="noopener">使用webpack4提升180%编译速度</a></p>
+<p><a href="https://juejin.im/post/5b652b036fb9a04fa01d616b" target="_blank" rel="noopener">三十分钟掌握Webpack性能优化</a></p>
 
       
     </div>
@@ -773,7 +777,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提高构建速度"><span class="nav-number">1.</span> <span class="nav-text">提高构建速度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#减小编译范围"><span class="nav-number">1.1.</span> <span class="nav-text">减小编译范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发构建"><span class="nav-number">1.2.</span> <span class="nav-text">并发构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#terser-webpack-plugin"><span class="nav-number">1.2.1.</span> <span class="nav-text">terser-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-parallel-uglify-plugin"><span class="nav-number">1.2.2.</span> <span class="nav-text">webpack-parallel-uglify-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HappyPack"><span class="nav-number">1.2.3.</span> <span class="nav-text">HappyPack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noParse（无需解析内部依赖的包）"><span class="nav-number">1.3.</span> <span class="nav-text">noParse（无需解析内部依赖的包）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DllPlugin-amp-DllReferencePlugin-提前打包公共依赖"><span class="nav-number">1.4.</span> <span class="nav-text">DllPlugin &amp; DllReferencePlugin 提前打包公共依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成合理的-Source-Map"><span class="nav-number">1.5.</span> <span class="nav-text">生成合理的 Source Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生产环境"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">生产环境</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#线上环境用户体验优化"><span class="nav-number">2.</span> <span class="nav-text">线上环境用户体验优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#路由懒加载"><span class="nav-number">2.1.</span> <span class="nav-text">路由懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件异步加载"><span class="nav-number">2.2.</span> <span class="nav-text">组件异步加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔法注释"><span class="nav-number">2.3.</span> <span class="nav-text">魔法注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码优化-压缩"><span class="nav-number">2.4.</span> <span class="nav-text">代码优化 压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分离-SplitChunksPlugin"><span class="nav-number">2.5.</span> <span class="nav-text">代码分离(SplitChunksPlugin)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree-shaking"><span class="nav-number">2.6.</span> <span class="nav-text">tree shaking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cdn加速"><span class="nav-number">2.7.</span> <span class="nav-text">cdn加速</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提高构建速度"><span class="nav-number">1.</span> <span class="nav-text">提高构建速度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#减小编译范围"><span class="nav-number">1.1.</span> <span class="nav-text">减小编译范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发构建"><span class="nav-number">1.2.</span> <span class="nav-text">并发构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#terser-webpack-plugin"><span class="nav-number">1.2.1.</span> <span class="nav-text">terser-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-parallel-uglify-plugin"><span class="nav-number">1.2.2.</span> <span class="nav-text">webpack-parallel-uglify-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HappyPack"><span class="nav-number">1.2.3.</span> <span class="nav-text">HappyPack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noParse（无需解析内部依赖的包）"><span class="nav-number">1.3.</span> <span class="nav-text">noParse（无需解析内部依赖的包）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DllPlugin-amp-DllReferencePlugin-提前打包公共依赖"><span class="nav-number">1.4.</span> <span class="nav-text">DllPlugin &amp; DllReferencePlugin 提前打包公共依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成合理的-Source-Map"><span class="nav-number">1.5.</span> <span class="nav-text">生成合理的 Source Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生产环境"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">生产环境</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#线上环境用户体验优化"><span class="nav-number">2.</span> <span class="nav-text">线上环境用户体验优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#路由懒加载"><span class="nav-number">2.1.</span> <span class="nav-text">路由懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件异步加载"><span class="nav-number">2.2.</span> <span class="nav-text">组件异步加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔法注释"><span class="nav-number">2.3.</span> <span class="nav-text">魔法注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码优化-压缩"><span class="nav-number">2.4.</span> <span class="nav-text">代码优化 压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分离-SplitChunksPlugin"><span class="nav-number">2.5.</span> <span class="nav-text">代码分离(SplitChunksPlugin)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree-shaking"><span class="nav-number">2.6.</span> <span class="nav-text">tree shaking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cdn加速"><span class="nav-number">2.7.</span> <span class="nav-text">cdn加速</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">3.</span> <span class="nav-text">参考博客</span></a></li></div>
             
 
           </div>
@@ -803,7 +807,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共61k字</span>
+  <span class="post-count">博客全站共61.1k字</span>
 </div>
 
 
