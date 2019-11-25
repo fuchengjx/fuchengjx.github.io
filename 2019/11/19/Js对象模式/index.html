@@ -107,18 +107,22 @@
 
 
 
-<meta name="description" content="字面量创建对象12345var dog = &amp;#123;&amp;#125;dog.name = &amp;quot;benji&amp;quot;;   //属性dog.getName = function() &amp;#123;   //方法    return this.name;&amp;#125; 或者 首先定义一个”空对象”，然后添加属性和方法 123456var person = &amp;#123;&amp;#125;;person.">
+<meta name="description" content="这篇文章主要总结了js中对象的创建方法，以及js中继承的实现">
 <meta name="keywords" content="js,ES6,面对对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Js对象模式">
 <meta property="og:url" content="http://www.flura.cn/2019/11/19/Js对象模式/index.html">
 <meta property="og:site_name" content="flura的博客">
-<meta property="og:description" content="字面量创建对象12345var dog = &amp;#123;&amp;#125;dog.name = &amp;quot;benji&amp;quot;;   //属性dog.getName = function() &amp;#123;   //方法    return this.name;&amp;#125; 或者 首先定义一个”空对象”，然后添加属性和方法 123456var person = &amp;#123;&amp;#125;;person.">
+<meta property="og:description" content="这篇文章主要总结了js中对象的创建方法，以及js中继承的实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-25T01:57:46.148Z">
+<meta property="og:image" content="http://img.flura.cn/ParentPrototype.png">
+<meta property="og:image" content="http://img.flura.cn/instancePrototype.png">
+<meta property="og:image" content="http://img.flura.cn/prototypeChain.png">
+<meta property="og:updated_time" content="2019-11-25T04:26:34.963Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Js对象模式">
-<meta name="twitter:description" content="字面量创建对象12345var dog = &amp;#123;&amp;#125;dog.name = &amp;quot;benji&amp;quot;;   //属性dog.getName = function() &amp;#123;   //方法    return this.name;&amp;#125; 或者 首先定义一个”空对象”，然后添加属性和方法 123456var person = &amp;#123;&amp;#125;;person.">
+<meta name="twitter:description" content="这篇文章主要总结了js中对象的创建方法，以及js中继承的实现">
+<meta name="twitter:image" content="http://img.flura.cn/ParentPrototype.png">
 
 
 
@@ -427,7 +431,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k 字
+                  1.9k 字
                 </span>
               
 
@@ -443,12 +447,16 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  7 分钟
                 </span>
               
             </div>
           
 
+          
+              <div class="post-description">
+                  这篇文章主要总结了js中对象的创建方法，以及js中继承的实现
+              </div>
           
 
         </div>
@@ -464,13 +472,12 @@ var _hmt = _hmt || [];
       
 
       
-        <h2 id="字面量创建对象"><a href="#字面量创建对象" class="headerlink" title="字面量创建对象"></a>字面量创建对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var dog = &#123;&#125;</span><br><span class="line">dog.name = &quot;benji&quot;;   //属性</span><br><span class="line">dog.getName = function() &#123;   //方法</span><br><span class="line">    return this.name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h1><h2 id="字面量创建对象"><a href="#字面量创建对象" class="headerlink" title="字面量创建对象"></a>字面量创建对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var dog = &#123;&#125;</span><br><span class="line">dog.name = &quot;benji&quot;;   //属性</span><br><span class="line">dog.getName = function() &#123;   //方法</span><br><span class="line">    return this.name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>或者</p>
 <p>首先定义一个”空对象”，然后添加属性和方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var person = &#123;&#125;;</span><br><span class="line">person.name = &apos;beijin&apos;;</span><br><span class="line">person.age = 70;</span><br><span class="line">person.say = function()&#123;</span><br><span class="line">    return &quot;hello&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>为什么是”空对象”？ js中并不存在真正的空对象，最简单的{}对象也会从Object.prototype继承方法和属性，我们提到的空对象只是没有只有属性。</p>
-<p><strong>对象字面量vs构造函数创建对象对比</strong></p>
-<p>字面量的优势：</p>
+<h3 id="对象字面量vs构造函数创建对象对比"><a href="#对象字面量vs构造函数创建对象对比" class="headerlink" title="对象字面量vs构造函数创建对象对比"></a><strong>对象字面量vs构造函数创建对象对比</strong></h3><p>字面量的优势：</p>
 <blockquote>
 <ol>
 <li>它的代码量更少，更易读；</li>
@@ -495,6 +502,29 @@ var _hmt = _hmt || [];
 <h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Animal (name) &#123;</span><br><span class="line">  // 属性</span><br><span class="line">  this.name = name || &apos;Animal&apos;;</span><br><span class="line">  // 实例方法</span><br><span class="line">  this.sleep = function()&#123;</span><br><span class="line">    console.log(this.name + &apos;正在睡觉！&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 原型方法</span><br><span class="line">Animal.prototype.eat = function(food) &#123;</span><br><span class="line">  console.log(this.name + &apos;正在吃：&apos; + food);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var dog = new Animal(&apos;dog&apos;)</span><br><span class="line">var cat = new Animal(&apos;cat&apos;)</span><br></pre></td></tr></table></figure>
 <p>我们创建的每个函数都有一个prototype(原型)属性，这个属性是一个指针，指向一个对象，而这个对象的用途是可以给所有实例共享的方法和属性。(所以如果有要所有实例共享的方法或属性，为了避免重复创建，一定要放在prototype上)。</p>
 <p>(感觉这种方式又不太像纯粹的原型模式，是组合使用的构造函数模式与原型模式) 构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，但又同时共享着对方法的引用，最大程度节省了内存。另外，这种混合模式还支持像构造函数传递参数。</p>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>许多面向对象语言都支持两种继承的方式；<strong>接口继承</strong>和<strong>实现继承</strong>。接口继承只继承方法签名，而实现继承则继承实际的方法。因为js的函数的函数没有签名，在ES(ECMAScipt)中无法实现接口继承。ES只支持实现继承，而且其实现继承主要是依靠原型链来实现的。</p>
+<h2 id="Prototype与-proto"><a href="#Prototype与-proto" class="headerlink" title="Prototype与 __proto__"></a><strong>Prototype</strong>与 <code>__proto__</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function Parent &#123;&#125;</span><br><span class="line">var parent = new Parent()</span><br></pre></td></tr></table></figure>
+<p>第一行代码发生了什么？</p>
+<ul>
+<li>创建了一个构造函数 <code>Parent</code></li>
+<li>创建了一个原型对象 <code>prototype</code></li>
+</ul>
+<p><img src="http://img.flura.cn/ParentPrototype.png" alt=""></p>
+<p>构造函数 <code>Parent</code> 中 有一个 <code>prototype</code> 的属性指向 <code>Parent</code> 的 原型对象 <code>prototype</code><br>原型对象 <code>prototype</code> 则有一个 <code>constructor</code> 的属性 指向回 构造函数 <code>Parent</code></p>
+<p>第二行代码发生了什么？</p>
+<p><img src="http://img.flura.cn/instancePrototype.png" alt=""></p>
+<p>图中的 <code>Parent</code> 的实例 <code>parent</code> 里，有一个<code>[[prototype]]</code>，为什么这里不是 <code>__proto__</code>呢？</p>
+<p>其实，这里的 <code>[[prototype]]</code> 表示一种标准规范内置属性，被一些浏览器自己通过<code>__proto__</code>实现了。</p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function Parent() &#123;&#125;</span><br><span class="line">function Child() &#123;&#125;</span><br><span class="line"></span><br><span class="line">var parent = new Parent()</span><br><span class="line">Child.prototype = parent</span><br><span class="line"></span><br><span class="line">var child = new Child()</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.flura.cn/prototypeChain.png" alt=""></p>
+<p><strong>优缺点</strong> 简单易于实现,无法实现多继承。 </p>
+<p>而且原型的属性最好不能是引用类型，因为原型链上的所有实例会共享引用，这样每个实例都可以修改这个原型上的引用。</p>
+<p>而且原型继承，在创建子类型的时候，不能向父类型传参。</p>
+<h2 id="借用构造函数继承-经典继承"><a href="#借用构造函数继承-经典继承" class="headerlink" title="借用构造函数继承(经典继承)"></a>借用构造函数继承(经典继承)</h2><p>实质是利用call来改变Cat中的this指向   这种技术的基本思想非常简单，即在子类型构造函数的内部调用父类型构造函数。(函数不过是在特定环境中执行代码的对象，因此通过使用apply()和call()方法也可以在(将来)新创建的对象上执行构造函数)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Animal(nation) &#123;</span><br><span class="line">  this.nation = nation</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Cat(name, nation)&#123;</span><br><span class="line">  Animal.call(this, nation); // 传递参数</span><br><span class="line">  this.name = name || &apos;Tom&apos;;</span><br><span class="line">&#125;</span><br><span class="line">let cat1 = new Cat(&apos;白猫&apos;, &apos;白猫科&apos;)</span><br><span class="line">let cat2 = new Cat(&apos;黑猫&apos;, &apos;黑猫科&apos;)</span><br><span class="line">cat1.nation //白猫科</span><br><span class="line">cat2.nation //黑猫科</span><br></pre></td></tr></table></figure>
+<p>以上代码，我们实际上是在(未来将要) 新创建的Cat实例的环境下调用了Animal构造函数。这样一来，就会在新的Cat对象上执行Animal()函数中定义的所有对象初始化代码，结果Cat的每个实例上都会有一个自己的nation属性副本了。</p>
+<p><strong>优缺点</strong> 可以实现多继承，子类也可以向父类传参, 不能继承原型属性/方法(如果方法都只能在构造函数中定义，那么函数的复用就无从谈起了)</p>
+<h2 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function Cat(name)&#123;</span><br><span class="line">  Animal.call(this);</span><br><span class="line">  this.name = name || &apos;Tom&apos;;</span><br><span class="line">&#125;</span><br><span class="line">Cat.prototype = new Animal();</span><br><span class="line">Cat.prototype.constructor = Cat;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -708,7 +738,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字面量创建对象"><span class="nav-number">1.</span> <span class="nav-text">字面量创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式创建对象"><span class="nav-number">2.</span> <span class="nav-text">工厂模式创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数创建对象"><span class="nav-number">3.</span> <span class="nav-text">构造函数创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number">4.</span> <span class="nav-text">原型模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建对象"><span class="nav-number">1.</span> <span class="nav-text">创建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字面量创建对象"><span class="nav-number">1.1.</span> <span class="nav-text">字面量创建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象字面量vs构造函数创建对象对比"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象字面量vs构造函数创建对象对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式创建对象"><span class="nav-number">1.2.</span> <span class="nav-text">工厂模式创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数创建对象"><span class="nav-number">1.3.</span> <span class="nav-text">构造函数创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number">1.4.</span> <span class="nav-text">原型模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#继承"><span class="nav-number">2.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype与-proto"><span class="nav-number">2.1.</span> <span class="nav-text">Prototype与 __proto__</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链"><span class="nav-number">2.2.</span> <span class="nav-text">原型链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#借用构造函数继承-经典继承"><span class="nav-number">2.3.</span> <span class="nav-text">借用构造函数继承(经典继承)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合继承"><span class="nav-number">2.4.</span> <span class="nav-text">组合继承</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -738,7 +768,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共62.3k字</span>
+  <span class="post-count">博客全站共63k字</span>
 </div>
 
 
