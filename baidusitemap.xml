@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.flura.cn/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/</loc>
+    <lastmod>2019-12-07</lastmod>
+  </url>  <url>
     <loc>http://www.flura.cn/2019/11/19/Js%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2019-11-27</lastmod>
   </url>  <url>
@@ -30,9 +33,6 @@
   </url>  <url>
     <loc>http://www.flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/</loc>
     <lastmod>2019-10-15</lastmod>
-  </url>  <url>
-    <loc>http://www.flura.cn/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/</loc>
-    <lastmod>2019-10-07</lastmod>
   </url>  <url>
     <loc>http://www.flura.cn/2019/10/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-OSS-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%BD%BF%E7%94%A8%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0/</loc>
     <lastmod>2019-10-02</lastmod>
