@@ -145,9 +145,9 @@
     
       <category term="webpack" scheme="http://www.flura.cn/tags/webpack/"/>
     
-      <category term="react" scheme="http://www.flura.cn/tags/react/"/>
-    
       <category term="前端工程化" scheme="http://www.flura.cn/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+      <category term="react" scheme="http://www.flura.cn/tags/react/"/>
     
   </entry>
   
