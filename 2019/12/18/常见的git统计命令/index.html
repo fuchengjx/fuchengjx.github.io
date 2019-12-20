@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="查看项目的代码总行数1git log  --pretty=tformat: --numstat | awk &amp;apos;&amp;#123; add += $1; subs += $2; loc += $1 - $2 &amp;#125; END &amp;#123; printf &amp;quot;added lines: %s, removed lines: %s, total lines: %s\n&amp;quot;, add">
+<meta name="description" content="最近突然想看看自己对一个项目的贡献，打算总结常见的git统计命令，可以说对以前自己项目的一个回顾吧">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常见的git统计命令">
 <meta property="og:url" content="http://www.flura.cn/2019/12/18/常见的git统计命令/index.html">
 <meta property="og:site_name" content="flura的博客">
-<meta property="og:description" content="查看项目的代码总行数1git log  --pretty=tformat: --numstat | awk &amp;apos;&amp;#123; add += $1; subs += $2; loc += $1 - $2 &amp;#125; END &amp;#123; printf &amp;quot;added lines: %s, removed lines: %s, total lines: %s\n&amp;quot;, add">
+<meta property="og:description" content="最近突然想看看自己对一个项目的贡献，打算总结常见的git统计命令，可以说对以前自己项目的一个回顾吧">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-18T07:17:05.587Z">
+<meta property="og:updated_time" content="2019-12-20T07:01:48.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常见的git统计命令">
-<meta name="twitter:description" content="查看项目的代码总行数1git log  --pretty=tformat: --numstat | awk &amp;apos;&amp;#123; add += $1; subs += $2; loc += $1 - $2 &amp;#125; END &amp;#123; printf &amp;quot;added lines: %s, removed lines: %s, total lines: %s\n&amp;quot;, add">
+<meta name="twitter:description" content="最近突然想看看自己对一个项目的贡献，打算总结常见的git统计命令，可以说对以前自己项目的一个回顾吧">
 
 
 
@@ -449,7 +449,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  833 字
+                  878 字
                 </span>
               
 
@@ -472,6 +472,10 @@ var _hmt = _hmt || [];
           
 
           
+              <div class="post-description">
+                  最近突然想看看自己对一个项目的贡献，打算总结常见的git统计命令，可以说对以前自己项目的一个回顾吧
+              </div>
+          
 
         </div>
       </header>
@@ -486,7 +490,8 @@ var _hmt = _hmt || [];
       
 
       
-        <h3 id="查看项目的代码总行数"><a href="#查看项目的代码总行数" class="headerlink" title="查看项目的代码总行数"></a>查看项目的代码总行数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log  --pretty=tformat: --numstat | awk &apos;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&apos; -</span><br></pre></td></tr></table></figure>
+        <p>最近突然想看看自己对一个项目的贡献，打算总结常见的git统计命令，可以说对以前自己项目的一个回顾吧</p>
+<h3 id="查看项目的代码总行数"><a href="#查看项目的代码总行数" class="headerlink" title="查看项目的代码总行数"></a>查看项目的代码总行数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log  --pretty=tformat: --numstat | awk &apos;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&apos; -</span><br></pre></td></tr></table></figure>
 <p>查看当前这个项目总的代码行数</p>
 <h3 id="查看git上的个人代码量"><a href="#查看git上的个人代码量" class="headerlink" title="查看git上的个人代码量"></a>查看git上的个人代码量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --author=&quot;username&quot; --pretty=tformat: --numstat | awk &apos;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&apos; -</span><br></pre></td></tr></table></figure>
 <p>查看自己的提交和删除行数</p>
@@ -735,7 +740,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共64.9k字</span>
+  <span class="post-count">博客全站共65k字</span>
 </div>
 
 
