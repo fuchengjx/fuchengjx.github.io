@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.flura.cn/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.flura.cn/about/index.html</loc>
+    
+    <lastmod>2020-01-01T14:14:38.469Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.flura.cn/2019/12/31/%E9%9A%8F%E7%AC%94/</loc>
     
     <lastmod>2019-12-31T15:39:25.385Z</lastmod>
@@ -194,13 +201,6 @@
     <loc>http://www.flura.cn/2019/03/25/DOM%E8%AF%A6%E8%A7%A3/</loc>
     
     <lastmod>2019-07-06T02:17:10.949Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.flura.cn/about/index.html</loc>
-    
-    <lastmod>2019-07-05T12:28:41.496Z</lastmod>
     
   </url>
   
