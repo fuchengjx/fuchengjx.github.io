@@ -107,14 +107,18 @@
 
 
 
+<meta name="description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#123;  name: &amp;quot;">
 <meta name="keywords" content="前端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="flura的博客">
-<meta property="og:url" content="http://www.flura.cn/tags/自动化/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue的路由传参">
+<meta property="og:url" content="http://www.flura.cn/2020/02/29/vue的路由传参/index.html">
 <meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#123;  name: &amp;quot;">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-29T15:39:16.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flura的博客">
+<meta name="twitter:title" content="vue的路由传参">
+<meta name="twitter:description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#123;  name: &amp;quot;">
 
 
 
@@ -144,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="http://www.flura.cn/tags/自动化/">
+  <link rel="canonical" href="http://www.flura.cn/2020/02/29/vue的路由传参/">
 
 
 
 
 
-  <title>标签: 自动化 | flura的博客</title>
+  <title>vue的路由传参 | flura的博客</title>
   
 
 
@@ -182,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/fuchengjx" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -337,78 +341,195 @@ var _hmt = _hmt || [];
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>自动化<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2020/02/29/vue的路由传参/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://img.flura.cn/myAvatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/10/01/阿里云对象存储-OSS-部署前端项目并使用自动脚本上传/" itemprop="url">
-              
-                <span itemprop="name">阿里云对象存储(OSS)部署前端项目并使用自动脚本上传</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">vue的路由传参</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-01T19:47:31+08:00" content="2019-10-01">
-          10-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-29T20:04:16+08:00">
+                2020-02-29
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/29/vue的路由传参/" class="leancloud_visitors" data-flag-title="vue的路由传参">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  178 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/29/前端gitlab-ci实现自动化部署/" itemprop="url">
-              
-                <span itemprop="name">前端gitlab-ci实现自动化部署</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-29T10:27:12+08:00" content="2019-09-29">
-          09-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <h1 id="vue-router传参方式"><a href="#vue-router传参方式" class="headerlink" title="vue-router传参方式"></a>vue-router传参方式</h1><p>当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。</p>
+<h2 id="query方式传参和接收参数"><a href="#query方式传参和接收参数" class="headerlink" title="query方式传参和接收参数"></a>query方式传参和接收参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A组件跳转到B组件，通过query传参。</span><br><span class="line">this.$router.push(&#123;</span><br><span class="line">  name: &quot;PageB&quot;,</span><br><span class="line">  query: &#123;</span><br><span class="line">    id: 2,</span><br><span class="line">    content: &quot;这是id为2的content&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B组件接收A组件传递过来的参数</span><br><span class="line">this.$route.query.id  // 2</span><br><span class="line">this.$route.query.content // &quot;这是id为2的content&quot;</span><br></pre></td></tr></table></figure>
+<p>ps: 传参是 <strong>this.$router</strong>, 通过VueRouter的实例， 接收参数使用的是 <strong>this.$route</strong>。</p>
+<h2 id="params方式传参和接收参数"><a href="#params方式传参和接收参数" class="headerlink" title="params方式传参和接收参数"></a>params方式传参和接收参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
+		<div>
+		
+			<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+		
+		</div>
+    
 
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/31/随笔/" rel="next" title="随笔">
+                <i class="fa fa-chevron-left"></i> 随笔
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -416,6 +537,10 @@ var _hmt = _hmt || [];
 
 
           
+
+  
+
+
 
         </div>
         
@@ -436,8 +561,17 @@ var _hmt = _hmt || [];
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -528,6 +662,22 @@ var _hmt = _hmt || [];
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-router传参方式"><span class="nav-number">1.</span> <span class="nav-text">vue-router传参方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#query方式传参和接收参数"><span class="nav-number">1.1.</span> <span class="nav-text">query方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#params方式传参和接收参数"><span class="nav-number">1.2.</span> <span class="nav-text">params方式传参和接收参数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -666,6 +816,10 @@ var _hmt = _hmt || [];
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
