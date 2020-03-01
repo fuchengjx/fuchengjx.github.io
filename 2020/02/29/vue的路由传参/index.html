@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="flura的博客">
 <meta property="og:description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#123;  name: &amp;quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-29T15:39:16.722Z">
+<meta property="og:updated_time" content="2020-03-01T15:41:31.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue的路由传参">
 <meta name="twitter:description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为两种, 一种是query，一种是params。下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#123;  name: &amp;quot;">
@@ -427,7 +427,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  178 字
+                  277 字
                 </span>
               
 
@@ -468,8 +468,10 @@ var _hmt = _hmt || [];
 <h2 id="query方式传参和接收参数"><a href="#query方式传参和接收参数" class="headerlink" title="query方式传参和接收参数"></a>query方式传参和接收参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A组件跳转到B组件，通过query传参。</span><br><span class="line">this.$router.push(&#123;</span><br><span class="line">  name: &quot;PageB&quot;,</span><br><span class="line">  query: &#123;</span><br><span class="line">    id: 2,</span><br><span class="line">    content: &quot;这是id为2的content&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B组件接收A组件传递过来的参数</span><br><span class="line">this.$route.query.id  // 2</span><br><span class="line">this.$route.query.content // &quot;这是id为2的content&quot;</span><br></pre></td></tr></table></figure>
 <p>ps: 传参是 <strong>this.$router</strong>, 通过VueRouter的实例， 接收参数使用的是 <strong>this.$route</strong>。</p>
-<h2 id="params方式传参和接收参数"><a href="#params方式传参和接收参数" class="headerlink" title="params方式传参和接收参数"></a>params方式传参和接收参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<h2 id="params方式传参和接收参数"><a href="#params方式传参和接收参数" class="headerlink" title="params方式传参和接收参数"></a>params方式传参和接收参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A组件跳转到B组件，通过params传参。</span><br><span class="line">this.$router.push(&#123;</span><br><span class="line">  name: &quot;PageB&quot;,</span><br><span class="line">  params: &#123;</span><br><span class="line">    id: id,</span><br><span class="line">    content: &quot;这是params id为2的content&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B组件接收A组件传递过来的参数</span><br><span class="line">this.$route.params.id  // 2</span><br><span class="line">this.$route.params.content // &quot;这是id为2的content&quot;</span><br></pre></td></tr></table></figure>
+<p>ps:  params传参，push里面只能是 name:’xxxx’,不能是path:’/xxx’,因为params只能用name来引入路由。</p>
+<h2 id="动态路由传递参数"><a href="#动态路由传递参数" class="headerlink" title="动态路由传递参数"></a>动态路由传递参数</h2>
       
     </div>
     
@@ -672,7 +674,7 @@ var _hmt = _hmt || [];
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-router传参方式"><span class="nav-number">1.</span> <span class="nav-text">vue-router传参方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#query方式传参和接收参数"><span class="nav-number">1.1.</span> <span class="nav-text">query方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#params方式传参和接收参数"><span class="nav-number">1.2.</span> <span class="nav-text">params方式传参和接收参数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-router传参方式"><span class="nav-number">1.</span> <span class="nav-text">vue-router传参方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#query方式传参和接收参数"><span class="nav-number">1.1.</span> <span class="nav-text">query方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#params方式传参和接收参数"><span class="nav-number">1.2.</span> <span class="nav-text">params方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态路由传递参数"><span class="nav-number">1.3.</span> <span class="nav-text">动态路由传递参数</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -702,7 +704,7 @@ var _hmt = _hmt || [];
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共65.8k字</span>
+  <span class="post-count">博客全站共65.9k字</span>
 </div>
 
 
