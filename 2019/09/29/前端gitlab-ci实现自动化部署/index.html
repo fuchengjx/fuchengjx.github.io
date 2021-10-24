@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。 背景为什么要去配置这么一个自动化部署CI，这个需求是什么？我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置">
@@ -127,9 +127,24 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">34</span></a>
 
   </li>
   </ul>
@@ -163,7 +178,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/09/29/%E5%89%8D%E7%AB%AFgitlab-ci%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://img.flura.cn/myAvatar.jpg">
       <meta itemprop="name" content="flura">
       <meta itemprop="description" content="flura的个人博客">
     </span>
@@ -417,6 +432,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="flura"
+      src="http://img.flura.cn/myAvatar.jpg">
   <p class="site-author-name" itemprop="name">flura</p>
   <div class="site-description" itemprop="description">flura的个人博客</div>
 </div>
@@ -431,11 +448,13 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
@@ -459,18 +478,18 @@
         
 
         
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">赣ICP备18002942号 </a>
+  </div>
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2019 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">flura</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
 
         
 
