@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。 恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！ 前置知识，秘钥配置你需要把你的秘钥，上传到我们的gitlab上。  ssh配置参考教程 项目新建我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="家园工作室项目注意事项(工作流)-新人必读">
+<meta property="og:url" content="http://www.flura.cn/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9(%E5%B7%A5%E4%BD%9C%E6%B5%81)-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。 恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！ 前置知识，秘钥配置你需要把你的秘钥，上传到我们的gitlab上。  ssh配置参考教程 项目新建我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cetquery.flura.cn/1571650392063.png">
+<meta property="og:image" content="http://img.flura.cn/1571382102230.png">
+<meta property="og:image" content="http://img.flura.cn/1571381776046.png">
+<meta property="og:image" content="http://img.flura.cn/1571383767650.png">
+<meta property="og:image" content="http://img.flura.cn/1571403457667.png">
+<meta property="article:published_time" content="2019-10-21T12:53:28.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.494Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="家园">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cetquery.flura.cn/1571650392063.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9(%E5%B7%A5%E4%BD%9C%E6%B5%81)-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>家园工作室项目注意事项(工作流)-新人必读 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9(%E5%B7%A5%E4%BD%9C%E6%B5%81)-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          家园工作室项目注意事项(工作流)-新人必读
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-21 20:53:28" itemprop="dateCreated datePublished" datetime="2019-10-21T20:53:28+08:00">2019-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>项目创建、数据埋点、监控埋点、代码规范、工作流、项目进度、上线部署、文档、项目存档(语雀)、监控、数据分析、交接。</p>
+<p>恭喜你！如果你能独立负责一个项目，证明你已经有独挡一面的能力了。接下来请仔细阅读该文档。做好独立负责一个项目的准备吧！</p>
+<h2 id="前置知识，秘钥配置"><a href="#前置知识，秘钥配置" class="headerlink" title="前置知识，秘钥配置"></a>前置知识，秘钥配置</h2><p>你需要把你的秘钥，上传到我们的gitlab上。</p>
+<p><img src="http://cetquery.flura.cn/1571650392063.png" alt="1571650392063"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/popfisher/p/5731232.html">ssh配置参考教程</a></p>
+<h2 id="项目新建"><a href="#项目新建" class="headerlink" title="项目新建"></a>项目新建</h2><p>我们工作室所有的项目基本上都是保存在我们自己内部的gitlab上的。<a target="_blank" rel="noopener" href="https://git.ncuos.com/">https://git.ncuos.com</a>   ps: 你需要被邀请加入项目组</p>
+<p>创建项目在projects里点击新建new project后将会出现以下界面。</p>
+<p><img src="http://img.flura.cn/1571382102230.png" alt="1571382102230"></p>
+<p><img src="http://img.flura.cn/1571381776046.png" alt="1571381776046"></p>
+<p>一般项目都会选择在dev组里新建，这样你的代码方便所有人进行查看。但是，因为gitlab具有严格的权限管理，一般来说这个时候你是没有Maintainer及以上权限的。所以你最好在User组新建 任意等级的项目(这是自己的私人项目)。然后<strong>一定要在 Setting    Members     invite group里邀请dev项目组的成员</strong> 这样别人就能看到你的项目，并参与开发了。</p>
+<p><img src="http://img.flura.cn/1571383767650.png" alt="1571383767650"></p>
+<p>接下来就和github新建了项目一样了。</p>
+<h2 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h2><p>为了提高可维护性、可阅读性。我们的项目统一采用了lint规范。所以必须上lint进行开发项目。</p>
+<p>git规范： <a target="_blank" rel="noopener" href="https://yanshuo.io/assets/player/?deck=58f7703ba22b9d006c15edee&amp;tdsourcetag#/">https://yanshuo.io/assets/player/?deck=58f7703ba22b9d006c15edee&amp;tdsourcetag#/</a></p>
+<p>技术文档规范： <a target="_blank" rel="noopener" href="https://github.com/ruanyf/document-style-guide">https://github.com/ruanyf/document-style-guide</a></p>
+<p>前端代码规范： <a target="_blank" rel="noopener" href="https://ncuhome.github.io/frontend-guide/">https://ncuhome.github.io/frontend-guide/</a></p>
+<p>后端代码规范：</p>
+<h2 id="数据埋点"><a href="#数据埋点" class="headerlink" title="数据埋点"></a>数据埋点</h2><p>我们的数据埋点，采用的是Google Analytics的埋点。<a target="_blank" rel="noopener" href="https://analytics.google.com/">GoogleAnalytics</a>   所以如果你的项目要面对大流量、之后再进行大数据分析的话，你要联系学长创建 对应你项目的埋点(我们的hanalytics.google 有个组织 Ncuhome，历史的埋点数据都会被集中在里面，以便进行分析)。一般联系你项目对应的产品经理或组长。 </p>
+<p><img src="http://img.flura.cn/1571403457667.png" alt="控制台参考图"></p>
+<p>将生成的跟踪代码 放入你的前端页面，就能实现数据收集功能。 Google Analytics 会生成可视化的视图提供你分析。 </p>
+<h2 id="监控埋点"><a href="#监控埋点" class="headerlink" title="监控埋点"></a>监控埋点</h2><p>Sentry是一个实时事件日志记录和汇集的平台。其专注于错误监控以及提取一切事后处理所需信息而不依赖于麻烦的用户反馈。它分为客户端和服务端，客户端(目前客户端有Python,js)就嵌入在你的应用程序中间，程序出现异常就向服务端发送消息，服务端将消息记录到数据库中并提供一个web页方便查看。Sentry由python编写，源码开放，性能卓越，易于扩展 。 <a target="_blank" rel="noopener" href="http://sentry.ncuos.com/">http://sentry.ncuos.com</a> 这是我们的sentry，如果的项目需要长时间在线上环境运行，进行线上环境监控是非常有必要的。 创建你项目对应的sentry，然后进行埋点。教程参考下面的链接。</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000014496409">Sentry异常监控方案部署-前端攻略</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/66e00077fac3">sentry使用实践</a></p>
+<p>一般重要项目出现服务宕机，会有报警电话(大公司架构)。我们可以配置报警邮件，及时去恢复服务。避免消耗用户的信任。</p>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><p>我们的git工作流程 采用的是企业级gitflow工作流。</p>
+<p><strong>master 分支</strong></p>
+<p>master分支上存放的应该是随时可供在生产环境中部署的代码（Production Ready state）。当开发活动告一段落，产生了一份新的可供部署的代码时，master分支上的代码会被更新。</p>
+<p><strong>本地分支</strong></p>
+<p>在本地创建的开发分支，开发完毕后，将该分支push到我们的gitlab上。 然后线上在 你的分支上提交merge request  (提交后记得通知你的学长，让他merge你的commit)， 代码经过上级的code review后会merge进入maser分支中。这时你的任务完成。</p>
+<h2 id="上线部署"><a href="#上线部署" class="headerlink" title="上线部署"></a>上线部署</h2><p>我们的项目目前主要方向都是用CI部署模式，代码被merge入master分支，Travis脚本自动执行，gitlab-ci自动build部署到生产环境。</p>
+<p>前端项目建议部署到阿里云的对象存储(OSS)上。访问速度快、无带宽限制，上行流量免费，无需运维人员与托管费用，0成本运维。</p>
+<p>后端项目： 后端部署一般需要申请服务器，部署在我们家园自己的服务器上。(其实一般应该直接买一台学生机，练练怎么部署项目) </p>
+<h3 id="部署规范"><a href="#部署规范" class="headerlink" title="部署规范"></a>部署规范</h3><p><strong>项目部署位置</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/www/project_name</span><br></pre></td></tr></table></figure>
+
+<p>请将所有的项目部署在这个文件夹内，并且要求项目名清晰明了。  </p>
+<p>Lxxyx学长在2016年写了一份<a target="_blank" rel="noopener" href="http://blog.ncuos.com/xiang-mu-ji-dai-ma-bu-shu-gui-fan/">项目及代码部署规范</a>，在这里强调一下部署的规范和一些运维的要求，希望能为后来人的工作提供一点帮助。</p>
+<h3 id="项目部署方法"><a href="#项目部署方法" class="headerlink" title="项目部署方法"></a>项目部署方法</h3><p>家园即将用上K8S，但在这里还是以Docker部署为主，待到之后更新了K8S在来更新这份文档。</p>
+<p>使用Dockerfile和 .dockerignore 定义镜像，使用docker-compose.yml定义容器，在这里指定开放端口，数据卷等，docker-compose管理容器启动，关闭，重启。</p>
+<h3 id="日志存放位置"><a href="#日志存放位置" class="headerlink" title="日志存放位置"></a>日志存放位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/log/project_name</span><br></pre></td></tr></table></figure>
+
+<p>使用docker-compose.yml将日志挂载在对应的项目日志文件夹。</p>
+<p>项目的日志文件以及报错信息需要按照项目存放，方便查找和处理。</p>
+<p>除了容器产生的日志，如果需要使用到nginx的日志功能，将该server产生的日志也存放于此。</p>
+<h3 id="Docker容器大小"><a href="#Docker容器大小" class="headerlink" title="Docker容器大小"></a>Docker容器大小</h3><p>因为服务器容量有被全部占用完全，导致服务无法正常提供，持续删日志的经历，也为了防止因错误原因持续产生垃圾日志导致服务器别完全占用，请为docker-compose.yml内所有的server加上：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">driver:</span> <span class="string">&quot;json-file&quot;</span> <span class="string">//</span> <span class="string">可自行选择</span></span><br><span class="line">    <span class="attr">options:</span></span><br><span class="line">		<span class="attr">max-size:</span> <span class="string">&quot;50m&quot;</span> <span class="string">//</span> <span class="string">可选</span></span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="服务器申请"><a href="#服务器申请" class="headerlink" title="服务器申请"></a>服务器申请</h3><p>我们的服务器申请有自己的一套流程，只需要在  <a target="_blank" rel="noopener" href="https://git.ncuos.com/dev/devops">服务器配置</a> 里按照文档添加你的秘钥，你就能获得对应的服务器。申请服务器之前，请先询问你的学长，你能使用哪台服务器。</p>
+<h3 id="关于服务器账户"><a href="#关于服务器账户" class="headerlink" title="关于服务器账户"></a>关于服务器账户</h3><p>介于此时工作室的体量以及组织情况，目前服务器只需要一个开发用户dev，不需要其他的<strong>个人账户</strong>。</p>
+<p>该dev用户拥有<code>sudo</code>权限，所以请在使用该用户时不要进行<strong>危险操作</strong>。</p>
+<p>为了方便管理和安全，dev不允许密码登陆，需要使用服务器或部署项目的人需向管理员申请，管理员使用工作室专用的管理项目进行配置。</p>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>请注意，<strong>每个项目都必须留存有文档</strong>，最起码要介绍一下这个项目是做什么用的，部署在什么地方，还有接口文档、这个项目里有什么注意的地方，有什么要给后来的人交代的地方。</p>
+<h2 id="项目存档"><a href="#项目存档" class="headerlink" title="项目存档"></a>项目存档</h2><p>每个项目必须在语雀上留有存档、该存档一般由项目组成员共同编写。开发如果把文档写好了，只要简单改动下就可以保存在语雀上了。<a target="_blank" rel="noopener" href="https://www.yuque.com/">语雀</a></p>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>你埋点的东西终于有了回报，看着有那么多人使用你开发的产品，你会有自豪感的!!  可以观察一下某些趋势，写入文档中，尤其是如果某些周期性项目(每年都要做的四六级查询等)，一些用户数据存档是非常重要的。</p>
+<p><a target="_blank" rel="noopener" href="https://analytics.google.com/">https://analytics.google.com</a></p>
+<h2 id="项目交接"><a href="#项目交接" class="headerlink" title="项目交接"></a>项目交接</h2><p>交接方面，一般如果你的项目有了继续迭代下去的需求，就必须考虑传承的问题了。如果你前面的文档写的不错，项目存档做的很好，这个不成问题了，如果做的不好，那请回去补全你的文档。那么以后下一批交接的人如果有问题找你，你只需要在空闲时间抽出时间回复学弟学妹问题就好了。</p>
+<p>请对你的用户负责，对你的项目负责，也对你自己负责。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B6%E5%9B%AD/" rel="tag"># 家园</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/10/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%96%B0%E4%BA%BA%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD(%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%85%A5%E9%97%A8)/" rel="prev" title="家园工作室新人第一次培训(计算机入门)">
+      <i class="fa fa-chevron-left"></i> 家园工作室新人第一次培训(计算机入门)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/01/webpack%E4%BC%98%E5%8C%96/" rel="next" title="webpack性能优化">
+      webpack性能优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%EF%BC%8C%E7%A7%98%E9%92%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">前置知识，秘钥配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%96%B0%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">项目新建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">3.</span> <span class="nav-text">代码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%9F%8B%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">数据埋点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E5%9F%8B%E7%82%B9"><span class="nav-number">5.</span> <span class="nav-text">监控埋点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">6.</span> <span class="nav-text">工作流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2"><span class="nav-number">7.</span> <span class="nav-text">上线部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%A7%84%E8%8C%83"><span class="nav-number">7.1.</span> <span class="nav-text">部署规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95"><span class="nav-number">7.2.</span> <span class="nav-text">项目部署方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%AD%98%E6%94%BE%E4%BD%8D%E7%BD%AE"><span class="nav-number">7.3.</span> <span class="nav-text">日志存放位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E5%A4%A7%E5%B0%8F"><span class="nav-number">7.4.</span> <span class="nav-text">Docker容器大小</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%B3%E8%AF%B7"><span class="nav-number">8.1.</span> <span class="nav-text">服务器申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%A6%E6%88%B7"><span class="nav-number">8.2.</span> <span class="nav-text">关于服务器账户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3"><span class="nav-number">9.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AD%98%E6%A1%A3"><span class="nav-number">10.</span> <span class="nav-text">项目存档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-number">11.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BA%A4%E6%8E%A5"><span class="nav-number">12.</span> <span class="nav-text">项目交接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

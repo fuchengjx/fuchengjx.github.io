@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 &#x3D; &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js对象拷贝">
+<meta property="og:url" content="http://www.flura.cn/2019/07/16/js%E5%AF%B9%E8%B1%A1%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="对象介绍js中包含两种不同数据类型的值: 基本类型值和引用类型值。 基本类型值指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。 js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。 按引用赋值1234567let obj1 &#x3D; &amp;#">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-16T07:28:47.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.489Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2019/07/16/js%E5%AF%B9%E8%B1%A1%E6%8B%B7%E8%B4%9D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>js对象拷贝 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/07/16/js%E5%AF%B9%E8%B1%A1%E6%8B%B7%E8%B4%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js对象拷贝
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-16 15:28:47" itemprop="dateCreated datePublished" datetime="2019-07-16T15:28:47+08:00">2019-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="对象介绍"><a href="#对象介绍" class="headerlink" title="对象介绍"></a>对象介绍</h2><p>js中包含两种不同数据类型的值: 基本类型值和引用类型值。 <strong>基本类型值</strong>指的是简单的数据段，而引用类型值指的是那些由可能由多个值构成的对象。</p>
+<p>js对象都是引用类型，对象是某个特定引用类型的实例。对象是js的基本块。对象是属性的集合，属性是键值对。js中看到的大多数引用类型都是Object类型的实例，Object也是js中使用最多的一个类型。</p>
+<h3 id="按引用赋值"><a href="#按引用赋值" class="headerlink" title="按引用赋值"></a>按引用赋值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let obj1 = &#123;</span><br><span class="line">	name : &#x27;jack&#x27;,</span><br><span class="line">	number: 10</span><br><span class="line">&#125;</span><br><span class="line">let obj2 = obj1 // 将obj1的引用赋值给obj2 此时obj1、obj2指向同一块内存空间</span><br><span class="line">obj2.name = &#x27;tom&#x27;</span><br><span class="line">console.log(obj1.name) // tom</span><br></pre></td></tr></table></figure>
+
+<p>但从一个变量像另一个变量复制引用类型的值时，同样也会将存储在变量对象中的值复制一份放到位新的变量分配的空间中。不同的是，这个值的副本实际是一个指针，而这个指针指向存储在堆中的一个对象。复制操作结束后，两个变量实际上将引用同一个对象。因此改变其中一个变量就会改变另一个变量。</p>
+<h3 id="对象的拷贝方式"><a href="#对象的拷贝方式" class="headerlink" title="对象的拷贝方式"></a>对象的拷贝方式</h3><h4 id="1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"><a href="#1-复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。" class="headerlink" title="1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。"></a>1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">let objCopy = &#123;&#125;; // objCopy 将存储 mainObj 的副本</span><br><span class="line"></span><br><span class="line">function copy(mainObj) &#123;</span><br><span class="line">  let key;</span><br><span class="line"> </span><br><span class="line">  for (key in mainObj) &#123;</span><br><span class="line">    objCopy[key] = mainObj[key]; // 将每个属性复制到objCopy对象</span><br><span class="line">  &#125;</span><br><span class="line">  return objCopy;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">const mainObj = &#123;</span><br><span class="line">  a: 2,</span><br><span class="line">  b: 5,</span><br><span class="line">  c: &#123;</span><br><span class="line">    x: 7,</span><br><span class="line">    y: 4,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">console.log(copy(mainObj));</span><br><span class="line">objCopy.c.x = 10086</span><br><span class="line">console.log(&quot;mainObj.c.x&quot;, mainObj.c.x)  // 10086</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码只复制了 <code>mainObj</code> 的可枚举属性。</p>
+<p>如果原始对象中的一个属性本身就是一个对象，那么副本和原始对象之间将共享这个对象，从而使其各自的属性指向同一个对象。</p>
+<h4 id="2-浅拷贝"><a href="#2-浅拷贝" class="headerlink" title="2.浅拷贝"></a>2.<strong>浅拷贝</strong></h4><p>浅拷贝是对象共用一个内存地址，对象的变化相互影响。比如常见的赋值引用就是浅拷贝:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let obj1 = &#123;</span><br><span class="line">	name : &#x27;jack&#x27;,</span><br><span class="line">	number: 10</span><br><span class="line">&#125;</span><br><span class="line">let obj2 = obj1 // 将obj1的引用赋值给obj2 此时obj1、obj2指向同一块内存空间</span><br><span class="line">obj2.name = &#x27;tom&#x27;</span><br><span class="line">console.log(obj1.name) // tom</span><br></pre></td></tr></table></figure>
+
+<h5 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a><strong>Object.assign()</strong></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: 1,</span><br><span class="line">  b: &#123;</span><br><span class="line">    c: 2,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">let newObj = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(newObj); // &#123; a: 1, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">obj.a = 10;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 2&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 1, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">newObj.a = 20;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 2&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 20, b: &#123; c: 2&#125; &#125;</span><br><span class="line"> </span><br><span class="line">newObj.b.c = 30;</span><br><span class="line">console.log(obj); // &#123; a: 10, b: &#123; c: 30&#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 20, b: &#123; c: 30&#125; &#125;</span><br><span class="line"> </span><br><span class="line">// 注意: newObj.b.c = 30; 为什么呢..</span><br></pre></td></tr></table></figure>
+
+<p><code>bject.assign</code> 只是浅拷贝。 <code>newObj.b</code> 和 <code>obj.b</code> 都引用同一个对象，没有单独拷贝，而是复制了对该对象的引用。任何对对象属性的更改都适用于使用该对象的所有引用。</p>
+<p>注意：原型链上的属性和不可枚举的属性不能复制。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let someObj = &#123;</span><br><span class="line">  a: 2,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">let obj = Object.create(someObj, &#123; </span><br><span class="line">  b: &#123;</span><br><span class="line">    value: 2,  </span><br><span class="line">  &#125;,</span><br><span class="line">  c: &#123;</span><br><span class="line">    value: 3,</span><br><span class="line">    enumerable: true,  </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">let objCopy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(objCopy); // &#123; c: 3 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>someObj</code> 是在 <code>obj</code> 的原型链，所以它不会被复制。<br>属性 <code>b</code> 是不可枚举属性。<br>属性 <code>c</code> 具有 可枚举(enumerable) 属性描述符，所以它可以枚举。 这就是为什么它会被复制。</p>
+<h5 id="使用展开操作符-…"><a href="#使用展开操作符-…" class="headerlink" title="使用展开操作符(…)"></a>使用展开操作符(…)</h5><p>ES6已经有了用于数组解构赋值的 rest 元素，和实现的数组字面展开的操作符。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const array = [</span><br><span class="line">&quot;a&quot;, &quot;c&quot;, &quot;d&quot;, &#123; four: 4 &#125;,</span><br><span class="line">];</span><br><span class="line">const newArray = [...array];</span><br><span class="line">console.log(newArray);</span><br><span class="line">// 结果 </span><br><span class="line">// [&quot;a&quot;, &quot;c&quot;, &quot;d&quot;, &#123; four: 4 &#125;]</span><br></pre></td></tr></table></figure>
+
+<p>只对浅拷贝有效</p>
+<h4 id="3-深拷贝"><a href="#3-深拷贝" class="headerlink" title="3.深拷贝"></a>3.<strong>深拷贝</strong></h4><p>简单理解深拷贝是将对象放到一个新的内存中，两个对象的改变不会相互影响。</p>
+<h5 id="JSON-parse-和-JSON-stringify"><a href="#JSON-parse-和-JSON-stringify" class="headerlink" title="JSON.parse() 和 JSON.stringify()"></a>JSON.parse() 和 JSON.stringify()</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;&#x27;name&#x27;: &#x27;明&#x27;, grade: &#123;&#x27;chi&#x27;: &#x27;50&#x27;, &#x27;eng&#x27;: &#x27;50&#x27;&#125; &#125;;</span><br><span class="line">// copyObj2 = Object.assign(&#123;&#125;, srcObj);</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &#x27;红&#x27;;</span><br><span class="line">copyObj2.grade.chi = &#x27;60&#x27;;</span><br><span class="line">console.log(&#x27;JSON srcObj&#x27;, srcObj); // &#123; name: &#x27;明&#x27;, grade: &#123; chi: &#x27;50&#x27;, eng: &#x27;50&#x27; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到改变copyObj2并没有改变原始对象，实现了基本的深拷贝。<br>但是用JSON.parse()和JSON.stringify()会有一个问题。<br>JSON.parse()和JSON.stringify()能正确处理的对象只有Number、String、Array等能够被json表示的数据结构，因此函数这种不能被json表示的类型将不能被正确处理。比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">srcObj = &#123;</span><br><span class="line">		 &#x27;name&#x27;: &#x27;明&#x27;, </span><br><span class="line">		  grade: &#123;&#x27;chi&#x27;: &#x27;50&#x27;, &#x27;eng&#x27;: &#x27;50&#x27;&#125;,</span><br><span class="line">         &#x27;hello&#x27;: function() &#123;console.log(&#x27;hello&#x27;)&#125;</span><br><span class="line">         &#125;;</span><br><span class="line">copyObj2 = JSON.parse(JSON.stringify(srcObj));</span><br><span class="line">copyObj2.name = &#x27;红&#x27;;</span><br><span class="line">copyObj2.grade.chi = &#x27;60&#x27;;</span><br><span class="line">console.log(&#x27;JSON srcObj&#x27;, copyObj2); //&#123; name: &#x27;红&#x27;, grade: &#123; chi: &#x27;60&#x27;, eng: &#x27;50&#x27; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，经过转换之后，function丢失了，因此JSON.parse()和JSON.stringify()还是需要谨慎使用。</p>
+<p>所以我们需要自己写一个可以进行深拷贝的代码。</p>
+<h5 id="自定义的深拷贝方法"><a href="#自定义的深拷贝方法" class="headerlink" title="自定义的深拷贝方法"></a>自定义的深拷贝方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function clone(target) &#123;</span><br><span class="line">  if (typeof target === &#x27;object&#x27;) &#123;</span><br><span class="line">    let newObject = &#123;&#125;</span><br><span class="line">    for (key in target) &#123;</span><br><span class="line">      newObject[key] = clone(target[key])</span><br><span class="line">    &#125;</span><br><span class="line">    return newObject</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return target</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为在深拷贝里，我们不知道要拷贝的对象是多少深度的，所以我们用递归来解决。</p>
+<ul>
+<li>如果是基本类型，就无需拷贝直接返回</li>
+<li>如果是引用类型就创建一个新的对象，遍历需要拷贝的对象，如果有更深层次的对象就继续递归到其为基本数据类型。这样我们就完成了一个很简单的深拷贝。</li>
+</ul>
+<h6 id="考虑数组"><a href="#考虑数组" class="headerlink" title="考虑数组"></a>考虑数组</h6><p>上面的方法，我们只考虑了object，如果要拷贝数组的话，只要在新建对象那边加一个判断就行了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function clone(target) &#123;</span><br><span class="line">  if (typeof target === &#x27;object&#x27;) &#123;</span><br><span class="line">    let newTarget = Array.isArray(target) ? [] : &#123;&#125; // 判断这个引用类型是不是数组，如果是新建一个数组，再往数组内添加属性。如果不是新建一个对象，往对象内添加属性</span><br><span class="line">    for (key in target) &#123;</span><br><span class="line">      newTarget[key] = clone(target[key])</span><br><span class="line">    &#125;</span><br><span class="line">    return newTarget</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return target</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="如果考虑函数。。。"><a href="#如果考虑函数。。。" class="headerlink" title="如果考虑函数。。。"></a>如果考虑函数。。。</h6><ul>
+<li><p><strong>箭头函数</strong>： 将它转为字符串，再将字符串转换为方法。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">constconst arrowFunction = () =&gt; &#123;&#125;</span><br><span class="line">eval(arrowFunction.toString)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>普通函数</strong>：可以使用正则来处理普通函数</p>
+<p>分别使用正则取出函数体和函数参数，然后使用<code>new Function ([arg1[, arg2[, ...argN]],] functionBody)</code>构造函数重新构造一个新的函数。</p>
+</li>
+</ul>
+<h2 id="数组的深拷贝和浅拷贝"><a href="#数组的深拷贝和浅拷贝" class="headerlink" title="数组的深拷贝和浅拷贝"></a>数组的深拷贝和浅拷贝</h2><p>最后在补充一点数组的深拷贝和浅拷贝，同对象一样数组的浅拷贝也是改变其中一个会相互影响，比如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let srcArr = [1, 2, 3];</span><br><span class="line">let copyArr = srcArr;</span><br><span class="line">copyArr[0] = &#x27;0&#x27;;</span><br><span class="line">console.log(&#x27;srcArr&#x27;, srcArr); // [&#x27;0&#x27;, 2, 3]</span><br></pre></td></tr></table></figure>
+
+<p>但是数组的深拷贝方法要相对简单一些可以理解为数组方法中那些会改变原数组的方法，比如</p>
+<ul>
+<li>concat</li>
+<li>slice</li>
+<li>es6 的Array.from</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/12/TypeScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/" rel="prev" title="TypeScript学习笔记(二)">
+      <i class="fa fa-chevron-left"></i> TypeScript学习笔记(二)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/23/%E5%88%9D%E8%AF%86webpack/" rel="next" title="初识webpack">
+      初识webpack <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">对象介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%BC%95%E7%94%A8%E8%B5%8B%E5%80%BC"><span class="nav-number">1.1.</span> <span class="nav-text">按引用赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8B%B7%E8%B4%9D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">对象的拷贝方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%A4%8D%E5%88%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8E%9F%E5%A7%8B%E6%96%B9%E6%B3%95%E6%98%AF%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%8E%9F%E5%A7%8B%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%84%B6%E5%90%8E%E4%B8%80%E4%B8%AA%E6%8E%A5%E4%B8%80%E4%B8%AA%E5%9C%B0%E5%A4%8D%E5%88%B6%E6%AF%8F%E4%B8%AA%E5%B1%9E%E6%80%A7%E3%80%82"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 复制对象的原始方法是循环遍历原始对象，然后一个接一个地复制每个属性。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-assign"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Object.assign()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B1%95%E5%BC%80%E6%93%8D%E4%BD%9C%E7%AC%A6-%E2%80%A6"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">使用展开操作符(…)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSON-parse-%E5%92%8C-JSON-stringify"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">JSON.parse() 和 JSON.stringify()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">自定义的深拷贝方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%80%83%E8%99%91%E6%95%B0%E7%BB%84"><span class="nav-number">1.2.3.2.1.</span> <span class="nav-text">考虑数组</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E8%80%83%E8%99%91%E5%87%BD%E6%95%B0%E3%80%82%E3%80%82%E3%80%82"><span class="nav-number">1.2.3.2.2.</span> <span class="nav-text">如果考虑函数。。。</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.</span> <span class="nav-text">数组的深拷贝和浅拷贝</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

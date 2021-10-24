@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HTTP概述HTTP (HyperText Transfer Protocol,超文本传输协议)。  Web是建立在HTTP协议通信的。 HTTP 是个应用层协议。HTTP 无需操心网络通信的具体细节；它把联网的细节都交给了通用、可靠的因特网传输协议 TCP&#x2F;IP。 TCP 提供了：• 无差错的数据传输；• 按序传输（数据总是会按照发送的顺序到达）；• 未分段的数据流（可以在任意时刻以任意尺寸将数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈http">
+<meta property="og:url" content="http://www.flura.cn/2019/04/26/%E6%B5%85%E8%B0%88http/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="HTTP概述HTTP (HyperText Transfer Protocol,超文本传输协议)。  Web是建立在HTTP协议通信的。 HTTP 是个应用层协议。HTTP 无需操心网络通信的具体细节；它把联网的细节都交给了通用、可靠的因特网传输协议 TCP&#x2F;IP。 TCP 提供了：• 无差错的数据传输；• 按序传输（数据总是会按照发送的顺序到达）；• 未分段的数据流（可以在任意时刻以任意尺寸将数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E7%B1%BB.png">
+<meta property="og:image" content="http://img.flura.cn/%E4%BB%A3%E7%90%86.png">
+<meta property="og:image" content="http://img.flura.cn/%E7%BC%93%E5%AD%98.png">
+<meta property="og:image" content="http://img.flura.cn/%E7%BD%91%E5%85%B3.png">
+<meta property="og:image" content="http://img.flura.cn/%E9%9A%A7%E9%81%93.png">
+<meta property="og:image" content="http://img.flura.cn/http%E5%88%86%E5%B1%82.png">
+<meta property="article:published_time" content="2019-04-26T09:22:48.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.496Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E7%B1%BB.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/04/26/%E6%B5%85%E8%B0%88http/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>浅谈http | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/04/26/%E6%B5%85%E8%B0%88http/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈http
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-26 17:22:48" itemprop="dateCreated datePublished" datetime="2019-04-26T17:22:48+08:00">2019-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="HTTP概述"><a href="#HTTP概述" class="headerlink" title="HTTP概述"></a>HTTP概述</h3><p>HTTP (HyperText Transfer Protocol,超文本传输协议)。  Web是建立在HTTP协议通信的。</p>
+<p>HTTP 是个应用层协议。HTTP 无需操心网络通信的具体细节；它把联网的细节都<br>交给了通用、可靠的因特网传输协议 TCP/IP。</p>
+<p>TCP 提供了：<br>• 无差错的数据传输；<br>• 按序传输（数据总是会按照发送的顺序到达）；<br>• 未分段的数据流（可以在任意时刻以任意尺寸将数据发送出去）。</p>
+<h3 id="HTTP资源"><a href="#HTTP资源" class="headerlink" title="HTTP资源"></a>HTTP资源</h3><p>Web 服务器是 Web 资源（Web resource）的宿主。Web 资源是 Web 内容的源头。<br>最简单的 Web 资源就是 Web 服务器文件系统中的静态文件。这些文件可以包含<br>任意内容：文本文件、HTML 文件、微软的 Word 文件、Adobe 的 Acrobat 文件、<br>JPEG 图片文件、AVI 电影文件，或所有其他你能够想到的格式。</p>
+<h4 id="MIME"><a href="#MIME" class="headerlink" title="MIME"></a><strong>MIME</strong></h4><p>（Multipurpose Internet Mail Extension，多用途因特网邮件扩展）是为了解决在不同<br>的电子邮件系统之间搬移报文时存在的问题。MIME 在电子邮件系统中工作得非常<br>好，因此 HTTP 也采纳了它，用它来描述并标记多媒体内容</p>
+<p>• HTML 格式的文本文档由 text/html 类型来标记。<br>• 普通的 ASCII 文本文档由 text/plain 类型来标记。<br>• JPEG 格式的图片为 image/jpeg 类型。<br>• GIF 格式的图片为 image/gif 类型。<br>• Apple 的 QuickTime 电影为 video/quicktime 类型。<br>• 微软的 PowerPoint 演示文件为 application/vnd.ms-powerpoint 类型</p>
+<h4 id="URL"><a href="#URL" class="headerlink" title="URL"></a><strong>URL</strong></h4><p>服务器资源名被称为统一资源标识符（Uniform Resource Identifier，URI）。<br>URI 就像因特网上的邮政地址一样，在世界范围内唯一标识并定位信息资源。</p>
+<p>大部分 URL 都遵循一种标准格式，这种格式包含三个部分。<br>• URL 的第一部分被称为方案（scheme），说明了访问资源所使用的协议类型。这<br>部分通常就是 HTTP 协议（http://）。<br>• 第二部分给出了服务器的因特网地址（比如，<a target="_blank" rel="noopener" href="http://www.joes-hardware.com)./">www.joes-hardware.com）。</a><br>• 其余部分指定了 Web 服务器上的某个资源（比如，/specials/saw-blade.gif）</p>
+<h3 id="HTTP-报文"><a href="#HTTP-报文" class="headerlink" title="HTTP 报文"></a>HTTP 报文</h3><p>所有的 HTTP 报文都可以分为两类： 请求报文（request message）和响应报文<br>（response message）。 </p>
+<p><strong>请求报文的格式</strong></p>
+<p><method> <request-URL> <version></p>
+<headers>
+
+<entity-body>
+
+<p>GET /test/hi-there.txt HTTP/1.1<br>Accept: text/*<br>Host: <a target="_blank" rel="noopener" href="http://www.joes-hardware.com/">www.joes-hardware.com</a></p>
+<p><strong>响应报文的格式</strong></p>
+<p><version> <status> <reason-phrase></p>
+<headers>
+
+<entity-body>
+
+<p>HTTP/1.0 200 OK<br>Content-type: text/plain<br>Content-length: 19<br>Hi! I’m a message!</p>
+<p><strong>包括以下三个部分</strong>。</p>
+<p><strong>• 起始行</strong><br>报文的第一行就是起始行，在请求报文中用来说明要做些什么，在响应报文中说<br>明出现了什么情况。<br><strong>• 首部字段</strong><br>起始行后面有零个或多个首部字段。每个首部字段都包含一个名字和一个值，为<br>了便于解析，两者之间用冒号（:）来分隔。首部以一个空行结束。添加一个首<br>部字段和添加新行一样简单。<br><strong>• 主体</strong><br>空行之后就是可选的报文主体了，其中包含了所有类型的数据。请求主体中包括<br>了要发送给 Web 服务器的数据；响应主体中装载了要返回给客户端的数据。起<br>始行和首部都是文本形式且都是结构化的，而主体则不同，主体中可以包含任意<br>的二进制数据（比如图片、视频、音轨、软件程序）。当然，主体中也可以包含<br>文本</p>
+<h3 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h3><p><strong>一些常见的HTTP方法</strong></p>
+<p>HTTP方法         描　　述<br>GET                 从服务器向客户端发送命名资源<br>PUT                 将来自客户端的数据存储到一个命名的服务器资源中去<br>DELETE          从服务器中删除命名资源<br>POST              将客户端数据发送到一个服务器网关应用程序<br>HEAD             仅发送命名资源响应中的 HTTP 首部</p>
+<h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><p>状态码则用来告诉客户端，发生了什么事情。状态码位于响应的起始行中。比如，在行 HTTP/1.0 200 OK 中，状态码就是 200。</p>
+<p>状态码分类：</p>
+<p><img src="http://img.flura.cn/%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E7%B1%BB.png" alt="状态码分类"></p>
+<p>常见状态码： </p>
+<p>100——客户必须继续发出请求</p>
+<p>101——客户要求服务器根据请求转换HTTP协议版本</p>
+<p>200——交易成功</p>
+<p>201——提示知道新文件的URL</p>
+<p>202——接受和处理、但处理未完成</p>
+<p>203——返回信息不确定或不完整</p>
+<p>204——请求收到，但返回信息为空</p>
+<p>205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</p>
+<p>206——服务器已经完成了部分用户的GET请求</p>
+<p>300——请求的资源可在多处得到</p>
+<p>301——删除请求数据</p>
+<p>302——在其他地址发现了请求数据</p>
+<p>303——建议客户访问其他URL或访问方式</p>
+<p>304——客户端已经执行了GET，但文件未变化</p>
+<p>305——请求的资源必须从服务器指定的地址得到</p>
+<p>306——前一版本HTTP中使用的代码，现行版本中不再使用</p>
+<p>307——申明请求的资源临时性删除</p>
+<p>400——错误请求，如语法错误</p>
+<p>401——请求授权失败</p>
+<p>402——保留有效ChargeTo头响应</p>
+<p>403——请求不允许</p>
+<p>404——没有发现文件、查询或URl</p>
+<p>405——用户在Request-Line字段定义的方法不允许</p>
+<p>406——根据用户发送的Accept拖，请求资源不可访问</p>
+<p>407——类似401，用户必须首先在代理服务器上得到授权</p>
+<p>408——客户端没有在用户指定的时间内完成请求</p>
+<p>409——对当前资源状态，请求不能完成</p>
+<p>410——服务器上不再有此资源且无进一步的参考地址</p>
+<p>411——服务器拒绝用户定义的Content-Length属性请求</p>
+<p>412——一个或多个请求头字段在当前请求中错误</p>
+<p>413——请求的资源大于服务器允许的大小</p>
+<p>414——请求的资源URL长于服务器允许的长度</p>
+<p>415——请求资源不支持请求项目格式</p>
+<p>416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</p>
+<p>417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求</p>
+<p>500——服务器产生内部错误</p>
+<p>501——服务器不支持请求的函数</p>
+<p>502——服务器暂时不可用，有时是为了防止发生系统过载</p>
+<p>503——服务器过载或暂停维修</p>
+<p>504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长</p>
+<p>505——服务器不支持或拒绝支请求头中指定的HTTP版本</p>
+<h3 id="HTTP的结构组件"><a href="#HTTP的结构组件" class="headerlink" title="HTTP的结构组件"></a>HTTP的结构组件</h3><p>在本章的概述中，我们重点介绍了两个 Web 应用程序（Web 浏览器和 Web 服务器）<br>是如何相互发送报文来实现基本事务处理的。在因特网上，要与很多 Web 应用程序<br>进行交互。在本节中，我们将列出其他一些比较重要的应用程序，如下所示。<br>• 代理<br>位于客户端和服务器之间的 HTTP 中间实体。<br>• 缓存<br>HTTP 的仓库，使常用页面的副本可以保存在离客户端更近的地方。<br>• 网关<br>连接其他应用程序的特殊 Web 服务器。<br>• 隧道<br>对 HTTP 通信报文进行盲转发的特殊代理。<br>• Agent 代理<br>发起自动 HTTP 请求的半智能 Web 客户端。</p>
+<h4 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h4><p><img src="http://img.flura.cn/%E4%BB%A3%E7%90%86.png" alt="代理"></p>
+<p>代理位于客户端和服务器之间，接收所有客户端的 HTTP 请求，并<br>将这些请求转发给服务器（可能会对请求进行修改之后转发）。对用户来说，这些应<br>用程序就是一个代理，代表用户访问服务器。</p>
+<h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><p><img src="http://img.flura.cn/%E7%BC%93%E5%AD%98.png" alt="缓存"></p>
+<p>Web 缓存（Web cache）或代理缓存（proxy cache）是一种特殊的 HTTP 代理服务<br>器，可以将经过代理传送的常用文档复制保存起来。下一个请求同一文档的客户端<br>就可以享受缓存的私有副本所提供的服务了。 客户端从附近的缓存下载文档会比从远程 Web 服务器下载快得多。</p>
+<h4 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h4><p><img src="http://img.flura.cn/%E7%BD%91%E5%85%B3.png" alt="隧道"></p>
+<p>网关（gateway）是一种特殊的服务器，作为其他服务器的中间实体使用。通常用于<br>将 HTTP 流量转换成其他的协议。网关接受请求时就好像自己是资源的源端服务器<br>一样。客户端可能并不知道自己正在与一个网关进行通信。</p>
+<h4 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a>隧道</h4><p><img src="http://img.flura.cn/%E9%9A%A7%E9%81%93.png" alt="隧道"></p>
+<p>隧道（tunnel）是建立起来之后，就会在两条连接之间对原始数据进行盲转发的<br>HTTP 应用程序。HTTP 隧道通常用来在一条或多条 HTTP 连接上转发非 HTTP 数<br>据，转发时不会窥探数据。</p>
+<p>HTTP 隧道的一种常见用途是通过 HTTP 连接承载加密的安全套接字层（SSL，<br>Secure Sockets Layer）流量，这样 SSL 流量就可以穿过只允许 Web 流量通过的防<br>火墙了。如图 所示，HTTP/SSL 隧道收到一条 HTTP 请求，要求建立一条到目<br>的地址和端口的输出连接，然后在 HTTP 信道上通过隧道传输加密的 SSL 流量，这<br>样就可以将其盲转发到目的服务器上去了</p>
+<h4 id="Agent-代理"><a href="#Agent-代理" class="headerlink" title="Agent 代理"></a>Agent 代理</h4><p>用户 Agent 代理（或者简称为 Agent 代理）是代表用户发起 HTTP 请求的客户端程<br>序。(也被叫做爬虫、网络蜘蛛、web机器人），是一种按照一定的规则，自动地抓取<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%87%E7%BB%B4%E7%BD%91/215515">万维网</a>信息的程序或者脚本。另外一些不常使用的名字还有<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%9A%82%E8%9A%81/9770178">蚂蚁</a>、自动索引、模拟程序或者<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A0%95%E8%99%AB/4454380">蠕虫</a>。</p>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>HTTPS 是最常见的 HTTP 安全版本。它得到了很广泛的应用，所有主要的商业浏览<br>器和服务器上都提供 HTTPS。HTTPS 将 HTTP 协议与一组强大的对称、非对称和<br>基于证书的加密技术结合在一起，使得 HTTPS 不仅很安全，而且很灵活，很容易<br>在处于无序状态的、分散的全球互联网上进行管理。</p>
+<p><img src="http://img.flura.cn/http%E5%88%86%E5%B1%82.png" alt="https分层"></p>
+<p>HTTPS = HTTP + SSL(或TLS) + 认证(证书) + 加密(加密算法)</p>
+<h4 id="HTTP和HTTPS协议的区别"><a href="#HTTP和HTTPS协议的区别" class="headerlink" title="HTTP和HTTPS协议的区别"></a>HTTP和HTTPS协议的区别</h4><p>1、HTTPS协议需要到证书颁发机构(Certificate Authority，简称CA)<a target="_blank" rel="noopener" href="https://www.wosign.com/price.htm">申请证书</a>，一般免费证书很少，需要交费。</p>
+<p>2、HTTP是超文本传输协议，信息是明文传输，HTTPS则是具有安全性的SSL加密传输协议。</p>
+<p>3、HTTP和HTTPS使用的是完全不同的连接方式，使用的端口也不一样,前者是80,后者是443。</p>
+<p>4、HTTP的连接很简单,是无状态的。</p>
+<p>5、HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比HTTP协议安全。</p>
+<p>从上面可看出，HTTPS和HTTP协议相比提供了</p>
+<p>· 数据完整性：内容传输经过完整性校验</p>
+<p>· 数据隐私性：内容经过对称加密，每个连接生成一个唯一的加密密钥</p>
+<p>· 身份认证：第三方无法伪造服务端(客户端)身份</p>
+<p>其中，数据完整性和隐私性由TLS Record Protocol保证，身份认证由TLS Handshaking Protocols实现。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/http/" rel="tag"># http</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/" rel="prev" title="浅谈java与JavaScript的一些特性">
+      <i class="fa fa-chevron-left"></i> 浅谈java与JavaScript的一些特性
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/03/js%E6%B5%85%E8%B0%88promise/" rel="next" title="js浅谈promise">
+      js浅谈promise <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">HTTP概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E8%B5%84%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">HTTP资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MIME"><span class="nav-number">2.1.</span> <span class="nav-text">MIME</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URL"><span class="nav-number">2.2.</span> <span class="nav-text">URL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-%E6%8A%A5%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">HTTP 报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">HTTP方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E7%9A%84%E7%BB%93%E6%9E%84%E7%BB%84%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">HTTP的结构组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86"><span class="nav-number">6.1.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">6.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E5%85%B3"><span class="nav-number">6.3.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%A7%E9%81%93"><span class="nav-number">6.4.</span> <span class="nav-text">隧道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Agent-%E4%BB%A3%E7%90%86"><span class="nav-number">6.5.</span> <span class="nav-text">Agent 代理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS"><span class="nav-number">7.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%92%8CHTTPS%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.1.</span> <span class="nav-text">HTTP和HTTPS协议的区别</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

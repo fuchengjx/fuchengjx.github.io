@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="定义类类实质是个”特殊的函数”，就像你能够定义的函数表达式和函数声明一样， 类语法有两个组成部分： 类表达式和类声明。 class的本质是function。它可以看作一个语法糖，让对象原型的写法更加清晰、更像面向对象编程语言的语法。 12345678910111213class Ponit &amp;#123; &#x2F;&#x2F; 类声明 按照书写习惯 类名要大写 就像构造函数一样。	constructor(x, y)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈class">
+<meta property="og:url" content="http://www.flura.cn/2019/06/30/%E6%B5%85%E8%B0%88class/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="定义类类实质是个”特殊的函数”，就像你能够定义的函数表达式和函数声明一样， 类语法有两个组成部分： 类表达式和类声明。 class的本质是function。它可以看作一个语法糖，让对象原型的写法更加清晰、更像面向对象编程语言的语法。 12345678910111213class Ponit &amp;#123; &#x2F;&#x2F; 类声明 按照书写习惯 类名要大写 就像构造函数一样。	constructor(x, y)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-06-30T01:17:53.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.496Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2019/06/30/%E6%B5%85%E8%B0%88class/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>浅谈class | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/06/30/%E6%B5%85%E8%B0%88class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈class
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-06-30 09:17:53" itemprop="dateCreated datePublished" datetime="2019-06-30T09:17:53+08:00">2019-06-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><p>类实质是个”特殊的函数”，就像你能够定义的函数表达式和函数声明一样， 类语法有两个组成部分： 类表达式和类声明。</p>
+<p>class的本质是function。它可以看作一个语法糖，让对象原型的写法更加清晰、更像面向对象编程语言的语法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Ponit &#123; // 类声明 按照书写习惯 类名要大写 就像构造函数一样。</span><br><span class="line">	constructor(x, y) &#123;</span><br><span class="line">		this.x = x;</span><br><span class="line">		this.y = y;</span><br><span class="line">	&#125;</span><br><span class="line">	toString() &#123;</span><br><span class="line">		return this.x + this.y</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">typeof Ponit // &quot;function&quot;</span><br><span class="line">Point === Point.prototype.constructor // true</span><br><span class="line"></span><br><span class="line">let p = new Ponit() //类的实例化 p为实例对象</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码表明，类的数据类型就是函数，类本身就指向构造函数。 使用的时候也是直接对类使用new命令，和构造函数的用法一样。</p>
+<p>构造函数的prototype属性在ES6的”类”上继续存在。事实上，类的所有方法都定义在prototype属性上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class B &#123;</span><br><span class="line">	constructor() &#123;</span><br><span class="line">		//...</span><br><span class="line">	&#125;</span><br><span class="line">	toString() &#123;</span><br><span class="line">		//...</span><br><span class="line">	&#125;</span><br><span class="line">	toValue() &#123;</span><br><span class="line">		//...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line">B.prototype = &#123;</span><br><span class="line">	constructor() &#123;&#125;,</span><br><span class="line">	toString() &#123;&#125;,</span><br><span class="line">	toValue() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let b = new B()</span><br><span class="line">b.constructor === B.prototype.constructor // true	在类的实例上调用方法，其实就是调用原型上的方法。</span><br></pre></td></tr></table></figure>
+
+<p>由于类的方法(除constructor以外)都定义在prototype对象上，所以类的新方法可以添加在prototype对象上。  另外，类的内部定义的所有方法都是不可枚举的。</p>
+<h4 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h4><p>函数声明和类声明宅男有一个重要区别是函数声明会提升，类声明不会。你首先需要声明你的类，然后访问它，否则代码会抛出一个ReferenceError。 所以在继承中也<strong>必须</strong>保证之类在父类后定义</p>
+<h3 id="constructor方法"><a href="#constructor方法" class="headerlink" title="constructor方法"></a>constructor方法</h3><p>constructor方法是类的默认方法，通过new命令生成对象实例时自动调用该方法。一个类必须有constructor方法，如果显示定义，JavaScript引擎会自动为它添加一个空的constructor方法。</p>
+<p>constructor方法默认返回实例对象(即this)，不过完全可以定返回另外一个对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123;</span><br><span class="line">	constructor() &#123;</span><br><span class="line">		return Object.create(null)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new Foo() instanceof Foo // false </span><br></pre></td></tr></table></figure>
+
+<p>一个类只能拥有一个名为 “constructor”的特殊方法。如果类包含多个<code>constructor</code>的方法，则将抛出 一个<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError"><code>SyntaxError</code></a> 。</p>
+<p>一个构造函数可以使用 <code>super</code> 关键字来调用一个父类的构造函数。</p>
+<h3 id="类的实例对象"><a href="#类的实例对象" class="headerlink" title="类的实例对象"></a>类的实例对象</h3><p>生成实例对象的写法和ES5完全一样，也是使用new命令。如果忘记加上new, 像函数那样调用Class将会报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Point &#123;</span><br><span class="line">	// ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 报错</span><br><span class="line">let point = Point()</span><br><span class="line"></span><br><span class="line">// 正确</span><br><span class="line">let point = new Point()</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class P &#123;</span><br><span class="line">	constructor(x, y) &#123;</span><br><span class="line">		this.x = x;</span><br><span class="line">		this.y = y;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	toString() &#123;</span><br><span class="line">		// ...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let p =  new P(2, 3)</span><br><span class="line">p.hasOwnProperty(&#x27;x&#x27;) // true</span><br><span class="line">p.hasOwnProperty(&#x27;toString&#x27;) // false </span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，x和y都是实例对象p自身的属性(因为定义在this变量上)，所以hasOwnProperty方法返回true。而toString是原型对象的属性(因为定义在P类上)，所以hasOwnProperty方法返回false。</p>
+<p>与ES5一样，类的所有实例共享一个原型对象。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let p1 = new P(2, 3)</span><br><span class="line">let p2 = new P(4, 5)</span><br><span class="line"></span><br><span class="line">p1.__proto__ === p2.__proto__  // true</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中，p1和p2都是P的实例，它们的原型都是P.prototype,所以 <code>__proto__</code>属性是相等的。这也意味着，可以通过实例的 <code>__proto__</code>属性为类添加方法。</p>
+<h3 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h3><p>类相对于实例的原型，所有在类中定义的方法都会被实例继承。如果在一个方法前加上static关键字，就表示该方法不会被实例继承，而是直接通过类调用，成为”静态方法”。</p>
+<p><code>static</code> 关键字用来定义一个类的一个静态方法。调用静态方法不需要<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#The_object_(class_instance)">实例化</a>该类，但不能通过一个类实例调用静态方法。静态方法通常用于为一个应用程序创建工具函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">x, y</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="title">distance</span>(<span class="params">a, b</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> dx = a.x - b.x;</span><br><span class="line">        <span class="keyword">const</span> dy = a.y - b.y;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.hypot(dx, dy);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> Point(<span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> Point(<span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Point.distance(p1, p2));</span><br></pre></td></tr></table></figure>
+
+<h4 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">Foo.prop = 1</span><br><span class="line">console.log(Foo.prop) // 1</span><br></pre></td></tr></table></figure>
+
+<p>上面的写法可读/写Foo类的静态属性prop。  目前，只有这种学法可行，因为ES6明确规定，Class内部只有静态方法，没有静态属性。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/28/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/" rel="prev" title="css世界笔记">
+      <i class="fa fa-chevron-left"></i> css世界笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/05/react-redux%E5%AD%A6%E4%B9%A0/" rel="next" title="react-redux学习">
+      react-redux学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">定义类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%8D%87"><span class="nav-number">1.1.</span> <span class="nav-text">提升</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">constructor方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">类的实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text">静态属性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

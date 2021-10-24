@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。 背景为什么要去配置这么一个自动化部署CI，这个需求是什么？我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端gitlab-ci实现自动化部署">
+<meta property="og:url" content="http://www.flura.cn/2019/09/29/%E5%89%8D%E7%AB%AFgitlab-ci%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。 背景为什么要去配置这么一个自动化部署CI，这个需求是什么？我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/1569760156912.png">
+<meta property="og:image" content="http://img.flura.cn/1569815810780.png">
+<meta property="og:image" content="http://img.flura.cn/1569816937998.png">
+<meta property="og:image" content="http://img.flura.cn/1569817315527.png">
+<meta property="og:image" content="http://img.flura.cn/1569816937998.png">
+<meta property="og:image" content="http://img.flura.cn/1569817028804.png">
+<meta property="article:published_time" content="2019-09-29T02:27:12.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.493Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="gitlab">
+<meta property="article:tag" content="ci">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/1569760156912.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/09/29/%E5%89%8D%E7%AB%AFgitlab-ci%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>前端gitlab-ci实现自动化部署 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/09/29/%E5%89%8D%E7%AB%AFgitlab-ci%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端gitlab-ci实现自动化部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-29 10:27:12" itemprop="dateCreated datePublished" datetime="2019-09-29T10:27:12+08:00">2019-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文是我配置一个Gitlab CI实现一个前端项目自动打包部署的踩坑体会。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么要去配置这么一个自动化部署CI，这个需求是什么？"><a href="#为什么要去配置这么一个自动化部署CI，这个需求是什么？" class="headerlink" title="为什么要去配置这么一个自动化部署CI，这个需求是什么？"></a>为什么要去配置这么一个自动化部署CI，这个需求是什么？</h3><p>我所接手的这一个项目是比较老比较大的项目(vue)，它依赖了一些很麻烦的包，这些包很难在window下环境友好运行，所以导致这个项目无法打包部署。这给我们整个团队带来了很大的不便，部署只能用linux很麻烦的手动部署。(学生党不可能人人有钱买Mac吧)，所以我想配置一个gitlab-ci实现项目的自动部署，以提升效率。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="Gitlab"><a href="#Gitlab" class="headerlink" title="Gitlab"></a><strong>Gitlab</strong></h3><p> 一个基于git实现的在线代码仓库软件，你可以用Gitlab自己搭建一个类似于Github一样的系统，一般用于在企业、学校等内部网络搭建Git私服。</p>
+<h3 id="什么是持续集成-持续部署（CI-CD"><a href="#什么是持续集成-持续部署（CI-CD" class="headerlink" title="什么是持续集成/持续部署（CI/CD)?"></a>什么是持续集成/持续部署（CI/CD)?</h3><p>阮一峰有篇文章很好的介绍了<a href="https://link.juejin.im/?target=http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html">持续集成是什么？</a></p>
+<blockquote>
+<p>持续集成指的是，频繁地（一天多次）将代码集成到主干。</p>
+</blockquote>
+<blockquote>
+<p>持续集成的目的，就是让产品可以快速迭代，同时还能保持高质量。它的核心措施是，代码集成到主干之前，必须通过自动化测试。只要有一个测试用例失败，就不能集成。</p>
+</blockquote>
+<p>通俗易懂的来说就是把 代码测试、打包、发布等工作交给一些工具来自动完成、这样可以提高很多效率，减少失误，开发人员只要关心把代码提交到git就行了。 </p>
+<h3 id="Gitlab的CI"><a href="#Gitlab的CI" class="headerlink" title="Gitlab的CI"></a>Gitlab的CI</h3><p>从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 .gitlab-ci.yml 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级，GitLab CI 变得越来越强大。</p>
+<h3 id="gitlab-ci-yml"><a href="#gitlab-ci-yml" class="headerlink" title=".gitlab-ci.yml"></a>.gitlab-ci.yml</h3><p>在git项目的根目录下的一个文件，记录了一系列的阶段和执行规则。GitLab-CI在push后会解析它，根据里面的内容调用runner来运行。</p>
+<p>简单来说就是，你利用Git版本管理Push了本地代码到你的gitlab.com上，然后Gitlab，就通知你的服务器(runner服务器)，也就是Gitlab-runner来运行构建任务。然后跑测试用例，测试用例通过了就生成Build出相应的环境的代码，自动部署上不同的环境服务器上面去。</p>
+<h3 id="GitLab-Runner"><a href="#GitLab-Runner" class="headerlink" title="GitLab-Runner"></a>GitLab-Runner</h3><p>这个是脚本执行的承载者，.gitlab-ci.yml的script部分的运行就是由runner来负责的。GitLab-CI浏览过项目里的.gitlab-ci.yml文件之后，根据里面的规则，分配到各个Runner来运行相应的脚本script。这些脚本有的是测试项目用的，有的是部署用的。</p>
+<p><img src="http://img.flura.cn/1569760156912.png" alt="1569760156912"></p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>简而言之，CI所需要的步骤可以归结为：</p>
+<ol>
+<li><p>添加<code>.gitlab-ci.yml</code>到项目的根目录</p>
+</li>
+<li><p>配置一个Runner</p>
+</li>
+</ol>
+<p>从此刻开始，在每一次push到Git仓库的过程中，Runner会自动开启pipline，pipline将显示在项目的Pipline页面中。</p>
+<hr>
+<p>本指南要求：</p>
+<ul>
+<li>使用版本8.0+ 的GitLab实例或者是使用<a target="_blank" rel="noopener" href="https://gitlab.com/">GitLab.com</a></li>
+<li>一个想使用GitLab CI的项目</li>
+</ul>
+<h3 id="配置-gitlab-ci-yml"><a href="#配置-gitlab-ci-yml" class="headerlink" title="配置.gitlab-ci.yml"></a>配置<code>.gitlab-ci.yml</code></h3><ol>
+<li><p>在项目的根目录创建一个名为<code>.gitlab-ci.yml</code>的文件。注意：<code>.gitlab-ci.yml</code>是一个*&amp;####&amp;<em><em>10</em></em>&amp;####&amp;*文件，所以必须要格外注意锁紧。使用空格，而不是tabs。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">image: node  # 选用docker镜像</span><br><span class="line"></span><br><span class="line">stages: # Stages 表示构建阶段，这里有两个阶段 install, deploy</span><br><span class="line">- install</span><br><span class="line">- deploy</span><br><span class="line"></span><br><span class="line">install-staging:dep: # Jobs 表示构建工作，表示某个 Stage 里面执行的工作。</span><br><span class="line">  stage: install</span><br><span class="line">  only: # 定义了只有在被merge到了master分支上 才会执行部署脚本。</span><br><span class="line">  - master</span><br><span class="line">  script:</span><br><span class="line">  - echo &quot;=====start install======&quot;</span><br><span class="line">  - npm install --registry=https://registry.npm.taobao.org  #安装依赖</span><br><span class="line">  - echo &quot;=====end install======&quot;</span><br><span class="line">  artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies</span><br><span class="line">    expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了</span><br><span class="line">    paths:  # 需要被传递给下一个job的目录。</span><br><span class="line">    - node_modules/</span><br><span class="line">    </span><br><span class="line">deploy-staging:dep:</span><br><span class="line">  stage: deploy</span><br><span class="line">  only:</span><br><span class="line">  - master</span><br><span class="line">  script:</span><br><span class="line">  - echo &quot;=====start build======&quot;</span><br><span class="line">  - npm run build  # 将项目打包</span><br><span class="line">  - echo &quot;=====end build======&quot;</span><br><span class="line">  - echo &quot;=====start deploy======&quot;</span><br><span class="line">  - npm run deploy # 此处执行部署脚本，将打包好的静态文件上传到阿里云的oss上，为了保护项目安全，使抽象成deploy步骤。</span><br><span class="line">  - echo &quot;=====end deploy!!!!!!======&quot;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>这是我的**<code>.gitlab-ci.yml</code>脚本**。(# 为<code>.gitlab-ci.yml</code>脚本注释)</p>
+<h4 id="image"><a href="#image" class="headerlink" title="image"></a>image</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image: node  # 选用docker镜像</span><br></pre></td></tr></table></figure>
+
+<pre><code>我项目的 CI 任务是选的在 Docker 上运行，所以每次执行 CI 任务的时候，都会新启动一个 Docker 容器。因     为是前端项目，所以需要node环境。所以选用的是node镜像。也可以选择自己的docker镜像。
+</code></pre>
+<h4 id="stages"><a href="#stages" class="headerlink" title="stages"></a>stages</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stages: # Stages 表示构建阶段，这里有两个阶段 install, deploy</span><br><span class="line">- install</span><br><span class="line">- deploy</span><br></pre></td></tr></table></figure>
+
+<p>   Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，每个Stage可以完成不同的任务。 Stages有下面的特点：</p>
+<ul>
+<li><p>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</p>
+</li>
+<li><p>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</p>
+</li>
+<li><p>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</p>
+</li>
+</ul>
+<h4 id="only"><a href="#only" class="headerlink" title="only"></a>only</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">only:</span><br><span class="line">- master</span><br></pre></td></tr></table></figure>
+
+<p>只有maser分支才会触发这个脚本，因为我们采用的git-flow工作流，开发人员可能把自己未完善的分支(没有经过上级code review)提交到线上仓库，那么只要有push就会触发部署到线上环境，这样的后果是不堪设想的，所以必须加一个only，只有经过了code review的代码 被merge进入了maser分支才会实现部署到线上环境。</p>
+<h4 id="Jobs"><a href="#Jobs" class="headerlink" title="Jobs"></a>Jobs</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">install-staging:dep: # Jobs 表示构建工作，表示某个 Stage 里面执行的工作。</span><br><span class="line">  stage: install</span><br></pre></td></tr></table></figure>
+
+<p>   Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+<ul>
+<li><p>相同 Stage 中的 Jobs 会并行执行</p>
+</li>
+<li><p>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</p>
+</li>
+<li><p>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</p>
+</li>
+</ul>
+<h4 id="script"><a href="#script" class="headerlink" title="script"></a>script</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">script:</span><br><span class="line"> - echo &quot;=====start install======&quot;</span><br><span class="line"> - npm install --registry=https://registry.npm.taobao.org</span><br><span class="line"> - echo &quot;=====end install======&quot;</span><br></pre></td></tr></table></figure>
+
+<p>   <strong>script</strong>是一段由Runner执行的shell脚本</p>
+<h4 id="artifact"><a href="#artifact" class="headerlink" title="artifact"></a>artifact</h4> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies</span><br><span class="line">  expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了</span><br><span class="line">  paths:</span><br><span class="line">  - node_modules/</span><br></pre></td></tr></table></figure>
+
+<p>   artifacts 被用于在job作业成功后将制定列表里的文件或文件夹附加到job上，传递给下一个job，如果要在两个job之间传递artifacts，你必须设置<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ce/ci/yaml/README.html#dependencies">dependencies</a></p>
+<h4 id="脚本总结"><a href="#脚本总结" class="headerlink" title="脚本总结"></a>脚本总结</h4><p><strong>总结</strong>： 这个脚本的作用是 将merge进入master分支的代码打包并部署到阿里云的oss上。这里最值得注意的就是artifact，因为定义了两个job，其实每个job都是用的新的镜像，所以这样就会导致install阶段与deploy阶段没有任何关系，但是实际上deploy阶段是依赖install阶段安装的node_module的。所以必须将install阶段安装的 node_modules传递给下一个job(deploy)，这就需要用到artifact或者cache了(这里我用的是artifact)。ps:我还其实还把这两个job整合成一个了，但是不知道为什么明明两个分开执行就只要10min，而合在一个job就要超过1h，最后导致超时Pipeline失败。</p>
+<p>更多详细配置可以看这篇博客<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011890710">gitlab-ci配置详解</a></p>
+<p>或者参考官方文档 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/README.html">官方配置文档</a></p>
+<ol start="2">
+<li><p>推送<code>.gitlab-ci.yml</code>到GitLab</p>
+<p>一旦创建了<code>.gitlab-ci.yml</code>，你应该及时添加到Git仓库并推送到GitLab。</p>
+<p>现在到<strong>Pipelines</strong>页面查看，将会看到该Pipline处于等待状态。</p>
+<p><img src="http://img.flura.cn/1569815810780.png" alt="1569815810780"></p>
+</li>
+</ol>
+<h3 id="配置Runner"><a href="#配置Runner" class="headerlink" title="配置Runner"></a>配置Runner</h3><p>在GitLab中，Runners将会运行你在<code>.gitlab-ci.yml</code>中定义的jobs。Runner可以是虚拟机，VPS，裸机，docker容器，甚至一堆容器。GitLab和Runners通过API通信，所以唯一的要求就是运行Runners的机器可以联网。</p>
+<p>一个Runner可以服务GitLab中的某个特定的项目或者是多个项目。如果它服务所有的项目，则被称为共享的Runner。</p>
+<p>在<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/runners/README.html">Runners</a>文档中查阅更多关于不同Runners的信息。</p>
+<p>你可以通过<strong>Settings-&gt;CI/CD</strong>查找是否有Runners分配到你的项目中。创建一个Runner是简单且直接的。官方支持的Runner是用GO语言写的，它的文档在这里<a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/%E3%80%82">https://docs.gitlab.com/runner/。</a></p>
+<p>为了有一个功能性的Runner，你需要遵循以下步骤：</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">安装</a></h4><ol>
+<li><p>添加Gitlab的官方源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># For Debian/Ubuntu</span><br><span class="line">curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.deb.sh | sudo bash</span><br><span class="line"></span><br><span class="line"># For CentOS</span><br><span class="line">curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.rpm.sh | sudo bash</span><br></pre></td></tr></table></figure></li>
+<li><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># For Debian/Ubuntu</span><br><span class="line">sudo apt-get install gitlab-ci-multi-runner</span><br><span class="line"></span><br><span class="line"># For CentOS</span><br><span class="line">sudo yum install gitlab-ci-multi-runner</span><br></pre></td></tr></table></figure></li>
+<li><p>注册Runner<br>Runner需要注册到Gitlab才可以被项目所使用，一个gitlab-ci-multi-runner服务可以注册多个Runner。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gitlab-ci-multi-runner register</span><br><span class="line"></span><br><span class="line">Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )</span><br><span class="line">https://mygitlab.com/ci</span><br><span class="line">Please enter the gitlab-ci token for this runner</span><br><span class="line">xxx-xxx-xxx</span><br><span class="line">Please enter the gitlab-ci description for this runner</span><br><span class="line">my-runner</span><br><span class="line">INFO[0034] fcf5c619 Registering runner... succeeded</span><br><span class="line">Please enter the executor: shell, docker, docker-ssh, ssh?</span><br><span class="line">Please enter the Docker image (eg. ruby:2.1):</span><br><span class="line">node</span><br><span class="line">INFO[0037] Runner registered successfully. Feel free to start it, but if it&#x27;s</span><br><span class="line">running already the config should be automatically reloaded!</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>ps: 这里面的gitlab-ci coordinator URL 与token</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )</span><br><span class="line">https://mygitlab.com/ci</span><br><span class="line">Please enter the gitlab-ci token for this runner</span><br><span class="line">xxx-xxx-xxx</span><br></pre></td></tr></table></figure>
+
+<p>是在gitlab配置对应的runner里可以查看的。</p>
+<p><img src="http://img.flura.cn/1569816937998.png" alt="1569816937998"></p>
+<p><img src="http://img.flura.cn/1569817315527.png" alt="1569817315527"></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/runners/README.html#registering-a-specific-runner">配置</a></h4><p>按照上面的连接设置你自己的Runner，我这边因为这是专用对于一个项目的runner，所以我配置的是specific runner。</p>
+<p>一旦Runner安装好，你可以从项目的<strong>Settings-&gt;CI/CD</strong>找到Runner页面。</p>
+<p><img src="http://img.flura.cn/1569816937998.png" alt="1569816937998"></p>
+<p><img src="http://img.flura.cn/1569817028804.png" alt="1569817028804"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="http://www.ttlsa.com/auto/gitlab-cicd-quick-start/">GitLab CI/CD快速入门</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5c015f4ae51d453244120d86">前端项目基于GitLab-CI的持续集成/持续部署（CI/CD）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5b03963a51882542821ca56a">前端的gitlab的ci初尝试</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/README.html"><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007180257">GitLab-CI 从安装到差点放弃</a></a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+              <a href="/tags/ci/" rel="tag"># ci</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag"># 自动化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/19/JavaScript%E4%B8%AD%E7%9A%84this/" rel="prev" title="JavaScript中的this">
+      <i class="fa fa-chevron-left"></i> JavaScript中的this
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-OSS-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%BD%BF%E7%94%A8%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0/" rel="next" title="阿里云对象存储(OSS)部署前端项目并使用自动脚本上传">
+      阿里云对象存储(OSS)部署前端项目并使用自动脚本上传 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8E%BB%E9%85%8D%E7%BD%AE%E8%BF%99%E4%B9%88%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2CI%EF%BC%8C%E8%BF%99%E4%B8%AA%E9%9C%80%E6%B1%82%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要去配置这么一个自动化部署CI，这个需求是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab"><span class="nav-number">2.1.</span> <span class="nav-text">Gitlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90-%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2%EF%BC%88CI-CD"><span class="nav-number">2.2.</span> <span class="nav-text">什么是持续集成&#x2F;持续部署（CI&#x2F;CD)?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab%E7%9A%84CI"><span class="nav-number">2.3.</span> <span class="nav-text">Gitlab的CI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-ci-yml"><span class="nav-number">2.4.</span> <span class="nav-text">.gitlab-ci.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitLab-Runner"><span class="nav-number">2.5.</span> <span class="nav-text">GitLab-Runner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-number">3.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-gitlab-ci-yml"><span class="nav-number">3.1.</span> <span class="nav-text">配置.gitlab-ci.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#image"><span class="nav-number">3.1.1.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stages"><span class="nav-number">3.1.2.</span> <span class="nav-text">stages</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#only"><span class="nav-number">3.1.3.</span> <span class="nav-text">only</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jobs"><span class="nav-number">3.1.4.</span> <span class="nav-text">Jobs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#script"><span class="nav-number">3.1.5.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#artifact"><span class="nav-number">3.1.6.</span> <span class="nav-text">artifact</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%80%BB%E7%BB%93"><span class="nav-number">3.1.7.</span> <span class="nav-text">脚本总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AERunner"><span class="nav-number">3.2.</span> <span class="nav-text">配置Runner</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.2.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

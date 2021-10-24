@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前端知识体系概览前端开发(front-end development)简单来说，就是将抽象的数据、视觉效果和交互逻辑，结合起来产出用户看到的真实页面的一个过程。 前端开发技术最重要的三个是HTML(超文本标记语言)、CSS(叠层样式表)以及JavaScript。   HTML：提供网页的结构，提供网页中的内容 CSS: 用来美化网页 JavaScript: 可以用来控制网页内容，给网页增加动态的效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端知识体系概览">
+<meta property="og:url" content="http://www.flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="前端知识体系概览前端开发(front-end development)简单来说，就是将抽象的数据、视觉效果和交互逻辑，结合起来产出用户看到的真实页面的一个过程。 前端开发技术最重要的三个是HTML(超文本标记语言)、CSS(叠层样式表)以及JavaScript。   HTML：提供网页的结构，提供网页中的内容 CSS: 用来美化网页 JavaScript: 可以用来控制网页内容，给网页增加动态的效">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/http%E5%88%86%E5%B1%82.png">
+<meta property="og:image" content="https://cn.vuejs.org/images/lifecycle.png">
+<meta property="og:image" content="http://img.flura.cn/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5.png">
+<meta property="og:image" content="http://img.flura.cn/%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5.png">
+<meta property="article:published_time" content="2019-04-06T01:45:10.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.494Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="知识体系">
+<meta property="article:tag" content="杂项">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/http%E5%88%86%E5%B1%82.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>前端知识体系概览 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端知识体系概览
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-06 09:45:10" itemprop="dateCreated datePublished" datetime="2019-04-06T09:45:10+08:00">2019-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前端知识体系概览"><a href="#前端知识体系概览" class="headerlink" title="前端知识体系概览"></a>前端知识体系概览</h1><p><strong>前端开发</strong>(front-end development)简单来说，就是将抽象的数据、视觉效果和交互逻辑，结合起来产出用户看到的真实页面的一个过程。</p>
+<p><strong>前端开发技术</strong>最重要的三个是HTML(超文本标记语言)、CSS(叠层样式表)以及JavaScript。 </p>
+<ol>
+<li>HTML：提供网页的结构，提供网页中的内容</li>
+<li>CSS: 用来美化网页</li>
+<li>JavaScript: 可以用来控制网页内容，给网页增加动态的效果</li>
+</ol>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><p>css是用来表现html或xml等文件样式的语言，使用css可以有效地对页面的布局、字体、颜色、背景以及动画实现控制。</p>
+<h4 id="css的发展"><a href="#css的发展" class="headerlink" title="css的发展"></a><strong>css的发展</strong></h4><p>使用了一段时间的css以后，会发现很多令人头疼的问题：</p>
+<ul>
+<li>样式经常莫名其妙被覆盖</li>
+<li>代码复用性差</li>
+<li>代码没有层级结构</li>
+<li>代码维护性差，遇到问题难以定位</li>
+</ul>
+<p> <strong>css预处理器</strong>，css预处理器是一门专门的编程语言，为css增加了一些编程的特性。常用的css预处理器有</p>
+<ol>
+<li><strong>Sass</strong>(<a target="_blank" rel="noopener" href="https://sass-lang.com/">https://sass-lang.com/</a>)</li>
+<li><strong>Less</strong>(<a target="_blank" rel="noopener" href="http://lesscss.org/">http://lesscss.org/</a>)</li>
+<li><strong>Stylus</strong>(<a target="_blank" rel="noopener" href="http://stylus-lang.com/">http://stylus-lang.com</a>)</li>
+</ol>
+<p><strong>Css-in-Js</strong>,Css-in-Js是将html、css、javascript写在一起，一个组件封装了样式、结构和逻辑</p>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h4 id="JavaScript组成"><a href="#JavaScript组成" class="headerlink" title="JavaScript组成"></a>JavaScript组成</h4><ol>
+<li><p>ECMAScript - JavaScript的核心</p>
+<p>​    ECMA 欧洲计算机制造联合会</p>
+<p>​    网景：JavaScript</p>
+<p>​    微软：JScript</p>
+<p>​    定义了JavaScript的语法规范  </p>
+<p>​    JavaScript的核心，描述了语言的基本语法和数据类型，ECMAScript是一套标准，定义了一种语言的标准与具体实现无关</p>
+</li>
+<li><p>BOM - 浏览器对象模型</p>
+<p>​    一套操作浏览器功能的API</p>
+<p>​    通过BOM可以操作浏览器窗口，比如：弹出框、控制浏览器跳转、获取分辨率等</p>
+</li>
+<li><p>DOM - 文档对象模型</p>
+<p>​    一套操作页面元素的API</p>
+<p>​    DOM可以把HTML看做是文档树，通过DOM提供的API可以对树上的节点进行操作</p>
+</li>
+</ol>
+<h4 id="JavaScript能做什么？"><a href="#JavaScript能做什么？" class="headerlink" title="JavaScript能做什么？"></a>JavaScript能做什么？</h4><p>web开发</p>
+<ul>
+<li>jQuery、BootStrap、Angular、React、Vue</li>
+</ul>
+<p>后端开发</p>
+<ul>
+<li>Node.js</li>
+</ul>
+<p>桌面应用(Linux,  Mac OS X, Windows)</p>
+<ul>
+<li>Electorn</li>
+<li>NW.js</li>
+</ul>
+<p>Hybird移动应用开发</p>
+<ul>
+<li>PhoneGap</li>
+</ul>
+<p>Native移动引用开发</p>
+<ul>
+<li>React Native</li>
+<li>Weex</li>
+<li>NativeScript</li>
+</ul>
+<p>嵌入式/物联网开发</p>
+<ul>
+<li>IoT</li>
+<li></li>
+</ul>
+<h4 id="JavaScript的发展"><a href="#JavaScript的发展" class="headerlink" title="JavaScript的发展"></a>JavaScript的发展</h4><p><strong>ECMAScript6(ES6)</strong></p>
+<p><strong>Babel</strong>(<a target="_blank" rel="noopener" href="https://babeljs.io/)%EF%BC%8C%E4%B8%80%E4%B8%AA%E5%B9%BF%E6%B3%9B%E4%BD%BF%E7%94%A8%E7%9A%84ES6%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%B0%86es6%E4%BB%A3%E7%A0%81%E8%BD%AC%E4%B8%BAes5%E4%BB%A3%E7%A0%81%EF%BC%8C%E4%BB%8E%E8%80%8C%E5%9C%A8%E7%8E%B0%E6%9C%89%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E6%89%A7%E8%A1%8C">https://babeljs.io/)，一个广泛使用的ES6编译器，可以将es6代码转为es5代码，从而在现有的环境中执行</a></p>
+<p><strong>TypeScrip</strong>t(<a target="_blank" rel="noopener" href="https://www.typescriptlang.org/)%E6%98%AFjs%E7%9A%84%E5%BC%BA%E7%B1%BB%E5%9E%8B%E7%89%88%E6%9C%AC%EF%BC%8Cts%E6%98%AFjs%E7%9A%84%E8%B6%85%E9%9B%86(%E7%B1%BB%E4%BC%BC%E4%BA%8Ec%E4%B8%8Ec++%E7%9A%84%E5%85%B3%E7%B3%BB)%E3%80%82%E5%AE%83%E4%B8%BAjs%E7%9A%84%E7%94%9F%E6%80%81%E5%A2%9E%E5%8A%A0%E4%BA%86%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E6%9C%BA%E5%88%B6%EF%BC%8C%E5%B9%B6%E6%9C%80%E7%BB%88%E5%B0%86%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E4%B8%BA%E7%BA%AF%E7%B2%B9%E7%9A%84js%E4%BB%A3%E7%A0%81%E3%80%82%E4%BD%BF%E7%94%A8TypeScript%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E4%BC%98%E7%82%B9">https://www.typescriptlang.org/)是js的强类型版本，ts是js的超集(类似于c与c++的关系)。它为js的生态增加了静态类型检查机制，并最终将代码编译为纯粹的js代码。使用TypeScript有以下几个优点</a></p>
+<ul>
+<li>静态类型检查(编一阶段即可发现类型不匹配的错误)</li>
+<li>IDE智能提示</li>
+<li>类型信息有利于编译器优化</li>
+</ul>
+<p><strong>FLow</strong>(<a target="_blank" rel="noopener" href="https://flow.org/)%E9%92%88%E5%AF%B9js%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98%EF%BC%8CFacebook%E4%B9%9F%E6%8E%A8%E5%87%BA%E4%BA%86Flow%E3%80%82">https://flow.org/)针对js弱类型问题，Facebook也推出了Flow。</a></p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>HTTP (HyperText Transfer Protocol,超文本传输协议)。  Web是建立在HTTP协议通信的。</p>
+<h4 id="HTTP-报文"><a href="#HTTP-报文" class="headerlink" title="HTTP 报文"></a>HTTP 报文</h4><p>所有的 HTTP 报文都可以分为两类： 请求报文（request message）和响应报文<br>（response message）。</p>
+<p><strong>请求报文的格式</strong></p>
+<p><method> <request-URL> <version></p>
+<headers>
+
+<entity-body>
+
+<p>GET /test/hi-there.txt HTTP/1.1<br>Accept: text/*<br>Host: <a target="_blank" rel="noopener" href="http://www.joes-hardware.com/">www.joes-hardware.com</a></p>
+<p><strong>响应报文的格式</strong></p>
+<p><version> <status> <reason-phrase></p>
+<headers>
+
+<entity-body>
+
+<p>HTTP/1.0 200 OK<br>Content-type: text/plain<br>Content-length: 19<br>Hi! I’m a message!</p>
+<p><strong>包括以下三个部分</strong>。</p>
+<p><strong>• 起始行</strong><br>报文的第一行就是起始行，在请求报文中用来说明要做些什么，在响应报文中说<br>明出现了什么情况。<br><strong>• 首部字段</strong><br>起始行后面有零个或多个首部字段。每个首部字段都包含一个名字和一个值，为<br>了便于解析，两者之间用冒号（:）来分隔。首部以一个空行结束。添加一个首<br>部字段和添加新行一样简单。<br><strong>• 主体</strong><br>空行之后就是可选的报文主体了，其中包含了所有类型的数据。请求主体中包括<br>了要发送给 Web 服务器的数据；响应主体中装载了要返回给客户端的数据。起<br>始行和首部都是文本形式且都是结构化的，而主体则不同，主体中可以包含任意<br>的二进制数据（比如图片、视频、音轨、软件程序）。当然，主体中也可以包含<br>文本</p>
+<h4 id="一些常见的HTTP方法"><a href="#一些常见的HTTP方法" class="headerlink" title="一些常见的HTTP方法"></a>一些常见的HTTP方法</h4><p>HTTP方法     描　　述<br>GET     从服务器向客户端发送命名资源<br>PUT     将来自客户端的数据存储到一个命名的服务器资源中去<br>DELETE     从服务器中删除命名资源<br>POST     将客户端数据发送到一个服务器网关应用程序<br>HEAD     仅发送命名资源响应中的 HTTP 首部</p>
+<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p> 需要适应的各项要求</p>
+<p>• 服务器认证（客户端知道它们是在与真正的而不是伪造的服务器通话）。<br>• 客户端认证（服务器知道它们是在与真正的而不是伪造的客户端通话）。<br>• 完整性（客户端和服务器的数据不会被修改）。<br>• 加密（客户端和服务器的对话是私密的，无需担心被窃听）。<br>• 效率（一个运行的足够快的算法，以便低端的客户端和服务器使用）。<br>• 普适性（基本上所有的客户端和服务器都支持这些协议）。<br>• 管理的可扩展性（在任何地方的任何人都可以立即进行安全通信）。<br>• 适应性（能够支持当前最知名的安全方法）。<br>• 在社会上的可行性（满足社会的政治文化需要）。</p>
+<p><img src="http://img.flura.cn/http%E5%88%86%E5%B1%82.png" alt="https分层"></p>
+<h4 id="HTTP2-0"><a href="#HTTP2-0" class="headerlink" title="HTTP2.0"></a>HTTP2.0</h4><p>http是http1.x的升级，它是基于SPDY设计，但与SPDY存在一些不同，比如SPDY是强制使用HTTPS，而HTTP2.0支持HTTP传输(但是现在的主流的浏览器，还是只支持基于TLS部署的HTTP2.0协议，所以要想升级成2.0还是先升级HTTPS好。)；HTTP2.0消息头的压缩算法采用HPACK，而SPDY采用的是DEFLATE等。   <a target="_blank" rel="noopener" href="https://www.nginx.com/blog/nginx-1-9-5/">NGINX配置HTTP2.0官方指南</a> </p>
+<p>HTTP2.0的新特性相对于1.x</p>
+<ul>
+<li>多路复用： 允许在一个TCP连接上请求多个并发流，这样就可以降低延迟，同时提高带宽的利用率。</li>
+<li>请求优先级： 多路复用共享一个TCP连接，会导致关键请求被阻塞，HTTP2允许给每个请求设置优先级。客户端可以为每个请求分配一个优先级，这样就可以防止在网络通道被非关键资源堵塞时，高优先级的请求被挂起。比如浏览器加载首页，首页的html内容应该优先展示，之后才是各种静态资源文件，脚本文件等加载，这样可以保证用户能第一时间看到网页内容。</li>
+<li>HTTP报头压缩： 采用压缩算法对请求和响应HTTP报头进行压缩，可以减少传输的数据包数量和字节数。</li>
+<li>Server Push：允许服务主动推送数据给客户端，而不需要客户端发起请求，可以优化网页初次访问性能。例如我的网页有一个sytle.css的请求，在客户端收到sytle.css数据的同时，服务端会将sytle.js的文件推送给客户端，当客户端再次尝试获取sytle.js时就可以直接从缓存中获取到，不用再发请求了。</li>
+</ul>
+<h3 id="前端工具"><a href="#前端工具" class="headerlink" title="前端工具"></a>前端工具</h3><h4 id="代码编辑器与IDE"><a href="#代码编辑器与IDE" class="headerlink" title="代码编辑器与IDE"></a>代码编辑器与IDE</h4><p>常用代码编辑器：windows记事本、nodepad++(推荐用这个)、Emacs、Vim、Sublime Text、Atom、VS code(VS code逐渐成为前端领域的主流选择,因为vs code对TypeScript的支持程度是其他编辑器难以企及的)..</p>
+<p>IDE(集成开发环境)。与专注于代码编辑能力相比，IDE的职责要宽泛很多，包括但不限于代码编辑、运行、调试、编译打包甚至设计图形界面，常用IDE有：Visual Studio、WebStorm、Xcode、Dreamweaver等。</p>
+<h4 id="页面调试工具"><a href="#页面调试工具" class="headerlink" title="页面调试工具"></a>页面调试工具</h4><p><strong>Chrome DevTools</strong>(<a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools">https://developers.google.com/web/tools/chrome-devtools</a>)</p>
+<h4 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h4><h5 id="版本管理工具"><a href="#版本管理工具" class="headerlink" title="版本管理工具"></a>版本管理工具</h5><p> 在工程化越发复杂、多人协作日常化的今天，版本管理工具早已成为必需品，而Git这是当下的主流选择，搭配Github/Gitlab之类的代码托管工具，即可实现一个功能齐全的代码管理与共享工具</p>
+<p>Git官方网站：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a></p>
+<h5 id="设计工具"><a href="#设计工具" class="headerlink" title="设计工具"></a>设计工具</h5><p>Mac用户：Sketch，Famer X。</p>
+<p>Windows用户：PS，XD</p>
+<h5 id="抓包及代理工具"><a href="#抓包及代理工具" class="headerlink" title="抓包及代理工具"></a>抓包及代理工具</h5><p>在开发调试移动端的页面时，我们常常苦于无法使用类似于DevTools之类的工具查看网络请求，很多接口问题难以排查，此时我们往往会将无线设备的网络代理到电脑上，然后使用<strong>Charles</strong>(<a target="_blank" rel="noopener" href="https://www.charlesproxy.com)之类的工具抓包查看相关请求信息/">https://www.charlesproxy.com)之类的工具抓包查看相关请求信息</a></p>
+<h5 id="host管理"><a href="#host管理" class="headerlink" title="host管理"></a>host管理</h5><p>作为一个web开发者，绑定hosts可以说是再日常不过了，很多时候可能还要再多个应用/业务之间不断切换。这里推荐几个工具：</p>
+<ul>
+<li>SwitchHosts：跨平台</li>
+<li>iHosts：仅限苹果电脑</li>
+</ul>
+<h5 id="模拟请求及测试API"><a href="#模拟请求及测试API" class="headerlink" title="模拟请求及测试API"></a>模拟请求及测试API</h5><p>因为时常要测试服务端的API，需要模拟各种请求参数或者登录态</p>
+<ul>
+<li>Paw：仅限苹果电脑</li>
+<li>Postman：window</li>
+</ul>
+<h3 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h3><h4 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h4><h4 id="Angular"><a href="#Angular" class="headerlink" title="Angular"></a>Angular</h4><h4 id="React"><a href="#React" class="headerlink" title="React"></a>React</h4><p>官方文档(<a target="_blank" rel="noopener" href="https://react.js.org/">https://react.js.org/</a>)</p>
+<p><strong>环境搭建</strong>，对于初学者来说，建议使用facebook官方提供的脚手架工具Create-React-App，首先确保你已经安装了node.js 打开终端，依次输入一下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app my-app</span><br><span class="line">cd my-app</span><br><span class="line">npm start</span><br></pre></td></tr></table></figure>
+
+<p>……….</p>
+<h5 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h5><p>VDOM即是对真正的DOM的模拟，它与DOM一样，同样能够描述页面的结构、样式和内容。不过，VDOM往往以JavaScript对象的形式存储和操作，而不是浏览器提供的接口。</p>
+<p><strong>Virtual DOM中的diff算法</strong></p>
+<h4 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h4><h5 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h5><p><img src="https://cn.vuejs.org/images/lifecycle.png" alt="vue生命周期图示"></p>
+<p>Vue是一个构造函数，整个生命周期的入口是对Vue的实例化。在执行new Vue()时，Vue会依次初始化(init),和挂载(mount)两个阶段。</p>
+<p>在初始化阶段，Vue会触发生命周期事件、初始化Props、methods、data、computed与watch等。如果Vue的参数对象中没有render方法，则会调用模板编译器从template生成一个新的render函数，值得注意的是编译这一步会比较耗时，所以官方推荐使用离线构建的方式提前把模板编译成静态的render函数，以在线上获取更快的执行速度和更小的运行时体积。</p>
+<p>在挂载阶段，Vue会通过执行render方法，获得一个VDOM树，这颗树中的每一个节点对应一个真实的DOM节点，如果Vue的参数中有提供el选项，Vue会把这些节点渲染到el所代表的DOM节点上去，这个过程中Vue会依次触发beforeMount和mounted生命周期。</p>
+<p>挂载完成之后，如果数据发生了变更，Vue就会进入更新视图阶段。Vue会重新执行render函数，得到一个新的VDOM对象，并与原先的VDOM对象进行对比，这个对比的过程称之为patch，patch中的diff算法可以得到两个VDOM对象之间的差异。Vue在得到这些差异之后，会把这个变更应用到真实的DOM节点上。如果patch的结果是两者存在差异，在修改DOM之前会触发beforeUpdate生命周期，在修改DOM之后会触发updated生命周期。</p>
+<p>当一个Vue组件即将被销毁时，这有可能是父组件发生了重新渲染，删除了本组件。Vue会进入销毁阶段，Vue会触发beforeDestory生命周期，消除vm对象上的关联，包括watchers，事件监听器，data的依赖等，避免发生内存泄漏，同时也会递归的通知它的子组件进行销毁过程，当它的所有子组件完成销毁，会触发destroyed生命周期。</p>
+<h3 id="工程化知识"><a href="#工程化知识" class="headerlink" title="工程化知识"></a>工程化知识</h3><h4 id="自动化工程工具的使用"><a href="#自动化工程工具的使用" class="headerlink" title="自动化工程工具的使用"></a>自动化工程工具的使用</h4><ol>
+<li>使用前端构建工具<ul>
+<li>gulp、grunt、Broccoli</li>
+</ul>
+</li>
+<li>javascript 编译工具<ul>
+<li>Babel、Browserify、Webpack</li>
+</ul>
+</li>
+<li>开发辅助工具<ul>
+<li>数据 mock、livereload</li>
+</ul>
+</li>
+<li>使用CI集成工具<ul>
+<li>jenkins、Travis CI</li>
+</ul>
+</li>
+<li>使用脚手架工具<ul>
+<li>yeoman、create-app、vue-cli</li>
+</ul>
+</li>
+</ol>
+<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h3><p><strong>web服务框架</strong></p>
+<p>Node.js最常用的场景之一就是发布Web服务，而对应的框架则有两类</p>
+<ol>
+<li>简单的洋葱模型框架：比如Koa、Express，可以基于其丰富的Middlewares来快速的转配出一个Web服务。</li>
+<li>企业级的Web框架：比如阿里开发的Midway.js、Egg.js，可以基于一定约束多人开发一些中大规模的应用。</li>
+</ol>
+<p><strong>数据库</strong></p>
+<ol>
+<li>关系型数据库：Node.js有MySQL，PostgreSQL、Oracle、SQLite等常见关系型数据库产品的连接客户端，相匹配也有一些成熟的ORM产品让操作数据库更加的方便(比如Sequelize、TypeORM等)</li>
+<li>NoSQL产品：比如MongoDB、Redis等，更利于编写伸缩性强的分布式应用</li>
+</ol>
+<h4 id="构建跨端应用"><a href="#构建跨端应用" class="headerlink" title="构建跨端应用"></a>构建跨端应用</h4><h4 id="React-Native"><a href="#React-Native" class="headerlink" title="React Native"></a>React Native</h4><h5 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h5><p>在rn中，使用JSX来描述界面，使用css的子集Flexbox来申明样式</p>
+<p>Virtual Dom：对真实DOM的抽象，作为开发者描述的UI和实际渲染UI之间的桥梁。通过这层设计使得JS控制Native UI成为可能。在React Native中使用JSCore来运行js，将生成的VIrutal DOM以异步的形式传递给底层的渲染引擎。Native渲染引擎将接到手的指令转换为原生组件进行UI绘制。</p>
+<h5 id="通信机制"><a href="#通信机制" class="headerlink" title="通信机制"></a>通信机制</h5><p>在React Native中运行着以下几类线程：</p>
+<ul>
+<li>UI线程：即主线程，复杂最终UI界面的渲染</li>
+<li>JS线程：负责js执行、数据获取和事件处理等工作，也是React Native应用业务逻辑处理的地方</li>
+<li>Native 模块进程：当我们需要调用底层系统能力的时候，通常是单独开一个Native线程来处理。</li>
+</ul>
+<p>为了保证良好的用户体验，确保UI主线程不被阻塞，React Native中js和Native渲染引擎之间通信都是异步的、主要存在以下几类通信：</p>
+<ul>
+<li>界面渲染：js线程需要把UI的结构和样式传递给UI线程，并由UI线程渲染出最终的UI界面。这个过程是从js线程到ui线程的通信</li>
+<li>事件绑定与触发：由于UI线程组要负责UI界面的渲染和事件的触发，js线程负责事件的处理逻辑，因此js线程需要告诉ui线程需要监听哪些交互行为，当用户特定的交互行为发生时，UI线程需要把交互信息通知到js线程</li>
+<li>数据请求：当业务逻辑需要获取服务端数据、获取当前位置、调用摄像头等场景时，需要通知Native模块线程进行处理，然后将相关信息传给js线程。</li>
+</ul>
+<h4 id="Weex"><a href="#Weex" class="headerlink" title="Weex"></a>Weex</h4><h4 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h4><h3 id="图形技术"><a href="#图形技术" class="headerlink" title="图形技术"></a>图形技术</h3><h4 id="Canvas"><a href="#Canvas" class="headerlink" title="Canvas"></a>Canvas</h4><h4 id="WebGL-3D"><a href="#WebGL-3D" class="headerlink" title="WebGL 3D"></a>WebGL 3D</h4><h3 id="Web安全"><a href="#Web安全" class="headerlink" title="Web安全"></a>Web安全</h3><h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>首先说下最常见的 XSS 漏洞，XSS (Cross Site Script)，跨站脚本攻击，因为缩写和 CSS (Cascading Style Sheets) 重叠，所以只能叫 XSS。</p>
+<p>XSS 的原理是恶意攻击者往 Web 页面里插入恶意可执行网页脚本代码，当用户浏览该页之时，嵌入其中 Web 里面的脚本代码会被执行，从而可以达到攻击者盗取用户信息或其他侵犯用户安全隐私的目的。XSS 的攻击方式千变万化，但还是可以大致细分为几种类型。</p>
+<h5 id="非持久型-XSS-漏洞"><a href="#非持久型-XSS-漏洞" class="headerlink" title="非持久型 XSS 漏洞"></a>非持久型 XSS 漏洞</h5><p>也叫反射型 XSS 漏洞，一般是通过给别人发送带有恶意脚本代码参数的 URL，当 URL 地址被打开时，特有的恶意代码参数被 HTML 解析、执行。</p>
+<p>非持久型 XSS 漏洞攻击有以下几点<strong>特征</strong>：</p>
+<ul>
+<li>即时性，不经过服务器存储，直接通过 HTTP 的 GET 和 POST 请求就能完成一次攻击，拿到用户隐私数据。</li>
+<li>攻击者需要诱骗点击</li>
+<li>反馈率低，所以较难发现和响应修复</li>
+<li>盗取用户敏感保密信息</li>
+</ul>
+<h4 id="持久型-XSS"><a href="#持久型-XSS" class="headerlink" title="持久型 XSS"></a>持久型 XSS</h4><p>持久型 XSS 漏洞，也被称为存储型 XSS 漏洞，一般存在于 Form 表单提交等交互功能，如发帖留言，提交文本信息等，黑客利用的 XSS 漏洞，将内容经正常功能提交进入数据库持久保存，当前端页面获得后端从数据库中读出的注入代码时，恰好将其渲染执行。</p>
+<p>主要注入页面方式和非持久型 XSS 漏洞类似，只不过持久型的不是来源于 URL，refferer，forms 等，而是来源于后端从数据库中读出来的数据。持久型 XSS 攻击不需要诱骗点击，黑客只需要在提交表单的地方完成注入即可，但是这种 XSS 攻击的成本相对还是很高。攻击成功需要同时满足以下几个条件：</p>
+<ul>
+<li>POST 请求提交表单后端没做转义直接入库。</li>
+<li>后端从数据库中取出数据没做转义直接输出给前端。</li>
+<li>前端拿到后端数据没做转义直接渲染成 DOM。</li>
+</ul>
+<p>持久型 XSS 有以下几个<strong>特点</strong>：</p>
+<ul>
+<li>持久性，植入在数据库中</li>
+<li>危害面广，甚至可以让用户机器变成 DDoS 攻击的肉鸡。</li>
+<li>盗取用户敏感私密信息</li>
+</ul>
+<h4 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h4><p>CSRF（Cross-Site Request Forgery），中文名称：跨站请求伪造攻击</p>
+<p>完成 CSRF 攻击必须要有三个条件：</p>
+<ol>
+<li>用户已经登录了站点 A，并在本地记录了 cookie</li>
+<li>在用户没有登出站点 A 的情况下（也就是 cookie 生效的情况下），访问了恶意攻击者提供的引诱危险站点 B (B 站点要求访问站点A)。</li>
+<li>站点 A 没有做任何 CSRF 防御</li>
+</ol>
+<h4 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h4><p>SQL 注入漏洞（SQL Injection）是 Web 开发中最常见的一种安全漏洞。可以用它来从数据库获取敏感信息，或者利用数据库的特性执行添加用户，导出文件等一系列恶意操作，甚至有可能获取数据库乃至系统用户最高权限。</p>
+<p>而造成 SQL 注入的原因是因为程序没有有效的转义过滤用户的输入，使攻击者成功的向服务器提交恶意的 SQL 查询代码，程序在接收后错误的将攻击者的输入作为查询语句的一部分执行，导致原始的查询逻辑被改变，额外的执行了攻击者精心构造的恶意代码</p>
+<h4 id="DDoS-攻击"><a href="#DDoS-攻击" class="headerlink" title="DDoS 攻击"></a>DDoS 攻击</h4><p>DDoS 又叫分布式拒绝服务，全称 Distributed Denial of Service，其原理就是利用大量的请求造成资源过载，导致服务不可用。当DDoS攻击者制造高流量无用数据，造成网络拥塞，使受害主机无法正常和外界通讯。因为一直在处理无用的数据，就没有多余资源去处理正常数据了。最后造成的结果，轻则网速变慢，重则网络瘫痪，服务器系统奔溃，导致死机。</p>
+<p>面对DDoS，目前不存在彻底解决方法，通常通过提升硬件性能、分布式应用部署、DDoS清洗等方案提高应对DDoS的防御能力。</p>
+<h4 id="web安全常用工具"><a href="#web安全常用工具" class="headerlink" title="web安全常用工具"></a>web安全常用工具</h4><p>Fiddle：Window常用抓包工具</p>
+<p>Charles：常用的网络抓包工具</p>
+<p>sqlmap：SQL注入检测工具</p>
+<p>curl：命令行网络请求工具</p>
+<p>burp suite：请求截获与修改工具</p>
+<p>ant-XSS：XSS检测工具</p>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><h4 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h4><p><img src="http://img.flura.cn/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5.png" alt="网站的缓存策略"></p>
+<h4 id="常见性能优化措施"><a href="#常见性能优化措施" class="headerlink" title="常见性能优化措施"></a>常见性能优化措施</h4><p><img src="http://img.flura.cn/%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" rel="tag"># 知识体系</a>
+              <a href="/tags/%E6%9D%82%E9%A1%B9/" rel="tag"># 杂项</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/31/js%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="js判断数据类型">
+      <i class="fa fa-chevron-left"></i> js判断数据类型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/" rel="next" title="浅谈java与JavaScript的一些特性">
+      浅谈java与JavaScript的一些特性 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">前端知识体系概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">1.0.1.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#css%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">css的发展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">1.0.2.</span> <span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript%E7%BB%84%E6%88%90"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">JavaScript组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">JavaScript能做什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">JavaScript的发展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP"><span class="nav-number">1.0.3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-%E6%8A%A5%E6%96%87"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">HTTP 报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">一些常见的HTTP方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">HTTPS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP2-0"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">HTTP2.0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.</span> <span class="nav-text">前端工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8EIDE"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">代码编辑器与IDE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">页面调试工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">其他工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.3.1.</span> <span class="nav-text">版本管理工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.3.2.</span> <span class="nav-text">设计工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%93%E5%8C%85%E5%8F%8A%E4%BB%A3%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.4.3.3.</span> <span class="nav-text">抓包及代理工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#host%E7%AE%A1%E7%90%86"><span class="nav-number">1.0.4.3.4.</span> <span class="nav-text">host管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%B5%8B%E8%AF%95API"><span class="nav-number">1.0.4.3.5.</span> <span class="nav-text">模拟请求及测试API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6"><span class="nav-number">1.0.5.</span> <span class="nav-text">前端框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jQuery"><span class="nav-number">1.0.5.1.</span> <span class="nav-text">jQuery</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Angular"><span class="nav-number">1.0.5.2.</span> <span class="nav-text">Angular</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React"><span class="nav-number">1.0.5.3.</span> <span class="nav-text">React</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Virtual-DOM"><span class="nav-number">1.0.5.3.1.</span> <span class="nav-text">Virtual DOM</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue"><span class="nav-number">1.0.5.4.</span> <span class="nav-text">Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.0.5.4.1.</span> <span class="nav-text">生命周期</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%9F%A5%E8%AF%86"><span class="nav-number">1.0.6.</span> <span class="nav-text">工程化知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E7%A8%8B%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">自动化工程工具的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js"><span class="nav-number">1.0.7.</span> <span class="nav-text">Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E8%B7%A8%E7%AB%AF%E5%BA%94%E7%94%A8"><span class="nav-number">1.0.7.1.</span> <span class="nav-text">构建跨端应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React-Native"><span class="nav-number">1.0.7.2.</span> <span class="nav-text">React Native</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.0.7.2.1.</span> <span class="nav-text">架构设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="nav-number">1.0.7.2.2.</span> <span class="nav-text">通信机制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Weex"><span class="nav-number">1.0.7.3.</span> <span class="nav-text">Weex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flutter"><span class="nav-number">1.0.7.4.</span> <span class="nav-text">Flutter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E6%8A%80%E6%9C%AF"><span class="nav-number">1.0.8.</span> <span class="nav-text">图形技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Canvas"><span class="nav-number">1.0.8.1.</span> <span class="nav-text">Canvas</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebGL-3D"><span class="nav-number">1.0.8.2.</span> <span class="nav-text">WebGL 3D</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E5%AE%89%E5%85%A8"><span class="nav-number">1.0.9.</span> <span class="nav-text">Web安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#XSS"><span class="nav-number">1.0.9.1.</span> <span class="nav-text">XSS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%9E%E6%8C%81%E4%B9%85%E5%9E%8B-XSS-%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.0.9.1.1.</span> <span class="nav-text">非持久型 XSS 漏洞</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%9E%8B-XSS"><span class="nav-number">1.0.9.2.</span> <span class="nav-text">持久型 XSS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSRF"><span class="nav-number">1.0.9.3.</span> <span class="nav-text">CSRF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL-%E6%B3%A8%E5%85%A5"><span class="nav-number">1.0.9.4.</span> <span class="nav-text">SQL 注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDoS-%E6%94%BB%E5%87%BB"><span class="nav-number">1.0.9.5.</span> <span class="nav-text">DDoS 攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#web%E5%AE%89%E5%85%A8%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">1.0.9.6.</span> <span class="nav-text">web安全常用工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.0.10.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5"><span class="nav-number">1.0.10.1.</span> <span class="nav-text">缓存策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%AA%E6%96%BD"><span class="nav-number">1.0.10.2.</span> <span class="nav-text">常见性能优化措施</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

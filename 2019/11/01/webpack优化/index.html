@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。 提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack性能优化">
+<meta property="og:url" content="http://www.flura.cn/2019/11/01/webpack%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。 提高构建速度减小编译范围缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来 1234567">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-01T01:09:21.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.492Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="项目优化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2019/11/01/webpack%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>webpack性能优化 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/11/01/webpack%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack性能优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-01 09:09:21" itemprop="dateCreated datePublished" datetime="2019-11-01T09:09:21+08:00">2019-11-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文根据经验总结了一些对于webpack的优化方法。分别从webpack打包前的构建优化(提高代码构建速度)。打包后的线上体验优化。参考并总结了现在常见的优化方法。希望以后可以提升webpack构建的项目性能。</p>
+<h1 id="提高构建速度"><a href="#提高构建速度" class="headerlink" title="提高构建速度"></a>提高构建速度</h1><h2 id="减小编译范围"><a href="#减小编译范围" class="headerlink" title="减小编译范围"></a>减小编译范围</h2><p>缩小编译范围，减少不必要的编译工作，即 modules、mainFields、noParse、includes、exclude、alias全部用起来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">const resolve = dir =&gt; path.join(__dirname, &#x27;..&#x27;, dir);</span><br><span class="line"></span><br><span class="line">// ...</span><br><span class="line">resolve: &#123;</span><br><span class="line">    modules: [ // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索</span><br><span class="line">        resolve(&#x27;src&#x27;),</span><br><span class="line">        resolve(&#x27;node_modules&#x27;),</span><br><span class="line">        resolve(config.common.layoutPath)</span><br><span class="line">    ],</span><br><span class="line">    mainFields: [&#x27;main&#x27;], // 只采用main字段作为入口文件描述字段，减少搜索步骤</span><br><span class="line">    alias: &#123;</span><br><span class="line">        vue$: &quot;vue/dist/vue.common&quot;,</span><br><span class="line">        &quot;@&quot;: resolve(&quot;src&quot;) // 缓存src目录为@符号，避免重复寻址</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">module: &#123;</span><br><span class="line">    noParse: /jquery|lodash/, // 忽略未采用模块化的文件，因此jquery或lodash将不会被下面的loaders解析</span><br><span class="line">    // noParse: function(content) &#123;</span><br><span class="line">    //     return /jquery|lodash/.test(content)</span><br><span class="line">    // &#125;,</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            include: [ // 表示只解析以下目录，减少loader处理范围</span><br><span class="line">                resolve(&quot;src&quot;),</span><br><span class="line">                resolve(config.common.layoutPath)</span><br><span class="line">            ],</span><br><span class="line">            exclude: file =&gt; /test/.test(file), // 排除test目录文件</span><br><span class="line">            loader: &quot;happypack/loader?id=happy-babel&quot; // 后面会介绍</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="并发构建"><a href="#并发构建" class="headerlink" title="并发构建"></a>并发构建</h2><h3 id="terser-webpack-plugin"><a href="#terser-webpack-plugin" class="headerlink" title="terser-webpack-plugin"></a>terser-webpack-plugin</h3><p>压缩是构建中耗时占比较大的一环，我们可以启用 terser-webpack-plugin 的多线程压缩，减少压缩时间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimizer: [</span><br><span class="line">      new TerserJSPlugin(&#123;</span><br><span class="line">        parallel: true // 开启多线程压缩</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="webpack-parallel-uglify-plugin"><a href="#webpack-parallel-uglify-plugin" class="headerlink" title="webpack-parallel-uglify-plugin"></a>webpack-parallel-uglify-plugin</h3><p>实际上，搭载 webpack-parallel-uglify-plugin 插件，这个过程可以倍速提升。我们都知道 node 是单线程的，但node能够fork子进程，基于此，webpack-parallel-uglify-plugin 能够把任务分解给多个子进程去并发的执行，子进程处理完后再把结果发送给主进程，从而实现并发编译，进而大幅提升js压缩速度，如下是配置。<strong>多线程压缩</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">const ParallelUglifyPlugin = require(&#x27;webpack-parallel-uglify-plugin&#x27;);</span><br><span class="line"></span><br><span class="line">// ...</span><br><span class="line">optimization: &#123;</span><br><span class="line">    minimizer: [</span><br><span class="line">        new ParallelUglifyPlugin(&#123; // 多进程压缩</span><br><span class="line">            cacheDir: &#x27;.cache/&#x27;,</span><br><span class="line">            uglifyJS: &#123;</span><br><span class="line">                output: &#123;</span><br><span class="line">                    comments: false,</span><br><span class="line">                    beautify: false</span><br><span class="line">                &#125;,</span><br><span class="line">                compress: &#123;</span><br><span class="line">                    wa  rnings: false,</span><br><span class="line">                    drop_console: true,</span><br><span class="line">                    collapse_vars: true,</span><br><span class="line">                    reduce_vars: true</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="HappyPack"><a href="#HappyPack" class="headerlink" title="HappyPack"></a>HappyPack</h3><p>同 webpack-parallel-uglify-plugin 插件一样，HappyPack 也能实现并发编译，从而可以大幅提升 loader 的解析速度， 如下是部分配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const HappyPack = require(&#x27;happypack&#x27;);</span><br><span class="line">const happyThreadPool = HappyPack.ThreadPool(&#123; size: os.cpus().length &#125;);</span><br><span class="line">const createHappyPlugin = (id, loaders) =&gt; new HappyPack(&#123;</span><br><span class="line">    id: id,</span><br><span class="line">    loaders: loaders,</span><br><span class="line">    threadPool: happyThreadPool,</span><br><span class="line">    verbose: process.env.HAPPY_VERBOSE === &#x27;1&#x27; // make happy more verbose with HAPPY_VERBOSE=1</span><br><span class="line">&#125;);</span><br><span class="line">12345678</span><br></pre></td></tr></table></figure>
+
+<p>那么，对于前面 <code>loader: &quot;happypack/loader?id=happy-babel&quot;</code> 这句，便需要在 plugins 中创建一个 <code>happy-babel</code> 的插件实例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">    createHappyPlugin(&#x27;happy-babel&#x27;, [&#123;</span><br><span class="line">        loader: &#x27;babel-loader&#x27;,</span><br><span class="line">        options: &#123;</span><br><span class="line">            babelrc: true,</span><br><span class="line">            cacheDirectory: true // 启用缓存</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;])</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>像 vue-loader、css-loader 都支持 happyPack 加速，如下所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">    createHappyPlugin(&#x27;happy-css&#x27;, [&#x27;css-loader&#x27;, &#x27;vue-style-loader&#x27;]),</span><br><span class="line">    new HappyPack(&#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            path: &#x27;vue-loader&#x27;,</span><br><span class="line">            query: &#123;</span><br><span class="line">                loaders: &#123;</span><br><span class="line">                    scss: &#x27;vue-style-loader!css-loader!postcss-loader!sass-loader?indentedSyntax&#x27;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="noParse（无需解析内部依赖的包）"><a href="#noParse（无需解析内部依赖的包）" class="headerlink" title="noParse（无需解析内部依赖的包）"></a>noParse（无需解析内部依赖的包）</h2><p>对于我们引入的一些第三方包，比如<code>jQuery</code>，在这些包内部是肯定不会依赖别的包，所以根本不需要webpack去解析它内部的依赖关系，可以在<code>webpack</code>配置文件中的<code>module</code>属性下加上<code>noParse</code>属性，它的值是一个正则表达式，用来匹配无需解析的模块，这样可以节约<code>webpack</code>的打包时间，提高打包效率。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module：&#123;</span><br><span class="line">    noParse：/jquery/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DllPlugin-amp-DllReferencePlugin-提前打包公共依赖"><a href="#DllPlugin-amp-DllReferencePlugin-提前打包公共依赖" class="headerlink" title="DllPlugin &amp; DllReferencePlugin 提前打包公共依赖"></a>DllPlugin &amp; DllReferencePlugin 提前打包公共依赖</h2><p>我们都知道，webpack打包时，有一些框架代码是基本不变的，比如说 babel-polyfill、vue、vue-router、vuex、axios、element-ui、fastclick 等，这些模块也有不小的 size，每次编译都要加载一遍，比较费时费力。使用 DLLPlugin 和 DLLReferencePlugin 插件，便可以将这些模块提前打包。</p>
+<p>当项目达到一定体量，打包速度、热加载性能优化的需求就会被提出来，毕竟谁也不愿意修改后花上十几秒甚至几分钟等待修改视图更新。接下里我会介绍一些通用的优化策略，但需要注意的是，项目本身不能去踩一些无法优化的坑，已知两坑：超多页（ html-webpack-plugin 热更新时更新所有页面）和动态加载未指明明确路径（打包目录下所有页面）。</p>
+<p>DllPlugin 和 DllReferencePlugin 绝对是优化打包速度的最佳利器，它可以把部分公共依赖提前打包好，在之后的打包中就不再打包这些依赖而是直接取用已经打包好的代码，通常情况能降低 20% ~ 40% 打包时间，当然它也有缺点：</p>
+<ul>
+<li>需要在初始化和相关依赖更新时，额外执行一条命令</li>
+<li>通常 dll 是在 <code>.html</code> 文件中引入，滥用会导致首屏加载变慢</li>
+</ul>
+<p>但总归来说是利大于弊。</p>
+<p>为了完成 dll 过程，我们需要准备一份新的webpack配置，即 webpack.dll.config.js。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const CleanWebpackPlugin = require(&quot;clean-webpack-plugin&quot;);</span><br><span class="line">const dllPath = path.resolve(__dirname, &quot;../src/assets/dll&quot;); // dll文件存放的目录</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        // 把 vue 相关模块的放到一个单独的动态链接库</span><br><span class="line">        vue: [&quot;babel-polyfill&quot;, &quot;fastclick&quot;, &quot;vue&quot;, &quot;vue-router&quot;, &quot;vuex&quot;, &quot;axios&quot;, &quot;element-ui&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name]-[hash].dll.js&quot;, // 生成vue.dll.js</span><br><span class="line">        path: dllPath,</span><br><span class="line">        library: &quot;_dll_[name]&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CleanWebpackPlugin([&quot;*.js&quot;], &#123; // 清除之前的dll文件</span><br><span class="line">            root: dllPath,</span><br><span class="line">        &#125;),</span><br><span class="line">        new webpack.DllPlugin(&#123;</span><br><span class="line">            name: &quot;_dll_[name]&quot;,</span><br><span class="line">            // manifest.json 描述动态链接库包含了哪些内容</span><br><span class="line">            path: path.join(__dirname, &quot;./&quot;, &quot;[name].dll.manifest.json&quot;)</span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">&#125;;</span><br><span class="line">1234567891011121314151617181920212223242526</span><br></pre></td></tr></table></figure>
+
+<p>接着， 需要在 package.json 中新增 dll 命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dll&quot;: &quot;webpack --mode production --config build/webpack.dll.config.js&quot;</span><br><span class="line">&#125;</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>运行 <code>npm run dll</code> 后，会生成 <code>./src/assets/dll/vue.dll-[hash].js</code> 公共js 和 <code>./build/vue.dll.manifest.json</code> 资源说明文件，至此 dll 准备工作完成，接下来在 webpack 中引用即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">externals: &#123;</span><br><span class="line">    &#x27;vue&#x27;: &#x27;Vue&#x27;,</span><br><span class="line">    &#x27;vue-router&#x27;: &#x27;VueRouter&#x27;,</span><br><span class="line">    &#x27;vuex&#x27;: &#x27;vuex&#x27;,</span><br><span class="line">    &#x27;elemenct-ui&#x27;: &#x27;ELEMENT&#x27;,</span><br><span class="line">    &#x27;axios&#x27;: &#x27;axios&#x27;,</span><br><span class="line">    &#x27;fastclick&#x27;: &#x27;FastClick&#x27;</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">    ...(config.common.needDll ? [</span><br><span class="line">        new webpack.DllReferencePlugin(&#123;</span><br><span class="line">            manifest: require(&quot;./vue.dll.manifest.json&quot;)</span><br><span class="line">        &#125;)</span><br><span class="line">    ] : [])</span><br><span class="line">]</span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
+
+<p>dll 公共js轻易不会变化，假如在将来真的发生了更新，那么新的dll文件名便需要加上新的hash，从而避免浏览器缓存老的文件，造成执行出错。由于 hash 的不确定性，我们在 html 入口文件中没办法指定一个固定链接的 script 脚本，刚好，add-asset-html-webpack-plugin 插件可以帮我们自动引入 dll 文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const autoAddDllRes = () =&gt; &#123;</span><br><span class="line">    const AddAssetHtmlPlugin = require(&#x27;add-asset-html-webpack-plugin&#x27;);</span><br><span class="line">    return new AddAssetHtmlPlugin([&#123; // 往html中注入dll js</span><br><span class="line">        publicPath: config.common.publicPath + &quot;dll/&quot;,  // 注入到html中的路径</span><br><span class="line">        outputPath: &quot;dll&quot;, // 最终输出的目录</span><br><span class="line">        filepath: resolve(&quot;src/assets/dll/*.js&quot;),</span><br><span class="line">        includeSourcemap: false,</span><br><span class="line">        typeOfAsset: &quot;js&quot; // options js、css; default js</span><br><span class="line">    &#125;]);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// ...</span><br><span class="line">plugins: [</span><br><span class="line">    ...(config.common.needDll ? [autoAddDllRes()] : [])</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成合理的-Source-Map"><a href="#生成合理的-Source-Map" class="headerlink" title="生成合理的 Source Map"></a>生成合理的 Source Map</h2><p>在 webpack 4 中，是否生成 Source Map 以及生成怎样的 Source Map 是由 <code>devtool</code> 配置控制的，选择合理的 Source Map 可以有效的缩短打包时间。在选择前我们还是应该明白，不设置 Source Map 时打包是最快的，之所以需要 Source Map ，是因为打包后的代码结构、文件名和打包前完全不一致，当存在报错时我们只能直接定位到打包后的某个文件，无法定位到源文件，极大程度增加了调试难度。而 Source Map 就是为了增强打包后代码的可调试性而存在的，所以我们在开发环境总是需要它，在生产环境则有更多选择。</p>
+<p><code>devtool</code> 可选配置有 <code>none</code> 、 <code>eval</code> 、 <code>cheap-eval-source-map</code> 等 13 种，各自功能和性能比较在 <a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/devtool/">文档</a> 中有详细介绍。</p>
+<p>配置项由一个或多个单词和连字符组成，每个单词都有其含义和性能损耗，每个配置项最终意义就由这些单词决定：</p>
+<ul>
+<li><code>none</code> 不生成 Source Map ，性能 +++</li>
+<li><code>eavl</code> 每个模块由 <code>eval</code> 执行，不能正确显示行数，不能用生产模式，性能 +++</li>
+<li><code>module</code> 报错显示原始代码，性能 -</li>
+<li><code>source</code> 报错显示行列信息，显示 babel 转译后代码，性能 –</li>
+<li><code>cheap</code> 低开销模式，不映射列，性能 +</li>
+<li><code>inline</code> 不生成单独的 Source Map 文件，性能 o</li>
+</ul>
+<h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><p>由于开发模式建议显示报错源码和行信息，所以 <code>module</code> 和 <code>source</code> 都是需要的，为了性能我们又需要 <code>eval</code> 和 <code>cheap</code> ，所以参照配置项能找到最适合开发环境的配置是 <code>devtool: cheap-module-eval-source-map</code> 。</p>
+<h4 id="生产环境"><a href="#生产环境" class="headerlink" title="生产环境"></a>生产环境</h4><p>生产环境由于几乎不存在调试需求（ JS 相关调试），所以建议大家设置 <code>devtool: none</code> ，在需要调试的时候再更改设置为 <code>devtool: cheap-module-source-map</code> 。</p>
+<p>分别配置 mode属性，设置为 <code>development</code> 将获得最好的开发体验，设置为 <code>production</code> 将专注项目编译部署，比如说开启 Scope hoisting 和 Tree-shaking 功能。</p>
+<h1 id="线上环境用户体验优化"><a href="#线上环境用户体验优化" class="headerlink" title="线上环境用户体验优化"></a>线上环境用户体验优化</h1><h2 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h2><p>Vue  是单页面应用，可能会有很多的路由引入 ，这样使用 webpcak 打包后的文件很大，当进入首页时，加载的资源过多，页面会出现白屏的情况，不利于用户体验。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应的组件，这样就更加高效了。这样会大大提高首屏显示的速度，但是可能其他的页面的速度就会降下来。</p>
+<p><strong>路由懒加载：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const Foo = () =&gt; import(&#x27;./Foo.vue&#x27;)</span><br><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123; path: &#x27;/foo&#x27;, component: Foo &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="组件异步加载"><a href="#组件异步加载" class="headerlink" title="组件异步加载"></a>组件异步加载</h2><p>如果组件在页面加载时不需要，只在调用时用到，这时可以使用异步组件的写法。仅仅是引入和组件注册写法不同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// template</span><br><span class="line">&lt;test v-if=&quot;showTest&quot;&gt;&lt;/test&gt;</span><br><span class="line"></span><br><span class="line">// script</span><br><span class="line">  components: &#123;</span><br><span class="line">    test: () =&gt; import(&#x27;./test&#x27;) // 将组件异步引入，告诉webpack，将该部分代码分割打包</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">      clickTest () &#123;</span><br><span class="line">          this.showTest = !this.showTest</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="魔法注释"><a href="#魔法注释" class="headerlink" title="魔法注释"></a>魔法注释</h2><p>在懒加载的同时可以使用魔法注释：<code>Prefetching</code>，可以在首页资源加载完毕后，<strong>空闲时间时，将动态导入的资源加载进来</strong>，这样即可以提高页面加载速度又保证了用户体验。(感觉有点类似于h2的主动推送)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const Foo = () =&gt; import(/* webpackChunkName: &quot;group-foo&quot; */ &#x27;./Foo.vue&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="代码优化-压缩"><a href="#代码优化-压缩" class="headerlink" title="代码优化 压缩"></a>代码优化 压缩</h2><p>vue-cli已经使用UglifyJsPlugin 插件来压缩代码，可以设置成如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">  compress: &#123;</span><br><span class="line">    warnings: false,</span><br><span class="line">    drop_console: true,</span><br><span class="line">    pure_funcs: [&#x27;console.log&#x27;]</span><br><span class="line">  &#125;,</span><br><span class="line">  sourceMap: false</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="代码分离-SplitChunksPlugin"><a href="#代码分离-SplitChunksPlugin" class="headerlink" title="代码分离(SplitChunksPlugin)"></a>代码分离(SplitChunksPlugin)</h2><p>代码分离有两个优点：</p>
+<ul>
+<li><p>剥离公共代码和依赖，避免重复打包</p>
+</li>
+<li><p>避免单个文件体积过大</p>
+<p>总加载体积一致，浏览器加载多个文件通常快于单个文件</p>
+</li>
+</ul>
+<p>为了解决公共资源被重复打包问题，我们就需要 <a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/split-chunks-plugin/">SplitChunksPlugin</a> 的帮助，它可以把代码分离成不同的 bundle ，在页面需要时被加载。另外 SplitChunksPlugin 是 webpack 4 的内置插件，所以我们不需要去独立安装它。</p>
+<p>使用方法：只需在主配置文件中添加如下配置即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Optimization: &#123;</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">        Chunks: &#x27;all&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="tree-shaking"><a href="#tree-shaking" class="headerlink" title="tree shaking"></a>tree shaking</h2><p>上面我们分离代码，解决了项目中部分代码被重复打包到多个生成物中的问题，有效地缩小了生成物体积，但其实我们还可以在此基础上进一步缩小体积，这就涉及本小节的概念 tree shaking 。</p>
+<blockquote>
+<p>tree shaking 是一个术语，通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。它依赖于 ES2015 模块语法的 静态结构 特性，例如 import 和 export。</p>
+</blockquote>
+<blockquote>
+<p>你可以将应用程序想象成一棵树。绿色表示实际用到的 source code(源码) 和 library(库)，是树上活的树叶。灰色表示未引用代码，是秋天树上枯萎的树叶。为了除去死去的树叶，你必须摇动这棵树，使它们落下。</p>
+</blockquote>
+<p>我们回头看在使用 SplitChunksPlugin 时生成的文件，可以发现 <code>say</code> 函数没有使用但是却被打包进来了，它实际上是无用的代码，也就是文档中说的 dead-code 。要删除这些代码，只需要把 <code>mode</code> 修改为 <code>production</code> （让 tree shaking 生效），再次打包~</p>
+<p>不过需要注意的是， tree shaking 能移除无用代码的同时，也有一定的副作用（错误识别无用代码）。比如你可能会遇到 <strong>UI 组件库没有样式</strong>的问题，这个问题原因在于 tree shaking 不仅对 JS 生效，也对 CSS 生效 。我们通常在导入 CSS 时使用 <code>import &#39;xxx.min.css&#39;</code> ， ES6 的静态导入 + 生产环境满足了 tree shaking 的生效条件，并且 Webpack 无法判断 CSS 有效，所以它被当做了 dead-code 然后被删除。为了解决这个问题，你可以在 <code>package.json</code> 中添加一个 <code>sideEffects</code> 选项，告知 Webpack 那些文件是可以直接引入而不用 tree shaking 检查的，使用如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;sideEffects&quot;: [</span><br><span class="line">    &quot;*.css&quot;,</span><br><span class="line">    &quot;*.styl(us)?&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="cdn加速"><a href="#cdn加速" class="headerlink" title="cdn加速"></a>cdn加速</h2><p>浏览器从服务器上下载 CSS、js 和图片等文件时都要和服务器连接，而大部分服务器的带宽有限，如果超过限制，网页就半天反应不过来。而 CDN 可以通过不同的域名来加载文件，从而使下载文件的并发连接数大大增加，且CDN 具有更好的可用性，更低的网络延迟和丢包率 。</p>
+<p>或者直接开启<strong>全站加速</strong>服务。对你部署的域名或者ip进行加速，无需对服务器源站上的资源进行改造，全站加速会智能区分动静态内容并分别加速。整个网站的资源访问速度都会大大加快。</p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d68d6b0e51d4561a60d9e1c?utm_source=gold_browser_extension">webpack优化的一些基本方法</a></p>
+<p><a target="_blank" rel="noopener" href="http://louiszhai.github.io/2019/01/04/webpack4/">使用webpack4提升180%编译速度</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5b652b036fb9a04fa01d616b">三十分钟掌握Webpack性能优化</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/" rel="tag"># 项目优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9(%E5%B7%A5%E4%BD%9C%E6%B5%81)-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/" rel="prev" title="家园工作室项目注意事项(工作流)-新人必读">
+      <i class="fa fa-chevron-left"></i> 家园工作室项目注意事项(工作流)-新人必读
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/19/Js%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="Js对象模式">
+      Js对象模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">提高构建速度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%8F%E5%B0%8F%E7%BC%96%E8%AF%91%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">减小编译范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%9E%84%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">并发构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#terser-webpack-plugin"><span class="nav-number">1.2.1.</span> <span class="nav-text">terser-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-parallel-uglify-plugin"><span class="nav-number">1.2.2.</span> <span class="nav-text">webpack-parallel-uglify-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HappyPack"><span class="nav-number">1.2.3.</span> <span class="nav-text">HappyPack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noParse%EF%BC%88%E6%97%A0%E9%9C%80%E8%A7%A3%E6%9E%90%E5%86%85%E9%83%A8%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">noParse（无需解析内部依赖的包）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DllPlugin-amp-DllReferencePlugin-%E6%8F%90%E5%89%8D%E6%89%93%E5%8C%85%E5%85%AC%E5%85%B1%E4%BE%9D%E8%B5%96"><span class="nav-number">1.4.</span> <span class="nav-text">DllPlugin &amp; DllReferencePlugin 提前打包公共依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%90%88%E7%90%86%E7%9A%84-Source-Map"><span class="nav-number">1.5.</span> <span class="nav-text">生成合理的 Source Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">生产环境</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E4%B8%8A%E7%8E%AF%E5%A2%83%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">线上环境用户体验优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.1.</span> <span class="nav-text">路由懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.2.</span> <span class="nav-text">组件异步加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AD%94%E6%B3%95%E6%B3%A8%E9%87%8A"><span class="nav-number">2.3.</span> <span class="nav-text">魔法注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96-%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.4.</span> <span class="nav-text">代码优化 压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E7%A6%BB-SplitChunksPlugin"><span class="nav-number">2.5.</span> <span class="nav-text">代码分离(SplitChunksPlugin)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree-shaking"><span class="nav-number">2.6.</span> <span class="nav-text">tree shaking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cdn%E5%8A%A0%E9%80%9F"><span class="nav-number">2.7.</span> <span class="nav-text">cdn加速</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E5%8D%9A%E5%AE%A2"><span class="nav-number">3.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

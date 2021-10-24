@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、初始化项目文件夹在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入npm init进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个package.json文件。 随后在该项目文件夹下新建两个文件夹：&#x2F;dist和&#x2F;src，其中&#x2F;src用于放置开发的源码，&#x2F;dist用于放置“编译”后的代码。 随后在&#x2F;src目录下新建index">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack4从零配置react项目">
+<meta property="og:url" content="http://www.flura.cn/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="一、初始化项目文件夹在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入npm init进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个package.json文件。 随后在该项目文件夹下新建两个文件夹：&#x2F;dist和&#x2F;src，其中&#x2F;src用于放置开发的源码，&#x2F;dist用于放置“编译”后的代码。 随后在&#x2F;src目录下新建index">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-07T02:16:16.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.492Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="TS">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="前端工程化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>webpack4从零配置react项目 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack4从零配置react项目
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-07 10:16:16" itemprop="dateCreated datePublished" datetime="2019-10-07T10:16:16+08:00">2019-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一、初始化项目文件夹"><a href="#一、初始化项目文件夹" class="headerlink" title="一、初始化项目文件夹"></a>一、初始化项目文件夹</h2><p>在任意目录下，新建一个文件夹作为你的项目文件夹，命名随意。随后使用命令行工具，切换到该文件夹，键入<code>npm init</code>进行初始化（遇到的问题一直回车就好了），初始化完成之后可以看到生成了一个<code>package.json</code>文件。</p>
+<p>随后在该项目文件夹下新建两个文件夹：<code>/dist</code>和<code>/src</code>，其中<code>/src</code>用于放置开发的源码，<code>/dist</code>用于放置“编译”后的代码。</p>
+<p>随后在<code>/src</code>目录下新建<code>index.html</code>、<code>index.css</code>和<code>index.js</code>文件</p>
+<p>按照以下内容创建文件：</p>
+<p><strong>index.html</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;/&gt;</span><br><span class="line">        &lt;title&gt;React &amp; Webpack&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=&quot;root&quot;&gt;</span><br><span class="line">            &lt;h1&gt;Hello React &amp; Webpack!&lt;/h1&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>index.css</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">    background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#root &#123;</span><br><span class="line">    color: white;</span><br><span class="line">    background-color: black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>index.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#x27;./index.css&#x27;;</span><br><span class="line"></span><br><span class="line">console.log(&#x27;Success!&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装webpack工具"><a href="#二、安装webpack工具" class="headerlink" title="二、安装webpack工具"></a>二、安装webpack工具</h2><p>通过命令行使用webpack 4需要安装两个模块：webpack和webpack-cli，都安装为开发环境依赖。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D webpack webpack-cli</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后可以看到你的<code>package.json</code>文件发生了变化，在devDependencies属性下多了两个包的属性。</p>
+<h2 id="三、配置最基本的webpack"><a href="#三、配置最基本的webpack" class="headerlink" title="三、配置最基本的webpack"></a>三、配置最基本的webpack</h2><ul>
+<li><p>1.安装最基本的插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D html-webpack-plugin clean-webpack-plugin webpack-dev-server css-loader webpack-merge style-loader</span><br></pre></td></tr></table></figure></li>
+<li><p>2.在项目文件夹下新建文件<code>webpack.base.conf.js</code>，表示最基本的配置文件，内容如下：</p>
+</li>
+</ul>
+<p>````webpack.base.conf.js`<br>  const path = require(‘path’);<br>  const HtmlWebpackPlugin = require(‘html-webpack-plugin’);<br>  const { CleanWebpackPlugin } = require(‘clean-webpack-plugin’)</p>
+<p>  module.exports = {<br>      entry: ‘./src/index.js’,<br>      output: {<br>          filename: ‘bundle.[hash].js’,<br>          path: path.join(__dirname, ‘/dist’)  //打包生成文件地址<br>      },<br>      module: {<br>          rules: [<br>              {<br>                  test: /.css$/,<br>                  use: [‘style-loader’, ‘css-loader’]<br>              }<br>          ]<br>      },<br>      plugins: [<br>          new HtmlWebpackPlugin({<br>              template: ‘./src/index.html’<br>          }),<br>         new CleanWebpackPlugin({<br>              cleanAfterEveryBuildPatterns: [‘./dist’]<br>         })<br>      ]<br>  };</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">其中，`/src/index.html`是你的网站入口HTML文件，`/src/index.js`是你的入口js文件。</span><br><span class="line"></span><br><span class="line">.在项目文件夹下新建`webpack.dev.conf.js`文件，表示开发环境下的配置。内容如下：</span><br><span class="line"></span><br><span class="line">````webpack.dev.conf.js`</span><br><span class="line">  const merge = require(&#x27;webpack-merge&#x27;);</span><br><span class="line">  const baseConfig = require(&#x27;./webpack.base.conf.js&#x27;);</span><br><span class="line"></span><br><span class="line">  module.exports = merge(baseConfig, &#123;</span><br><span class="line">      mode: &#x27;development&#x27;,</span><br><span class="line">      devtool: &#x27;inline-source-map&#x27;,</span><br><span class="line">      devServer: &#123;</span><br><span class="line">          contentBase: &#x27;./dist&#x27;,</span><br><span class="line">          port: 3000</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在项目文件夹下新建<code>webpack.prod.conf.js</code>文件，表示生产环境的配置，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const merge = require(&#x27;webpack-merge&#x27;);</span><br><span class="line">const baseConfig = require(&#x27;./webpack.base.conf.js&#x27;);</span><br><span class="line"></span><br><span class="line">console.log(__dirname);</span><br><span class="line">module.exports = merge(baseConfig, &#123;</span><br><span class="line">    mode: &#x27;production&#x27;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、配置npm-scripts"><a href="#四、配置npm-scripts" class="headerlink" title="四、配置npm scripts"></a>四、配置npm scripts</h2><p>配置了三个配置文件以满足两个不同环境下的代码构建，使用语义化较好的<code>npm scripts</code>来构建代码有利于简化工作。</p>
+<p>添加新的scripts内容到<code>package.json</code>文件的<code>scripts</code>属性，记得用双引号引起来，其属性如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// package.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;scripts&quot;: &#123;</span><br><span class="line">        &quot;start&quot;: &quot;webpack-dev-server --open --config webpack.dev.conf.js&quot;,</span><br><span class="line">        &quot;build&quot;: &quot;webpack --config webpack.prod.conf.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置完之后，可以尝试修改<code>/src/index.html</code>、<code>/src/index.js</code>或<code>/src/index.css</code>，运行npm run start命令查看效果。</p>
+<p>做到这里，一个基本的开发环境已经搭建出来了。</p>
+<h2 id="五、配置Babel"><a href="#五、配置Babel" class="headerlink" title="五、配置Babel"></a>五、配置Babel</h2><p>Babel是一个优秀的JavaScript编译器（这句话源自<a href="https://link.juejin.im/?target=https://babel.bootcss.com/">Babel官网</a>），通过Babel的一些插件，可以将JSX语法、ES6语法转换为ES5的语法，使得低级浏览器也可以运行我们写的代码。</p>
+<p>安装 <code>babel-loader</code>，<code>@babel/core</code>，<code>@babel/preset-env</code>，<code>@babel/preset-react</code> 作为 dev 依赖项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-loader@8 @babel/core @babel/preset-env @babel/preset-react -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/babel/babel-loader">babel-loader</a>：使用 Babel 转换 JavaScript依赖关系的 Webpack 加载器</li>
+<li><a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-core">@babel/core</a>：即 babel-core，将 ES6 代码转换为 ES5</li>
+<li><a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-preset-env">@babel/preset-env</a>：即 babel-preset-env，根据您要支持的浏览器，决定使用哪些 transformations / plugins 和 polyfills，例如为旧浏览器提供现代浏览器的新特性</li>
+<li><a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-preset-react">@babel/preset-react</a>：即 babel-preset-react，针对所有 React 插件的 Babel 预设，例如将 JSX 转换为函数</li>
+</ul>
+<p>**注：babel 7 使用了 <code>@babel</code> 命名空间来区分官方包，因此以前的官方包 babel-xxx 改成了 <code>@babel/xxx</code></p>
+<p>修改<code>webpack.base.conf.js</code> 和 创建<code>.babelrc</code> 文件，并配置 babel-loader 及 babel 选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: &#x27;babel-loader&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [&quot;@babel/preset-env&quot;, &quot;@babel/preset-react&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、配置react"><a href="#六、配置react" class="headerlink" title="六、配置react"></a>六、配置react</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react react-dom</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在<code>/src</code>中新建一个<code>App.js</code>文件，内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import React from &#x27;react&#x27;;</span><br><span class="line"></span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;Hello React &amp; Webpack!&lt;/h1&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;].map(name =&gt; &lt;li&gt;&#123;`I&#x27;m $&#123;name&#125;!`&#125;&lt;/li&gt; )</span><br><span class="line">                &#125;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure>
+
+<p>清空<code>index.js</code>之后在其中写入如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import React from &#x27;react&#x27;;</span><br><span class="line">import ReactDOM from &#x27;react-dom&#x27;;</span><br><span class="line">import App from &#x27;./App&#x27;;</span><br><span class="line">import &#x27;./index.css&#x27;;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;App/&gt;, document.getElementById(&#x27;root&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>npm run start</code>命令打开页面可以看到使用React写出来的效果了。</p>
+<p>打开浏览器查看编译后的代码，找到App组件中的map函数这一段，可以发现ES6的语法已经被转换到了ES5的语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;].map(function (name) &#123;</span><br><span class="line">    return _react2.default.createElement(</span><br><span class="line">        &#x27;li&#x27;,</span><br><span class="line">        null,</span><br><span class="line">        &#x27;I\&#x27;m &#x27; + name + &#x27;!&#x27;</span><br><span class="line">    );</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>箭头函数被写成了function匿名函数。</p>
+<h2 id="七、配置TypeScript"><a href="#七、配置TypeScript" class="headerlink" title="七、配置TypeScript"></a>七、配置TypeScript</h2><p>执行以下命令安装 TypeScript compiler 和 loader：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev typescript ts-loader</span><br></pre></td></tr></table></figure>
+
+<p>在根目录新建一个tsconfig.json文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;compilerOptions&quot;: &#123;</span><br><span class="line">    &quot;outDir&quot;: &quot;./dist/&quot;,</span><br><span class="line">    &quot;sourceMap&quot;: true,</span><br><span class="line">    &quot;noImplicitAny&quot;: true,</span><br><span class="line">    &quot;module&quot;: &quot;commonjs&quot;,</span><br><span class="line">    &quot;target&quot;: &quot;es6&quot;,</span><br><span class="line">    &quot;jsx&quot;: &quot;react&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;include&quot;: [</span><br><span class="line">    &quot;./src/**/*&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在webpack.dev.conf.js配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &#x27;./src/index.js&#x27;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.tsx?$/,</span><br><span class="line">        use: &#x27;ts-loader&#x27;,</span><br><span class="line">        exclude: /node_modules/</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    extensions: [ &#x27;.tsx&#x27;, &#x27;.ts&#x27;, &#x27;.js&#x27; ]</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;bundle.js&#x27;,</span><br><span class="line">    path: path.resolve(__dirname, &#x27;dist&#x27;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候就可以使用ts了。 ps: 在ts中引用都要申明类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import * as React from &quot;react&quot;; // 这样没有申明的react会报错、 所以应该npm install @types/react</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5afc29fa6fb9a07ab379a2ae">基于Webpack搭建React开发环境</a></p>
+<p><a target="_blank" rel="noopener" href="https://imweb.io/topic/5b8699a96a0f1b02454de3c0">使用 Webpack 4 和 Babel 7 从头开始创建 React 应用程序</a></p>
+<p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/guides/typescript/">TypeScript</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TS/" rel="tag"># TS</a>
+              <a href="/tags/react/" rel="tag"># react</a>
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"># 前端工程化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/01/%E9%98%BF%E9%87%8C%E4%BA%91%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-OSS-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%BD%BF%E7%94%A8%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC%E4%B8%8A%E4%BC%A0/" rel="prev" title="阿里云对象存储(OSS)部署前端项目并使用自动脚本上传">
+      <i class="fa fa-chevron-left"></i> 阿里云对象存储(OSS)部署前端项目并使用自动脚本上传
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/10/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%96%B0%E4%BA%BA%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD(%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%85%A5%E9%97%A8)/" rel="next" title="家园工作室新人第一次培训(计算机入门)">
+      家园工作室新人第一次培训(计算机入门) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.</span> <span class="nav-text">一、初始化项目文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85webpack%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">二、安装webpack工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AE%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84webpack"><span class="nav-number">3.</span> <span class="nav-text">三、配置最基本的webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AEnpm-scripts"><span class="nav-number">4.</span> <span class="nav-text">四、配置npm scripts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AEBabel"><span class="nav-number">5.</span> <span class="nav-text">五、配置Babel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AEreact"><span class="nav-number">6.</span> <span class="nav-text">六、配置react</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AETypeScript"><span class="nav-number">7.</span> <span class="nav-text">七、配置TypeScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

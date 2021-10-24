@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="java简介 java的历史Java是由Sun Microsystems公司（现已被oracle公司收购）于1995年5月推出的Java面向对象程序设计语言和Java平台的总称。由James Gosling和同事们共同研发，并在1995年正式推出，据oracle官方数据指数，目前全球已有上亿的系统是使用Java开发的。Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈java与JavaScript的一些特性">
+<meta property="og:url" content="http://www.flura.cn/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="java简介 java的历史Java是由Sun Microsystems公司（现已被oracle公司收购）于1995年5月推出的Java面向对象程序设计语言和Java平台的总称。由James Gosling和同事们共同研发，并在1995年正式推出，据oracle官方数据指数，目前全球已有上亿的系统是使用Java开发的。Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/zh/8/88/Java_logo.png">
+<meta property="og:image" content="https://www.yaoyanghui.com/Uploads/201812/shareasale%20tracking%20code%20logo.png">
+<meta property="article:published_time" content="2019-04-22T08:16:06.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.497Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/zh/8/88/Java_logo.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>浅谈java与JavaScript的一些特性 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/04/22/%E6%B5%85%E8%B0%88java%E4%B8%8EJavaScript%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈java与JavaScript的一些特性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-22 16:16:06" itemprop="dateCreated datePublished" datetime="2019-04-22T16:16:06+08:00">2019-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="java简介"><a href="#java简介" class="headerlink" title="java简介"></a>java简介</h2><p><img src="https://upload.wikimedia.org/wikipedia/zh/8/88/Java_logo.png"></p>
+<h3 id="java的历史"><a href="#java的历史" class="headerlink" title="java的历史"></a>java的历史</h3><p>Java是由Sun Microsystems公司（现已被oracle公司收购）于1995年5月推出的Java面向对象程序设计语言和Java平台的总称。由James Gosling和同事们共同研发，并在1995年正式推出，据oracle官方数据指数，目前全球已有上亿的系统是使用Java开发的。Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。</p>
+<p>Java具有简单性、面向对象、分布式、健壮性、安全性、平台独立与可移植性、多线程、动态性等特点 。</p>
+<p>Java分为三个体系：</p>
+<ul>
+<li>Java SE (java Standard Edition) 可以用来开发客户端的应用程序。应用程序可以在桌面计算机中运行</li>
+<li>Java EE (java Enterprise Edition) 可以用来开发服务端的应用程序</li>
+<li>Java ME  (java Micro Edition) 用来开发移动设备的应用程序</li>
+</ul>
+<p>Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。</p>
+<h3 id="java的特性"><a href="#java的特性" class="headerlink" title="java的特性"></a>java的特性</h3><h4 id="简单性"><a href="#简单性" class="headerlink" title="简单性"></a>简单性</h4><p>java语言是简单的，java的语法与c语言和c++语言非常接近，使得大多数程序员非常易学习和使用。另一方面，Java丢弃了C++中很少使用的、很难理解的、令人迷惑的那些特性，如操作符重载、多继承、自动的强制类型转换。特别地，Java语言不使用指针，而是引用。并提供了自动的废料收集，使得程序员不必为内存管理而担忧。</p>
+<h4 id="面对对象"><a href="#面对对象" class="headerlink" title="面对对象"></a>面对对象</h4><p>Java语言提供类、接口和继承等原语，为了简单起见，只支持类之间的单继承，但支持接口之间的多继承，并支持类与接口之间的实现机制（关键字为implements）。Java语言全面支持动态绑定，而C++语言只对虚函数使用动态绑定。总之，Java语言是一个纯的面向对象程序设计语言。</p>
+<h4 id="健壮性"><a href="#健壮性" class="headerlink" title="健壮性"></a>健壮性</h4><p>Java的强类型机制、异常处理、垃圾的自动收集等是Java程序健壮性的重要保证。对指针的丢弃是Java的明智选择。Java的安全检查机制使得Java更具健壮性。</p>
+<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>Java通常被用在网络环境中，为此，Java提供了一个安全机制以防恶意代码的攻击。除了Java语言具有的许多安全特性以外，Java对通过网络下载的类具有一个安全防范机制（类ClassLoader），如分配不同的名字空间以防替代本地的同名类、字节代码检查，并提供安全管理机制（类SecurityManager）让Java应用设置安全哨兵。</p>
+<h4 id="跨平台的"><a href="#跨平台的" class="headerlink" title="跨平台的"></a>跨平台的</h4><p>Java程序（后缀为.java的文件）在Java平台上被编译为体系结构中立的字节码格式（后缀为.class的文件），然后可以在实现这个Java平台的任何系统中（windows，mac，linux等）运行，真正的实现了一次编译多处运行的效果。这种途径适合于异构的网络环境和软件的分发。</p>
+<h4 id="高性能的"><a href="#高性能的" class="headerlink" title="高性能的"></a>高性能的</h4><p>与那些解释型的高级脚本语言相比，Java的确是高性能的。事实上，Java的运行速度随着JIT(Just-In-Time）编译器技术的发展越来越接近于C++。</p>
+<h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>在Java语言中，线程是一种特殊的对象，它必须由Thread类或其子（孙）类来创建。通常有两种方法来创建线程：其一，使用型构为Thread(Runnable)的构造子将一个实现了Runnable接口的对象包装成一个线程，其二，从Thread类派生出子类并重写run方法，使用该子类创建的对象即为线程。值得注意的是Thread类已经实现了Runnable接口，因此，任何一个线程均有它的run方法，而run方法中包含了线程所要运行的代码。线程的活动由一组方法来控制。Java语言支持多个线程的同时执行，并提供多线程之间的同步机制（关键字为synchronized）。</p>
+<h4 id="动态的"><a href="#动态的" class="headerlink" title="动态的"></a>动态的</h4><p>java的类能够动态的被载入到运行环境，也可以通过网络来载入所需要的类。这也有利于软件的升级。另外，java中的类有一个运行时刻的表示，能进行运行时刻的检查。</p>
+<h3 id="java用途"><a href="#java用途" class="headerlink" title="java用途"></a>java用途</h3><ol>
+<li><p>桌面GUI应用程序</p>
+</li>
+<li><p>移动应用程序</p>
+</li>
+<li><p>嵌入式系统</p>
+</li>
+<li><p>Web应用程序</p>
+</li>
+<li><p>Web服务器和应用程序服务器</p>
+</li>
+<li><p>企业应用程序</p>
+</li>
+<li><p>科学应用</p>
+</li>
+</ol>
+<h3 id="java关键术语"><a href="#java关键术语" class="headerlink" title="java关键术语"></a>java关键术语</h3><p>java Development Toolkit (JDK) (java开发工具包)</p>
+<p>java Runtime Environment(JRE)(java运行环境)</p>
+<p>java Virtual Machine(JVM) (java虚拟机)</p>
+<p>​       javac 把源文件（java文件）编译生成class文件</p>
+<p>​          Java 执行java字节码</p>
+<p>​          Javap 可以查看java编译器生成的字节码（反汇编）</p>
+<p>​          Jshell  java的交互式命令环境</p>
+<p>​          Jconsole  一个内置的java性能分析器，用来监控java应用程序性能和跟踪java</p>
+<h2 id="JavaScript简介"><a href="#JavaScript简介" class="headerlink" title="JavaScript简介"></a>JavaScript简介</h2><p><img src="https://www.yaoyanghui.com/Uploads/201812/shareasale%20tracking%20code%20logo.png"></p>
+<h3 id="JavaScript的历史"><a href="#JavaScript的历史" class="headerlink" title="JavaScript的历史"></a>JavaScript的历史</h3><p>Netscape在最初将其脚本语言命名为LiveScript，后来Netscape在与Sun合作之后将其改名为JavaScript。JavaScript最初受Java启发而开始设计的，目的之一就是“看上去像Java”，因此语法上有类似之处，一些名称和命名规范也借自Java。JavaScript与Java名称上的近似，是当时Netscape为了营销考虑与Sun微系统达成协议的结果。但是就目前来看java与js之间的区别就如同雷锋与雷峰塔的区别。</p>
+<h3 id="JavaScript的特性"><a href="#JavaScript的特性" class="headerlink" title="JavaScript的特性"></a>JavaScript的特性</h3><p>JavaScript 是一门跨平台、面向对象的脚本语言，它能够让网页具有交互（例如具有复杂的动画，可点击的按钮，通俗的菜单等）。另外还有高级的服务端Javascript版本，例如Node.js，它可以让你在网页上添加更多功能，不仅仅是下载文件（例如在多台电脑之间的协同合作）。在宿主环境（例如 web 浏览器）中， JavaScript 能够通过其所连接的环境提供的编程接口进行控制。</p>
+<h3 id="JavaScript组成"><a href="#JavaScript组成" class="headerlink" title="JavaScript组成"></a>JavaScript组成</h3><ol>
+<li><p>ECMAScript - JavaScript的核心</p>
+<p>​    ECMA 欧洲计算机制造联合会</p>
+<p>​    网景：JavaScript</p>
+<p>​    微软：JScript</p>
+<p>​    定义了JavaScript的语法规范  </p>
+<p>​    JavaScript的核心，描述了语言的基本语法和数据类型，ECMAScript是一套标准，定义了一种语言的标准与具体实现无关</p>
+</li>
+<li><p>BOM - 浏览器对象模型</p>
+<p>​    一套操作浏览器功能的API</p>
+<p>​    通过BOM可以操作浏览器窗口，比如：弹出框、控制浏览器跳转、获取分辨率等</p>
+</li>
+<li><p>DOM - 文档对象模型</p>
+<p>​    一套操作页面元素的API</p>
+<p>​    DOM可以把HTML看做是文档树，通过DOM提供的API可以对树上的节点进行操作</p>
+</li>
+</ol>
+<h3 id="JavaScript的用途"><a href="#JavaScript的用途" class="headerlink" title="JavaScript的用途"></a>JavaScript的用途</h3><p>web开发</p>
+<ul>
+<li>jQuery、BootStrap、Angular、React、Vue</li>
+</ul>
+<p>后端开发</p>
+<ul>
+<li>Node.js</li>
+</ul>
+<p>桌面应用(Linux,  Mac OS X, Windows)</p>
+<ul>
+<li>Electorn</li>
+<li>NW.js</li>
+</ul>
+<p>Hybird移动应用开发</p>
+<ul>
+<li>PhoneGap</li>
+</ul>
+<p>Native移动引用开发</p>
+<ul>
+<li>React Native</li>
+<li>Weex</li>
+<li>NativeScript</li>
+</ul>
+<p>嵌入式/物联网开发</p>
+<ul>
+<li>IoT</li>
+</ul>
+<h3 id="JavaScript的发展"><a href="#JavaScript的发展" class="headerlink" title="JavaScript的发展"></a>JavaScript的发展</h3><p><strong>ECMAScript6(ES6)</strong></p>
+<p><strong>Babel</strong>(<a target="_blank" rel="noopener" href="https://babeljs.io/)%EF%BC%8C%E4%B8%80%E4%B8%AA%E5%B9%BF%E6%B3%9B%E4%BD%BF%E7%94%A8%E7%9A%84ES6%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%B0%86es6%E4%BB%A3%E7%A0%81%E8%BD%AC%E4%B8%BAes5%E4%BB%A3%E7%A0%81%EF%BC%8C%E4%BB%8E%E8%80%8C%E5%9C%A8%E7%8E%B0%E6%9C%89%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E6%89%A7%E8%A1%8C">https://babeljs.io/)，一个广泛使用的ES6编译器，可以将es6代码转为es5代码，从而在现有的环境中执行</a></p>
+<p><strong>TypeScrip</strong>t(<a target="_blank" rel="noopener" href="https://www.typescriptlang.org/)%E6%98%AFjs%E7%9A%84%E5%BC%BA%E7%B1%BB%E5%9E%8B%E7%89%88%E6%9C%AC%EF%BC%8Cts%E6%98%AFjs%E7%9A%84%E8%B6%85%E9%9B%86(%E7%B1%BB%E4%BC%BC%E4%BA%8Ec%E4%B8%8Ec++%E7%9A%84%E5%85%B3%E7%B3%BB)%E3%80%82%E5%AE%83%E4%B8%BAjs%E7%9A%84%E7%94%9F%E6%80%81%E5%A2%9E%E5%8A%A0%E4%BA%86%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E6%9C%BA%E5%88%B6%EF%BC%8C%E5%B9%B6%E6%9C%80%E7%BB%88%E5%B0%86%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E4%B8%BA%E7%BA%AF%E7%B2%B9%E7%9A%84js%E4%BB%A3%E7%A0%81%E3%80%82%E4%BD%BF%E7%94%A8TypeScript%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E4%BC%98%E7%82%B9">https://www.typescriptlang.org/)是js的强类型版本，ts是js的超集(类似于c与c++的关系)。它为js的生态增加了静态类型检查机制，并最终将代码编译为纯粹的js代码。使用TypeScript有以下几个优点</a></p>
+<ul>
+<li>静态类型检查(编一阶段即可发现类型不匹配的错误)</li>
+<li>IDE智能提示</li>
+<li>类型信息有利于编译器优化</li>
+</ul>
+<p><strong>FLow</strong>(<a target="_blank" rel="noopener" href="https://flow.org/)%E9%92%88%E5%AF%B9js%E5%BC%B1%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98%EF%BC%8CFacebook%E4%B9%9F%E6%8E%A8%E5%87%BA%E4%BA%86Flow%E3%80%82">https://flow.org/)针对js弱类型问题，Facebook也推出了Flow。</a></p>
+<h2 id="javaScript和java的对比"><a href="#javaScript和java的对比" class="headerlink" title="javaScript和java的对比"></a>javaScript和java的对比</h2><p>JavaScript 和 Java 有一些共性但是在另一些方面有着根本性区别。JavaScript语言类似 Java 但是并没有 Java 的静态类型和强类型检查特性。JavaScript 遵循了 Java 的表达式语法，命名规范以及基础流程控制，这也是 JavaScript 从 LiveScript 更名的原因。</p>
+<p>与 Java 通过声明的方式构建类的编译时系统不同，JavaScript 采用基于少量的数据类型如数字、布尔、字符串值的运行时系统。JavaScript 拥有基于原型的对象模型提供的动态继承；也就是说，独立对象的继承是可以改变的。 JavaScript 支持匿名函数。 函数也可以作为对象的属性被当做宽松的类型方式执行。</p>
+<p>与 Java 相比，Javascript 是一门形式自由的语言。你不必声明所有的变量，类和方法。你不必关心方法是否是 共有、私有或者受保护的，也不需要实现接口。无需显式指定变量、参数、方法返回值的数据类型。</p>
+<p>Java 是基于类的编程语言，设计的初衷就是为了确保快速执行和类型安全。类型安全，举个例子，你不能将一个 Java 整数变量转化为一个对象引用，或者由Java字节码访问专有存储器。Java基于类的模型，意味着程序包含专有的类及其方法。Java的类继承和强类型要求紧耦合的对象层级结构。这些要求使得Java编程比JavaScript要复杂的多。</p>
+<p>相比之下，JavaScript 传承了 HyperTalk 和 dBASE 语句精简、动态类型等精髓，这些脚本语言为更多开发者提供了一种语法简单、内置功能强大以及用最小需求创建对象的编程工具。</p>
+<h4 id="javaScript"><a href="#javaScript" class="headerlink" title="javaScript"></a>javaScript</h4><ol>
+<li>面对对象。不区分对象类型。通过原型机制继承，任何对象的属性和方法均可以被动态添加。</li>
+<li>变量类型不需要提前申明(动态类型)</li>
+<li>不懂直接自动写入硬盘</li>
+</ol>
+<h4 id="java"><a href="#java" class="headerlink" title="java"></a>java</h4><ol>
+<li>基于类系统。分为类和实例，通过类层级的定义实现继承。不能动态增加对象或类的属性或方法</li>
+<li>变量类型必须提前申明(静态类型)</li>
+<li>可以直接自动写入硬盘</li>
+</ol>
+<h3 id="基于类、基于原型的面对对象"><a href="#基于类、基于原型的面对对象" class="headerlink" title="基于类、基于原型的面对对象"></a>基于类、基于原型的面对对象</h3><p><strong>基于类的</strong>面向对象语言，比如 Java 和 C++，是构建在两个不同实体的概念之上的：即类和实例。</p>
+<ul>
+<li>类可以定义属性，这些属性可使特定的对象集合特征化（可以将 Java 中的方法和变量以及 C++ 中的成员都视作属性）。类是抽象的，而不是其所描述的对象集合中的任何特定的个体。例如 <code>Employee</code> 类可以用来表示所有雇员的集合。</li>
+<li>另一方面，一个实例是一个类的实例化；也就是其中一名成员。例如， <code>Victoria</code> 可以是 <code>Employee</code> 类的一个实例，表示一个特定的雇员个体。实例具有和其父类完全一致的属性。</li>
+</ul>
+<p><strong>基于原型</strong>的语言（如 JavaScript）并不存在这种区别：它只有对象。基于原型的语言具有所谓原型对象的概念。原型对象可以作为一个模板，新对象可以从中获得原始的属性。任何对象都可以指定其自身的属性，既可以是创建时也可以在运行时创建。而且，任何对象都可以作为另一个对象的原型，从而允许后者共享前者的属性。</p>
+<p>``</p>
+<h4 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h4><p>在基于类的语言中，需要专门的类定义符来定义类。在定义类时，允许定义特殊的方法，称为构造器，来创建该类的实例。在构造器方法中，可以指定实例的属性的初始值以及一些其他的操作。你可以通过将<code>new</code> 操作符和构造器方法结合来创建类的实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java定义类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span></span>&#123; <span class="comment">//类名</span></span><br><span class="line">    <span class="keyword">int</span> age = <span class="number">5</span>; <span class="comment">//数据域</span></span><br><span class="line">    String color;</span><br><span class="line">    Dog() &#123;&#125; <span class="comment">//构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">barking</span><span class="params">()</span></span>&#123;&#125; <span class="comment">//方法</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hungry</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sleeping</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Dog dog1 = <span class="keyword">new</span> Dog(); <span class="comment">//实例化对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 也遵循类似的模型，但却不同于基于类的语言。在 JavaScript 中你只需要定义构造函数来创建具有一组特定的初始属性和属性值的对象。任何 JavaScript 函数都可以用作构造器。 也可以使用 <code>new</code> 操作符和构造函数来创建一个新对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js自定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.age = age;</span><br><span class="line">  <span class="built_in">this</span>.job = job;</span><br><span class="line">  <span class="built_in">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  	<span class="built_in">console</span>.log(<span class="string">&#x27;Hello,everyBody&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">&#x27;张三&#x27;</span>, <span class="number">22</span>, <span class="string">&#x27;actor&#x27;</span>); <span class="comment">//对象实例化</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="子类和继承"><a href="#子类和继承" class="headerlink" title="子类和继承"></a>子类和继承</h4><p>基于类的语言是通过对类的定义中构建类的层级结构的。在类定义中，可以指定新的类是一个现存的类的子类。子类将继承父类的全部属性，并可以添加新的属性或者修改继承的属性。例如，假设 <code>Employee</code> 类只有 <code>name</code> 和 <code>dept</code> 属性，而 <code>Manager</code> 是 <code>Employee</code> 的子类并添加了 <code>reports</code> 属性。这时，<code>Manager</code> 类的实例将具有所有三个属性：<code>name</code>，<code>dept</code>和<code>reports</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Employee &#123;</span><br><span class="line">    String name = &quot;张三&quot;;</span><br><span class="line">    String dept = &quot;学生会&quot;;</span><br><span class="line">&#125;</span><br><span class="line">public class Manager extends Employee &#123;</span><br><span class="line">    String reports = &quot;fa&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 通过将构造器函数与原型对象相关联的方式来实现继承。这样，您可以创建完全一样的 <code>Employee</code> — <code>Manager</code> 示例，不过需要使用略微不同的术语。首先，定义Employee构造函数，在该构造函数内定义name、dept属性；接下来，定义Manager构造函数，在该构造函数内调用Employee构造函数，并定义reports属性；最后，将一个获得了Employee.prototype(Employee构造函数原型)的新对象赋予manager构造函数，以作为Manager构造函数的原型。之后当你创建新的Manager对象实例时，该实例会从Employee对象继承name、dept属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Employee</span>(<span class="params">name, dept</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name</span><br><span class="line">    <span class="built_in">this</span>.dept = dept</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params">reports</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.reports = reports</span><br><span class="line">&#125;</span><br><span class="line">Manager.prototype = <span class="keyword">new</span> Employee(<span class="string">&quot;张三&quot;</span>, <span class="string">&quot;学生会&quot;</span>) <span class="comment">//原型链实现继承</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> Manager(<span class="string">&quot;记者&quot;</span>) <span class="comment">//对象实例化</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(m.name) <span class="comment">//记者</span></span><br><span class="line"><span class="built_in">console</span>.log(m.reports) <span class="comment">//张三</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="添加和移除属性"><a href="#添加和移除属性" class="headerlink" title="添加和移除属性"></a>添加和移除属性</h4><p>在基于类的语言中，通常在编译时创建类，然后在编译时或者运行时对类的实例进行实例化。一旦定义了类，无法对类的属性进行更改。然而，在 JavaScript 中，允许运行时添加或者移除任何对象的属性。如果您为一个对象中添加了一个属性，而这个对象又作为其它对象的原型，则以该对象作为原型的所有其它对象也将获得该属性。</p>
+<h4 id="差异总结（基于java和原型js的对象系统比较）"><a href="#差异总结（基于java和原型js的对象系统比较）" class="headerlink" title="差异总结（基于java和原型js的对象系统比较）"></a>差异总结（基于java和原型js的对象系统比较）</h4><h5 id="基于类的java"><a href="#基于类的java" class="headerlink" title="基于类的java"></a>基于类的java</h5><ol>
+<li>类和实例是不同的事物</li>
+<li>通过类定义来定义类；通过构造器方法来实例化类</li>
+<li>通过new 操作符创建单个对象</li>
+<li>通过类定义来定义现存类的子类，从而构建对象的层级结构。</li>
+<li>遵循类链继承属性。</li>
+<li>类定义指定类的所有实例的<strong>所有</strong>属性。无法在运行时动态添加属性。</li>
+</ol>
+<h5 id="基于原型的JavaScript"><a href="#基于原型的JavaScript" class="headerlink" title="基于原型的JavaScript"></a>基于原型的JavaScript</h5><ol>
+<li>所有对象均为实例。</li>
+<li>通过构造器函数来定义和创建一组对象。</li>
+<li>通过 <code>new</code> 操作符创建单个对象。</li>
+<li>指定一个对象作为原型并且与构造函数一起构建对象的层级结构</li>
+<li>遵循原型链继承属性。</li>
+<li>构造器函数或原型指定初始的属性集。允许动态地向单个的对象或者整个对象集中添加或移除属性。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/06/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E6%A6%82%E8%A7%88/" rel="prev" title="前端知识体系概览">
+      <i class="fa fa-chevron-left"></i> 前端知识体系概览
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/26/%E6%B5%85%E8%B0%88http/" rel="next" title="浅谈http">
+      浅谈http <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">java简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">1.1.</span> <span class="nav-text">java的历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">java的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">简单性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">面对对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%A5%E5%A3%AE%E6%80%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">健壮性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">1.2.4.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84"><span class="nav-number">1.2.5.</span> <span class="nav-text">跨平台的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84"><span class="nav-number">1.2.6.</span> <span class="nav-text">高性能的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.7.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%9A%84"><span class="nav-number">1.2.8.</span> <span class="nav-text">动态的</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E7%94%A8%E9%80%94"><span class="nav-number">1.3.</span> <span class="nav-text">java用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E5%85%B3%E9%94%AE%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.4.</span> <span class="nav-text">java关键术语</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">JavaScript简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">2.1.</span> <span class="nav-text">JavaScript的历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">JavaScript的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%BB%84%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">JavaScript组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">2.4.</span> <span class="nav-text">JavaScript的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-number">2.5.</span> <span class="nav-text">JavaScript的发展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javaScript%E5%92%8Cjava%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">3.</span> <span class="nav-text">javaScript和java的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#javaScript"><span class="nav-number">3.0.1.</span> <span class="nav-text">javaScript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java"><span class="nav-number">3.0.2.</span> <span class="nav-text">java</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%B1%BB%E3%80%81%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.1.</span> <span class="nav-text">基于类、基于原型的面对对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-number">3.1.1.</span> <span class="nav-text">定义类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E7%B1%BB%E5%92%8C%E7%BB%A7%E6%89%BF"><span class="nav-number">3.1.2.</span> <span class="nav-text">子类和继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%92%8C%E7%A7%BB%E9%99%A4%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.3.</span> <span class="nav-text">添加和移除属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%AE%E5%BC%82%E6%80%BB%E7%BB%93%EF%BC%88%E5%9F%BA%E4%BA%8Ejava%E5%92%8C%E5%8E%9F%E5%9E%8Bjs%E7%9A%84%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">3.1.4.</span> <span class="nav-text">差异总结（基于java和原型js的对象系统比较）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%B1%BB%E7%9A%84java"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">基于类的java</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84JavaScript"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">基于原型的JavaScript</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

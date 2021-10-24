@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈WebWork">
+<meta property="og:url" content="http://www.flura.cn/2019/09/16/%E6%B5%85%E8%B0%88WebWork/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/1568774603784.png">
+<meta property="og:image" content="http://img.flura.cn/1568774001322.png">
+<meta property="og:image" content="http://img.flura.cn/1568774930762.png">
+<meta property="og:image" content="http://img.flura.cn/1568775141089.png">
+<meta property="article:published_time" content="2019-09-16T03:02:22.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.495Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="WebWork">
+<meta property="article:tag" content="h5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/1568774603784.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/09/16/%E6%B5%85%E8%B0%88WebWork/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>浅谈WebWork | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/09/16/%E6%B5%85%E8%B0%88WebWork/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈WebWork
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-16 11:02:22" itemprop="dateCreated datePublished" datetime="2019-09-16T11:02:22+08:00">2019-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">使用JavaScript执行大型运算时，经常会出现假死现象，这是因为JavaScript是单线程编程语言，运算能力比较弱。HTML5新增Web Workders能够创建一个不影响前台处理的后台进程，并且在这个后台线程中可以继续创建多个子线程，以帮助JavaScript实现多线程的能力。通过WebWork, 开发者可以将耗时较长的处理交给后台线程去运行，从而解决在执行大量运算造成进程阻塞而页面无响应的情况。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Web-Worker的作用"><a href="#Web-Worker的作用" class="headerlink" title="Web Worker的作用"></a>Web Worker的作用</h2><p>Web Worker的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。这样的好处是，一些计算密集型或高延迟的任务，被 Worker 线程负担了，主线程（通常负责 UI 交互）就会很流畅，不会被阻塞或拖慢。</p>
+<h2 id="Web-Worker-有以下几个使用注意点。"><a href="#Web-Worker-有以下几个使用注意点。" class="headerlink" title="Web Worker 有以下几个使用注意点。"></a>Web Worker 有以下几个使用注意点。</h2><h3 id="（1）同源限制"><a href="#（1）同源限制" class="headerlink" title="（1）同源限制"></a>（1）<strong>同源限制</strong></h3><p>分配给 Worker 线程运行的脚本文件，必须与主线程的脚本文件同源。</p>
+<h3 id="（2）DOM-限制"><a href="#（2）DOM-限制" class="headerlink" title="（2）DOM 限制"></a>（2）<strong>DOM 限制</strong></h3><p>Worker 线程所在的全局对象，与主线程不一样，无法读取主线程所在网页的 DOM 对象，也无法使用<code>document</code>、<code>window</code>、<code>parent</code>这些对象。但是，Worker 线程可以<code>navigator</code>对象和<code>location</code>对象。</p>
+<h3 id="（3）通信联系"><a href="#（3）通信联系" class="headerlink" title="（3）通信联系"></a>（3）<strong>通信联系</strong></h3><p>Worker 线程和主线程不在同一个上下文环境，它们不能直接通信，必须通过消息完成。</p>
+<h3 id="（4）脚本限制"><a href="#（4）脚本限制" class="headerlink" title="（4）脚本限制"></a>（4）<strong>脚本限制</strong></h3><p>Worker 线程不能执行<code>alert()</code>方法和<code>confirm()</code>方法，但可以使用 XMLHttpRequest 对象发出 AJAX 请求。</p>
+<h3 id="（5）文件限制"><a href="#（5）文件限制" class="headerlink" title="（5）文件限制"></a>（5）<strong>文件限制</strong></h3><p>Worker 线程无法读取本地文件，即不能打开本机的文件系统（<code>file://</code>），它所加载的脚本，必须来自网络。</p>
+<p>小结：Web Worker中执行的脚本不能访问该页面的window对象，因此不能直接访问web页面和DOM API，虽然Web Worker不会导致浏览器的主线程停止响应，但是仍会消耗CPU周期，导致系统反应速度变慢。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;title&gt;worker&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;button onclick=&quot;start()&quot;&gt;Start Worker&lt;/button&gt;</span><br><span class="line">&lt;p id=&quot;result&quot;&gt;这是没有值&lt;/p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  function start() &#123;</span><br><span class="line">    console.log(&quot;你有触发start&quot;)</span><br><span class="line">    if (typeof (Worker) !== &quot;undefined&quot;) &#123;</span><br><span class="line">    console.log(&#x27;支持worker&#x27;)</span><br><span class="line">    // 创建一个Worker对象并向它传递将在新线程中执行的脚步的URL</span><br><span class="line">    var worker = new Worker(&quot;worker.js&quot;)</span><br><span class="line">    worker.postMessage(&quot;hello world&quot;) // 向worker发送数据</span><br><span class="line">    worker.onmessage = function (res) &#123; // 接受worker传过来的数据函数</span><br><span class="line">      document.getElementById(&quot;result&quot;).innerHTML = res.data</span><br><span class="line">      console.log(&quot;输出从worker发送过来的数据: &quot;, res.data)</span><br><span class="line">     &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      alert(&#x27;不支持worker&#x27;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">onmessage = function (params) &#123;</span><br><span class="line">  let data = params.data // 获取主线程发送过来的数据</span><br><span class="line">  console.log(&#x27;worker收到的data &#x27;, data) </span><br><span class="line">  postMessage(data)  // 将获取到的数据发送回主线程</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>…这里遇到了些问题, google浏览器一直报错</p>
+<p><img src="http://img.flura.cn/1568774603784.png" alt="google报错"></p>
+<p>stackoverflow解答： google有文件保护，导致我不能直接读取本地文件。。。(其实我有尝试过吧worker.js放在cdn上，用http方式引入，但是还是这样的报错)</p>
+<figure class="highlight plaintext"><figcaption><span>Overflow</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">From this answer, Loading a local file, even with a relative URL, is the same as loading a file with the file: protocol. -- and it&#x27;s not cool for web pages to be able to just access your file system on a whim</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<p><img src="http://img.flura.cn/1568774001322.png" alt="1568774001322"></p>
+<p>我采用了这种方法，但是还是没有什么用。。。可能我什么地方搞错了吧。所以我尝试换了一个火狐浏览器，发现火狐连报错都没有，work根本就没有执行(太坑人了)。</p>
+<p><img src="http://img.flura.cn/1568774930762.png" alt="火狐报错"></p>
+<p>最后换了edge，发现才有用(꒦_꒦) 。</p>
+<p><img src="http://img.flura.cn/1568775141089.png" alt="1568775124601"></p>
+<h2 id="基本API"><a href="#基本API" class="headerlink" title="基本API"></a>基本API</h2><p><code>Worker()</code>构造函数返回一个 Worker 线程对象，用来供主线程操作 Worker。Worker 线程对象的属性和方法：</p>
+<ul>
+<li><p>Worker.onerror：指定 error 事件的监听函数。</p>
+</li>
+<li><p>Worker.onmessage：指定 message 事件的监听函数，发送过来的数据在<code>Event.data</code>属性中。</p>
+</li>
+<li><p>Worker.onmessageerror：指定 messageerror 事件的监听函数。发送的数据无法序列化成字符串时，会触发这个事件。</p>
+</li>
+<li><p>Worker.postMessage()：向 Worker 线程发送消息。</p>
+</li>
+<li><p>Worker.terminate()：立即终止 Worker 线程。</p>
+</li>
+</ul>
+<h3 id="注意的地方"><a href="#注意的地方" class="headerlink" title="注意的地方"></a>注意的地方</h3><p>主线程与Worker之间的通信内容是拷贝内容，就是说postMessage传值，传的是深拷贝的值，也就是说work.js里对通信内容的修改不会影响到主线程。事实上，浏览器内部的运行机制是，先将通信内容串行化，然后把串行化后的字符串发给 Worker，后者再将它还原。</p>
+<p> Worker 不能读取本地文件，所以这个脚本必须来自网络。如果下载没有成功（比如404错误），Worker 就会默默地失败。emmmm，所以应该部署到服务器上。。。不然浏览器不认，还有同源限制。所以本地调试最好用edge ie浏览器。</p>
+<p>最后更详细的使用 最好参考阮一峰老师的<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/07/web-worker.html">Web Worker 使用教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers">MDN关于web workers使用</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WebWork/" rel="tag"># WebWork</a>
+              <a href="/tags/h5/" rel="tag"># h5</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/08/vue-bus%E4%BD%BF%E7%94%A8%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" rel="prev" title="vue-bus使用遇到的坑">
+      <i class="fa fa-chevron-left"></i> vue-bus使用遇到的坑
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/19/JavaScript%E4%B8%AD%E7%9A%84this/" rel="next" title="JavaScript中的this">
+      JavaScript中的this <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Worker%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Web Worker的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Worker-%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E7%82%B9%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">Web Worker 有以下几个使用注意点。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%90%8C%E6%BA%90%E9%99%90%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">（1）同源限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89DOM-%E9%99%90%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">（2）DOM 限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E9%80%9A%E4%BF%A1%E8%81%94%E7%B3%BB"><span class="nav-number">2.3.</span> <span class="nav-text">（3）通信联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E8%84%9A%E6%9C%AC%E9%99%90%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">（4）脚本限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E6%96%87%E4%BB%B6%E9%99%90%E5%88%B6"><span class="nav-number">2.5.</span> <span class="nav-text">（5）文件限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACAPI"><span class="nav-number">4.</span> <span class="nav-text">基本API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">4.1.</span> <span class="nav-text">注意的地方</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

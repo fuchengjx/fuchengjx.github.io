@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为3种, 一种是query，一种是params，还有一种动态路由传参比较特殊。 下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue的路由传参">
+<meta property="og:url" content="http://www.flura.cn/2020/02/29/vue%E7%9A%84%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%8F%82/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="vue-router传参方式当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为3种, 一种是query，一种是params，还有一种动态路由传参比较特殊。 下面来具体总结一下。 query方式传参和接收参数1234567A组件跳转到B组件，通过query传参。this.$router.push(&amp;#12">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-29T12:04:16.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.491Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="-vue">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2020/02/29/vue%E7%9A%84%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%8F%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>vue的路由传参 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2020/02/29/vue%E7%9A%84%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%8F%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue的路由传参
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-29 20:04:16" itemprop="dateCreated datePublished" datetime="2020-02-29T20:04:16+08:00">2020-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="vue-router传参方式"><a href="#vue-router传参方式" class="headerlink" title="vue-router传参方式"></a>vue-router传参方式</h1><p>当发生组件跳转时，组件a 跳转到 组件b，数据的流动是单向的，那么可以考虑使用vue-router的方式传递参数。 vue-router的传参分为3种, 一种是query，一种是params，还有一种动态路由传参比较特殊。 下面来具体总结一下。</p>
+<h2 id="query方式传参和接收参数"><a href="#query方式传参和接收参数" class="headerlink" title="query方式传参和接收参数"></a>query方式传参和接收参数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A组件跳转到B组件，通过query传参。</span><br><span class="line">this.$router.push(&#123;</span><br><span class="line">  name: &quot;PageB&quot;,</span><br><span class="line">  query: &#123;</span><br><span class="line">    id: 2,</span><br><span class="line">    content: &quot;这是id为2的content&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B组件接收A组件传递过来的参数</span><br><span class="line">this.$route.query.id  // 2</span><br><span class="line">this.$route.query.content // &quot;这是id为2的content&quot;</span><br></pre></td></tr></table></figure>
+
+<p>ps: 传参是 <strong>this.$router</strong>, 通过VueRouter的实例， 接收参数使用的是 <strong>this.$route</strong>。</p>
+<p>而且我们发现 <strong>url（地址栏）</strong>是可以看到 id与content参数的。有点类似于发起get请求时，参数拼接在url中。</p>
+<h2 id="params方式传参和接收参数"><a href="#params方式传参和接收参数" class="headerlink" title="params方式传参和接收参数"></a>params方式传参和接收参数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A组件跳转到B组件，通过params传参。</span><br><span class="line">this.$router.push(&#123;</span><br><span class="line">  name: &quot;PageB&quot;,</span><br><span class="line">  params: &#123;</span><br><span class="line">    id: id,</span><br><span class="line">    content: &quot;这是params id为2的content&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B组件接收A组件传递过来的参数</span><br><span class="line">this.$route.params.id  // 2</span><br><span class="line">this.$route.params.content // &quot;这是id为2的content&quot;</span><br></pre></td></tr></table></figure>
+
+<p>ps:  params传参，push里面只能是 name:’xxxx’,不能是path:’/xxx’,因为params只能用name来引入路由。</p>
+<p>params方式传参是不会在url中显示的，如果为了美观 还是选择用params方法进行传参。</p>
+<h2 id="动态路由传递参数"><a href="#动态路由传递参数" class="headerlink" title="动态路由传递参数"></a>动态路由传递参数</h2><p>一般有种很常见的需求就是做 列表详情页。 一个列表，点击列表中的每一项，进入一个详情页。 而详情页的路由是根据你列表页的点击确定的。每个详情页都有一个对应列表的id，路由是动态的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 文章列表页</span><br><span class="line">&lt;li v-for=&quot;article in articles&quot; @click=&quot;getDetail(article.id)&quot;&gt;</span><br><span class="line"></span><br><span class="line">getDetail(id) &#123;</span><br><span class="line">  //直接调用$router.push 实现携带参数的跳转</span><br><span class="line">  this.$router.push(&#123;</span><br><span class="line">    path: `/detail/$&#123;id&#125;`,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法是需要在对应的路由进行配置的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// router.js</span><br><span class="line">   &#123;</span><br><span class="line">     path: &#x27;/detail/:id&#x27;,</span><br><span class="line">     name: &#x27;Detail&#x27;,</span><br><span class="line">     component: Detail</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// detail.vue 文章详情组件</span><br><span class="line">this.$route.params.id</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="关于刷新问题"><a href="#关于刷新问题" class="headerlink" title="关于刷新问题"></a>关于刷新问题</h2><p>其实我们开发大多是单页面组件，我们的所有页面都是一个Vue根实例，所有的data，以及vuex都挂载在根实例上，  如果用户刷新页面，我们保存在页面的数据会全部回到初始值，就是保存的状态全部消失。这样的话如果发生了组件跳转，a页面跳转到b页面 a中传递了数据给b。 我们在b页面中刷新，通过常规方法保存的状态都会直接消失，vue-bus、vuex、props之类的传值方式都会获取不到a传过来的值(所以尽量不要刷新)。 </p>
+<p>但是vue-router的两种传参方式其实是可以在刷新后获取到 之前的参数的。 我们可以发现刷新后 虽然状态全部没了，但是路由 也可以理解为url在刷新后是不变的。 而通过<strong>query</strong>方式 与<strong>动态路由</strong>方式 都会在跳转后 都会在路由中携带参数，所以通过url传参是可以在刷新后保存上一个页面传递过来的参数的。</p>
+<h2 id="vue-router打开新页面"><a href="#vue-router打开新页面" class="headerlink" title="vue-router打开新页面"></a>vue-router打开新页面</h2><p>vue-router怎么点击打开新的页面，就是a标签里的target=“blank</p>
+<p>vue本身开发的就是单页面组件，路由跳转其实在浏览器看来并没有跳转(或者说并没有打开页面，本质上还是在一个index.html上)</p>
+<h3 id="router-link-标签实现新窗口打开"><a href="#router-link-标签实现新窗口打开" class="headerlink" title="router-link 标签实现新窗口打开"></a>router-link 标签实现新窗口打开</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link target=&quot;_blank&quot;&gt;&lt;/router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h3><p>使用this.$router.resolve</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">seeShare()&#123;</span><br><span class="line">     let routeUrl = this.$router.resolve(&#123;</span><br><span class="line">          path: &quot;/share&quot;,</span><br><span class="line">          query: &#123;id:96&#125;</span><br><span class="line">     &#125;);</span><br><span class="line">     window.open(routeUrl.href, &#x27;_blank&#x27;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果用这种方法进行参数传递  其实是不能通过params方式进行参数传递的，只能通过query进行传递。其实想想也可以理解，因为_blank打开了一个新的页面，两个html页面之间进行数据传递，最好用的就是url进行传参。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># -vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/31/%E9%9A%8F%E7%AC%94/" rel="prev" title="随笔">
+      <i class="fa fa-chevron-left"></i> 随笔
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-router%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">vue-router传参方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#query%E6%96%B9%E5%BC%8F%E4%BC%A0%E5%8F%82%E5%92%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">query方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#params%E6%96%B9%E5%BC%8F%E4%BC%A0%E5%8F%82%E5%92%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">params方式传参和接收参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">动态路由传递参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%88%B7%E6%96%B0%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">关于刷新问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-router%E6%89%93%E5%BC%80%E6%96%B0%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.5.</span> <span class="nav-text">vue-router打开新页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#router-link-%E6%A0%87%E7%AD%BE%E5%AE%9E%E7%8E%B0%E6%96%B0%E7%AA%97%E5%8F%A3%E6%89%93%E5%BC%80"><span class="nav-number">1.5.1.</span> <span class="nav-text">router-link 标签实现新窗口打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="nav-number">1.5.2.</span> <span class="nav-text">编程式导航</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

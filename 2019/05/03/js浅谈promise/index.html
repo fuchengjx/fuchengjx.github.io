@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Promise的含义所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。 Promise对象有以下两个特点  对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js浅谈promise">
+<meta property="og:url" content="http://www.flura.cn/2019/05/03/js%E6%B5%85%E8%B0%88promise/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="Promise的含义所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。 Promise对象有以下两个特点  对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-05-03T11:19:20.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.490Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.flura.cn/2019/05/03/js%E6%B5%85%E8%B0%88promise/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>js浅谈promise | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/05/03/js%E6%B5%85%E8%B0%88promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js浅谈promise
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-03 19:19:20" itemprop="dateCreated datePublished" datetime="2019-05-03T19:19:20+08:00">2019-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Promise的含义"><a href="#Promise的含义" class="headerlink" title="Promise的含义"></a>Promise的含义</h2><p>所谓Promise， 简单来说是一个容器， 里面保存这未来才会结束的事件(通常是一个异步操作)的结果。</p>
+<p><strong>Promise对象有以下两个特点</strong></p>
+<ol>
+<li>对象的状态不受外界影响。 Promise对象代表一个异步操作，有3种状态： Pending(进行中)、Fulfilled(已成功)和Rejected(已失败)。 只有异步操作的结果可以决定当前是哪一种状态，其他任何操作都不会改变这个状态。</li>
+<li>一旦状态改变就不会改变，任何时候都可以得到这个结果。Promise对象的状态改变只能有两种可能：从Pending变化为Fulfilled和从Pending变为Rejected。 </li>
+</ol>
+<p><strong>有了Promise对象，就可以将异步操作以同步操作的流程表达出来，以避免了层层嵌套的回调函数。</strong></p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;...&#125; <span class="comment">/* executor */</span>  );</span><br></pre></td></tr></table></figure>
+
+<p>Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject。</p>
+<p><strong>resolve函数的作用</strong>是将Promise对象从”未完成”变为”成功”(即从Pending变为Resolved)，在异步操作成功时调用，并将异步操作的结果作为参数传递出去；</p>
+<p>reject函数的作用也类似， 不过是(从Pending变为Rejected)，在异步操作失败时调用，并将异步操作的错误作为参数传递出去。</p>
+<p>Promise实例生成后，可以用then方法分别指定Resolved和Rejected状态的回调函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">let promise = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    console.time(&#x27;st&#x27;)</span><br><span class="line">    console.log(&#x27;start&#x27;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;Promise&#x27;)</span><br><span class="line">        resolve(&#x27;par&#x27;); //resolve将参数传给回调函数</span><br><span class="line">        console.timeEnd(&#x27;st&#x27;) //2500ms左右</span><br><span class="line">    &#125;,2500)</span><br><span class="line">&#125;)</span><br><span class="line">promise.then(function (res) &#123;</span><br><span class="line">    console.time(&#x27;then&#x27;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&quot;Resolved&quot;)</span><br><span class="line">        console.log(res) //par 打印接受到的参数</span><br><span class="line">        console.timeEnd(&#x27;then&#x27;) //1000ms</span><br><span class="line">    &#125;,1000)</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&#x27;hi&#x27;) </span><br><span class="line"></span><br><span class="line">以上分别输出</span><br><span class="line">start</span><br><span class="line">hi</span><br><span class="line">Promise //2.5s后输出</span><br><span class="line">st: 2500ms</span><br><span class="line">Resolved //1s之后再输出</span><br><span class="line">par</span><br><span class="line">then: 1000ms</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中执行： Promise新建后就会立即执行，所以首先输出start、 然后setTimeout异步执行，然后then方法指定的回调函数将在当前脚本所有同步任务执行完成后才会执行 ，所以Resolved最后输出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var p1 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    setTimeout( () =&gt; reject(new Error(&#x27;fail&#x27;)), 3000)</span><br><span class="line">&#125;)</span><br><span class="line">console.log(p1) //Promise &#123; &lt;pending&gt; &#125; 直接打印输出p1实例可以输出当前Promise所处状态</span><br><span class="line">var p2 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    resolve(p1)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p2.then( () =&gt; &#123;</span><br><span class="line">    console.log(&quot;i am p2 callback&quot;)</span><br><span class="line">&#125;, (err) =&gt; &#123;</span><br><span class="line"> 	console.log(err) //Promise &#123; &lt;rejected&gt; &#125;</span><br><span class="line">    console.log(err) //Error: fail 因为p1是Rejected，所以p2直接执行rejected函数</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中p1，p2都是Promise的实例，此时p1的状态会传给p2。也就是说，p1的状态决定了p2的状态。</p>
+<p><strong>promise.all()</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">var r1 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    console.time(&#x27;start&#x27;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;this is a request1&#x27;)</span><br><span class="line">        console.timeEnd(&#x27;start&#x27;)</span><br><span class="line">    &#125;,3000)</span><br><span class="line">&#125;)</span><br><span class="line">var r2 = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;this is a request2&#x27;)</span><br><span class="line">    &#125;,3000)</span><br><span class="line">&#125;)</span><br><span class="line">Promise.all([</span><br><span class="line">    r1,</span><br><span class="line">    r2</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">// this is a request1</span><br><span class="line">// start: 3000ms</span><br><span class="line">// this is a request2 </span><br></pre></td></tr></table></figure>
+
+<p>上面代码中r1，r2都是同时输出。 </p>
+<p>这个方法返回一个新的promise对象，该promise对象在数组参数里所有的promise对象都成功的时候才会触发成功，一旦数组里面有任何一个的promise对象失败则立即触发该promise对象的失败。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/26/%E6%B5%85%E8%B0%88http/" rel="prev" title="浅谈http">
+      <i class="fa fa-chevron-left"></i> 浅谈http
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/24/%E6%B5%85%E8%B0%88async%E5%87%BD%E6%95%B0/" rel="next" title="浅谈async函数">
+      浅谈async函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">Promise的含义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

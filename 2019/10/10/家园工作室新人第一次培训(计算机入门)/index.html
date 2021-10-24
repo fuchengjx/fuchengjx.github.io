@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="计算机杂谈计算机组成 计算机硬件系统的基本组成及工作原理⑴ 计算机硬件由五个基本部分组成：运算器、控制器、存储器、输入设备和输出设备。⑵ 计算机内部采用二进制来表示程序和数据。⑶ 采用“存储程序”的方式，将程序和数据放入同一个存储器中（内存储器），计算机能够自动高速地从存储器中取出指令加以执行。可以说计算机硬件的五大部件中每一个部件都有相对独立的功能，分别完成各自不同的工作。如图1-7所示，五大部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="家园工作室新人第一次培训(计算机入门)">
+<meta property="og:url" content="http://www.flura.cn/2019/10/10/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%96%B0%E4%BA%BA%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD(%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%85%A5%E9%97%A8)/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="计算机杂谈计算机组成 计算机硬件系统的基本组成及工作原理⑴ 计算机硬件由五个基本部分组成：运算器、控制器、存储器、输入设备和输出设备。⑵ 计算机内部采用二进制来表示程序和数据。⑶ 采用“存储程序”的方式，将程序和数据放入同一个存储器中（内存储器），计算机能够自动高速地从存储器中取出指令加以执行。可以说计算机硬件的五大部件中每一个部件都有相对独立的功能，分别完成各自不同的工作。如图1-7所示，五大部">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.png">
+<meta property="og:image" content="http://img.flura.cn/1496915188338.png">
+<meta property="og:image" content="http://img.flura.cn/1497317567484.png">
+<meta property="og:image" content="http://img.flura.cn/%E7%A1%AC%E4%BB%B6%E4%B8%BB%E6%9D%BF.png">
+<meta property="og:image" content="http://img.flura.cn/jianpan-2.png">
+<meta property="og:image" content="http://img.flura.cn/1570599578880.png">
+<meta property="og:image" content="http://img.flura.cn/kuaijiejian-3.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8013/mdn-url-protocol@x2.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8015/mdn-url-domain@x2.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8017/mdn-url-port@x2.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8019/mdn-url-path@x2.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8021/mdn-url-parameters@x2.png">
+<meta property="og:image" content="https://mdn.mozillademos.org/files/8023/mdn-url-anchor@x2.png">
+<meta property="og:image" content="http://img.flura.cn/1456355-8883dbd15f39cc18.webp">
+<meta property="og:image" content="http://img.flura.cn/1497169919418.png">
+<meta property="og:image" content="http://img.flura.cn/1570719077546.png">
+<meta property="og:image" content="http://img.flura.cn/11994491-8518ebbd3428c691.webp">
+<meta property="og:image" content="http://img.flura.cn/11994491-f9287dcb83bb4647.webp">
+<meta property="og:image" content="http://img.flura.cn/11994491-1e36768a70f6a8cc.webp">
+<meta property="og:image" content="http://img.flura.cn/1570714164775.png">
+<meta property="article:published_time" content="2019-10-10T14:58:57.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.494Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="培训">
+<meta property="article:tag" content="知识体系">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/10/10/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%96%B0%E4%BA%BA%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD(%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%85%A5%E9%97%A8)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>家园工作室新人第一次培训(计算机入门) | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/10/10/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%96%B0%E4%BA%BA%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD(%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%85%A5%E9%97%A8)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          家园工作室新人第一次培训(计算机入门)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-10 22:58:57" itemprop="dateCreated datePublished" datetime="2019-10-10T22:58:57+08:00">2019-10-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="计算机杂谈"><a href="#计算机杂谈" class="headerlink" title="计算机杂谈"></a>计算机杂谈</h2><h3 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h3><p><img src="http://img.flura.cn/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.png" alt="计算机组成"></p>
+<p>计算机硬件系统的基本组成及工作原理<br>⑴ 计算机硬件由五个基本部分组成：运<strong>算器、控制器、存储器、输入设备和输出设备。</strong><br>⑵ 计算机内部采用<strong>二进制</strong>来表示程序和数据。<br>⑶ 采用“存储程序”的方式，将程序和数据放入同一个存储器中（内存储器），计算机能够自动高速地从存储器中取出指令加以执行。<br>可以说计算机硬件的五大部件中每一个部件都有相对独立的功能，分别完成各自不同的工作。如图1-7所示，五大部件实际上是在控制器的控制下协调统一地工作。首先，把表示计算步骤的程序和计算中需要的原始数据，在控制器输入命令的控制下，通过输入设备送入计算机的存储器存储。其次当计算开始时，在取指令作用下把程序指令逐条送入控制器。控制器对指令进行译码，并根据指令的操作要求向存储器和运算器发出存储、取数命令和运算命令，经过运算器计算并把结果存放在存储器内。在控制器的取数和输出命令作用下，通过输出设备输出计算结果。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sunshine_hsm/article/details/81536509">计算机的基本组成和工作原理</a></p>
+<p><img src="http://img.flura.cn/1496915188338.png" alt="1496915188338"></p>
+<p><img src="http://img.flura.cn/1497317567484.png" alt="1497317567484"></p>
+<p><img src="http://img.flura.cn/%E7%A1%AC%E4%BB%B6%E4%B8%BB%E6%9D%BF.png" alt="硬件主板"></p>
+<p><img src="http://img.flura.cn/jianpan-2.png" alt="敲键盘姿势"></p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><h4 id="查看本机基本配置"><a href="#查看本机基本配置" class="headerlink" title="查看本机基本配置"></a>查看本机基本配置</h4><p><a target="_blank" rel="noopener" href="http://www.xitongcheng.com/jiaocheng/xtazjc_article_29281.html">怎么查自己电脑的配置</a></p>
+<h4 id="查看隐藏文件、修改文件扩展名。"><a href="#查看隐藏文件、修改文件扩展名。" class="headerlink" title="查看隐藏文件、修改文件扩展名。"></a>查看隐藏文件、修改文件扩展名。</h4><p><img src="http://img.flura.cn/1570599578880.png" alt="1570599578880"></p>
+<h4 id="卸载软件"><a href="#卸载软件" class="headerlink" title="卸载软件"></a>卸载软件</h4><p>打开控制面板  程序  卸载程序   找到你要卸载的程序卸载就行了。</p>
+<h4 id="强制关闭程序"><a href="#强制关闭程序" class="headerlink" title="强制关闭程序"></a>强制关闭程序</h4><p>打开任务管理器 Ctrl+Shift+Esc  找到你要关闭的(进程)程序，点击结束任务。</p>
+<h4 id="window简单快捷键"><a href="#window简单快捷键" class="headerlink" title="window简单快捷键"></a>window简单快捷键</h4><p><img src="http://img.flura.cn/kuaijiejian-3.png" alt="kuaijiejian-3"></p>
+<h4 id="推荐基本工具"><a href="#推荐基本工具" class="headerlink" title="推荐基本工具"></a>推荐基本工具</h4><p><strong>notepad++</strong>  </p>
+<p>NOTEPAD++是一款免费又优秀的文本编辑器，支持在 MS Windows 环境下运行的多种编程语言。NOTEPAD++支持超过 50 种编程、脚本和标记语言的语法高亮显示和代码折叠，能让用户迅速减小或扩大代码段以便查阅整个文档。用户也可以手动设置当前语言，覆盖默认语言。该程序还支持自动完成某些编程语言的 API 子集。</p>
+<p>官方网站：<a target="_blank" rel="noopener" href="http://notepad-plus-plus.org/">http://notepad-plus-plus.org</a></p>
+<p><strong>Typora</strong>   Markdown文本编辑器 <a target="_blank" rel="noopener" href="https://sspai.com/post/54912">Typora 完全使用详解</a></p>
+<p><strong>代码编辑器</strong>  <strong>VS Code</strong> <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com</a>     <strong>subline text3</strong></p>
+<p><strong>IDE</strong>       <strong>WebStorm</strong>      <strong>PyCharm</strong>    <strong>IntelliJ IDEA</strong>       <a target="_blank" rel="noopener" href="https://www.jetbrains.com/">https://www.jetbrains.com</a>     ps:  jetbrains家族的东西都是要收费的(有一个月试用期，适用完毕开始收费)。所以需要在学校的官网申请教育邮箱 .edu结尾的邮箱， 然后用这个邮箱到  <a target="_blank" rel="noopener" href="https://www.jetbrains.com/">jetbrains</a> 官网注册学生账号，可以免费使用该产品。</p>
+<p><strong>浏览器</strong>  <strong>Chrome  FireFox</strong> </p>
+<p><strong>Git</strong>  Git官方网站：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com</a></p>
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><h3 id="从浏览器地址栏输入网址，到网页彻底打开，中间都发生了什么？"><a href="#从浏览器地址栏输入网址，到网页彻底打开，中间都发生了什么？" class="headerlink" title="从浏览器地址栏输入网址，到网页彻底打开，中间都发生了什么？"></a>从浏览器地址栏输入网址，到网页彻底打开，中间都发生了什么？</h3><ul>
+<li>DNS 解析:将域名解析成 IP 地址</li>
+<li>TCP 连接：TCP 三次握手</li>
+<li>发送 HTTP 请求</li>
+<li>服务器处理请求并返回 HTTP 报文</li>
+<li>浏览器解析渲染页面</li>
+<li>断开连接：TCP 四次挥手</li>
+</ul>
+<p><strong>URL</strong>    </p>
+<p>什么是URL？</p>
+<p><strong>URL指的是统一资源定位符（</strong><em>Uniform Resource Locator</em><strong>）</strong>。URL无非就是一个给定的独特资源在Web上的地址。</p>
+<p>一个URL由不同的部分组成，其中一些是必须的，而另一些是可选的。让我们以下面这个URL为例看看其中最重要的部分：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.example.com:80/path/to/myfile.html?key1=value1&amp;key2=value2#SomewhereInTheDocument</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><img src="https://mdn.mozillademos.org/files/8013/mdn-url-protocol@x2.png" alt="Protocol"></p>
+<p><code>http://</code> 是协议。它表明了浏览器必须使用何种协议。它通常都是HTTP协议或是HTTP协议的安全版，即HTTPS。Web需要它们二者之一，但浏览器也知道如何处理其他协议，比如<code>mailto:（打开邮件客户端）或者 ``ftp:（处理文件传输），所以当你看到这些协议时，不必惊讶。</code></p>
+</li>
+<li><p><img src="https://mdn.mozillademos.org/files/8015/mdn-url-domain@x2.png" alt="Domaine Name"></p>
+<p><code>www.example.com</code> 是域名。 它表明正在请求哪个Web服务器。或者，可以直接使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Glossary/IP_address">IP address</a>, 但是因为它不太方便，所以它不经常在网络上使用。.</p>
+</li>
+<li><p><img src="https://mdn.mozillademos.org/files/8017/mdn-url-port@x2.png" alt="Port"></p>
+<p><code>:80</code> 是端口。 它表示用于访问Web服务器上的资源的技术“门”。如果Web服务器使用HTTP协议的标准端口（HTTP为80，HTTPS为443）来授予其资源的访问权限，则通常会被忽略。否则是强制性的。</p>
+</li>
+<li><p><img src="https://mdn.mozillademos.org/files/8019/mdn-url-path@x2.png" alt="Path to the file"></p>
+<p><code>/path/to/myfile.html</code> 是网络服务器上资源的路径。在Web的早期阶段，像这样的路径表示Web服务器上的物理文件位置。如今，它主要是由没有任何物理现实的Web服务器处理的抽象。</p>
+</li>
+<li><p><img src="https://mdn.mozillademos.org/files/8021/mdn-url-parameters@x2.png" alt="Parameters"></p>
+<p><code>?key1=value1&amp;key2=value2</code> 是提供给网络服务器的额外参数。 这些参数是用 <code>&amp; </code>符号分隔的键/值对列表。在返回资源之前，Web服务器可以使用这些参数来执行额外的操作。每个Web服务器都有自己关于参数的规则，唯一可靠的方式来知道特定Web服务器是否处理参数是通过询问Web服务器所有者。</p>
+</li>
+<li><p><img src="https://mdn.mozillademos.org/files/8023/mdn-url-anchor@x2.png" alt="Anchor"></p>
+<p><code>#SomewhereInTheDocument</code> 是资源本身的另一部分的锚点. 锚点表示资源中的一种“书签”，给浏览器显示位于该“加书签”位置的内容的方向。例如，在HTML文档上，浏览器将滚动到定义锚点的位置;在视频或音频文档上，浏览器将尝试转到锚代表的时间。值得注意的是，＃后面的部分（也称为片段标识符）从来没有发送到请求的服务器。</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_URL">什么是URL？</a></p>
+<p><strong>浏览器解析渲染页面</strong></p>
+<p><img src="http://img.flura.cn/1456355-8883dbd15f39cc18.webp" alt="1456355-8883dbd15f39cc18"></p>
+<p><strong>解析后生成的DOM树</strong></p>
+<p><img src="http://img.flura.cn/1497169919418.png" alt="1497169919418"></p>
+<h3 id="常见的浏览器软件包括："><a href="#常见的浏览器软件包括：" class="headerlink" title="常见的浏览器软件包括："></a>常见的浏览器软件包括：</h3><ul>
+<li>Google的Chrome。Webkit内核（新版转向Blink）和V8 JS引擎</li>
+<li>微软的IE。Trident内核，IE 11之后不再更新。</li>
+<li>微软的Edge。EdgeHTML内核，Chakra JS引擎。</li>
+<li>Mozilla的Firefox。Gecko内核和 SpiderMonkey JS引擎。</li>
+<li>苹果的Safari。Webkit内核，Nitro JS引擎。</li>
+<li>Opera。原Presto，新版也转向Blink和V8。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.search1990.com/other/201611200936.html">2018年11月，全球&amp;国内浏览器市场份额排行榜</a></p>
+<h3 id="搜索引擎使用-搜索技巧"><a href="#搜索引擎使用-搜索技巧" class="headerlink" title="搜索引擎使用(搜索技巧)"></a>搜索引擎使用(搜索技巧)</h3><p>1、双引号</p>
+<p>把搜索词放在双引号中，代表完全匹配搜索，也就是说搜索结果返回的页面包含双引号中出现的所有的词，连顺序也必须完全匹配。bd和Google 都支持这个指令。例如搜索： “seo方法图片”</p>
+<p>2、减号</p>
+<p>减号代表搜索不包含减号后面的词的页面。使用这个指令时减号前面必须是空格，减号后面没有空格，紧跟着需要排除的词。Google 和bd都支持这个指令。<br>例如：搜索 -引擎<br>返回的则是包含“搜索”这个词，却不包含“引擎”这个词的结果</p>
+<p>3、星号<br>星号<em>是常用的通配符，也可以用在搜索中。百度不支持</em>号搜索指令。<br>比如在Google 中搜索：搜索<em>擎<br>其中的</em>号代表任何文字。返回的结果就不仅包含“搜索引擎”，还包含了“搜索收擎”，“搜索巨擎”等内容。</p>
+<p>4、site<br>site:是SEO 最熟悉的高级搜索指令，用来搜索某个域名下的所有文件。</p>
+<p>site:<a target="_blank" rel="noopener" href="http://www.yuque.com/">www.yuque.com</a></p>
+<p>5、related<br>related:指令只适用于Google，返回的结果是与某个网站有关联的页面。比如搜索</p>
+<p>related:<a target="_blank" rel="noopener" href="http://www.ncu.edu.cn/">www.ncu.edu.cn</a></p>
+<p>6、filetype<br>用于搜索特定文件格式。Google 和bd都支持filetype 指令。<br>比如搜索 </p>
+<p>SEO filetype:pdf<br>返回的就是包含SEO 这个关键词的所有pdf 文件。</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20161362">如何用好谷歌等搜索引擎？</a></p>
+<h3 id="Chrome浏览器使用"><a href="#Chrome浏览器使用" class="headerlink" title="Chrome浏览器使用"></a>Chrome浏览器使用</h3><h4 id="浏览器快捷键"><a href="#浏览器快捷键" class="headerlink" title="浏览器快捷键"></a>浏览器快捷键</h4><p><img src="http://img.flura.cn/1570719077546.png" alt="1570719077546"></p>
+<h4 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h4><p>打开方式有3种： 第一“<strong>按F12</strong>”，第二：s<strong>hift+ctrl+i</strong>，第三： <strong>鼠标右键</strong>  <strong>检查</strong></p>
+<p><strong>Console</strong></p>
+<p><img src="http://img.flura.cn/11994491-8518ebbd3428c691.webp" alt="11994491-8518ebbd3428c691"></p>
+<p><strong>Elements</strong></p>
+<p><img src="http://img.flura.cn/11994491-f9287dcb83bb4647.webp" alt="11994491-f9287dcb83bb4647"></p>
+<p><img src="http://img.flura.cn/11994491-1e36768a70f6a8cc.webp" alt="11994491-1e36768a70f6a8cc"></p>
+<p><strong>Network</strong></p>
+<p><img src="http://img.flura.cn/1570714164775.png" alt="1570714164775"></p>
+<p> Elements:查找网页源代码HTML中的任一元素,手动修改任一元素的属性和样式且能实时在浏览器里面得到反馈。</p>
+<p>Console:记录开发者开发过程中的日志信息，且可以作为与JS进行交互的命令行Shell。</p>
+<p>Sources:断点调试JS。</p>
+<p>Network:从发起网页页面请求Request后分析HTTP请求后得到的各个请求资源信息（包括状态、资源类型、大小、所用时间等），可以根据这个进行网络性能优化。</p>
+<p>Application:记录网站加载的所有资源信息，包括存储数据（Local Storage、Session Storage、IndexedDB、Web SQL、Cookies）、缓存数据、字体、图片、脚本、样式表等。</p>
+<p>Security:判断当前网页是否安全。</p>
+<p>Audits:对当前网页进行网络利用情况、网页性能方面的诊断，并给出一些优化建议。比如列出所有没有用到的CSS文件等。</p>
+<p><strong>Chrome DevTools</strong>(<a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools">https://developers.google.com/web/tools/chrome-devtools</a>)</p>
+<h3 id="常用网站"><a href="#常用网站" class="headerlink" title="常用网站"></a>常用网站</h3><p>GitHub  <a target="_blank" rel="noopener" href="https://github.com/">https://github.com</a></p>
+<p>作为开源代码库以及版本控制系统，Github拥有140多万开发者用户。随着越来越多的应用程序转移到了云上，Github已经成为了管理软件开发以及发现已有代码的首选方法。代码托管必备。</p>
+<p>MDN  <a target="_blank" rel="noopener" href="https://developer.mozilla.org/">https://developer.mozilla.org</a>   web权威文档</p>
+<p>MDN Web Docs 网站提供开放网络（Open Web）技术有关的信息，包括用于网站和渐进式网络应用的 HTML、CSS 和 API。</p>
+<h4 id="技术学习网站"><a href="#技术学习网站" class="headerlink" title="技术学习网站"></a>技术学习网站</h4><p><strong>慕课网</strong>（IMOOC）是IT技能学习平台。慕课网(IMOOC)提供了丰富的移动端开发、php开发、web前端、android开发以及html5等视频教程资源公开课。并且富有交互性及趣味性，你还可以和朋友一起编程。  <a target="_blank" rel="noopener" href="https://www.imooc.com/">https://www.imooc.com</a></p>
+<p>菜鸟教程 <a target="_blank" rel="noopener" href="http://www.runoob.com/">http://www.runoob.com</a>    入门学习网站</p>
+<p>w3school  <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/">https://www.w3school.com.cn</a>   入门学习网站</p>
+<h4 id="技术问答"><a href="#技术问答" class="headerlink" title="技术问答"></a>技术问答</h4><p>StackOverFlow技术问答  <a target="_blank" rel="noopener" href="http://stackoverflow.com/">http://stackoverflow.com</a></p>
+<p>是一个与程序相关的IT技术问答网站。用户可以在网站免费提交问题，浏览问题，索引相关内容，在创建主页的时候使用简单的HTML</p>
+<h4 id="技术博客"><a href="#技术博客" class="headerlink" title="技术博客"></a>技术博客</h4><p>掘金 <a target="_blank" rel="noopener" href="https://juejin.im/">https://juejin.im</a>     思否 <a target="_blank" rel="noopener" href="https://segmentfault.com/">https://segmentfault.com</a>     简书 <a target="_blank" rel="noopener" href="https://www.jianshu.com/">https://www.jianshu.com</a>     csdn(…)</p>
+<p>知乎 <a target="_blank" rel="noopener" href="https://zhihu.com/">https://zhihu.com</a> 其实知乎上也有很多不错的技术博客</p>
+<p>Chrome插件下载  [扩展迷] <a target="_blank" rel="noopener" href="https://extfans.com/">https://extfans.com/</a></p>
+<p><strong>Chrome DevTools</strong> <a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/">https://developers.google.com/web/tools/chrome-devtools/</a></p>
+<h4 id="github仓库"><a href="#github仓库" class="headerlink" title="github仓库"></a>github仓库</h4><p>在这里再推荐几个github项目: </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ivmm/Student-resources">本文介绍的是利用学生身份可以享受到的相关学生优惠权益</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kamranahmedse/developer-roadmap">web学习路线</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/justjavac/free-programming-books-zh_CN">免费的计算机编程类中文书籍</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%B9%E8%AE%AD/" rel="tag"># 培训</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/" rel="tag"># 知识体系</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/07/webpack4%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEreact%E9%A1%B9%E7%9B%AE/" rel="prev" title="webpack4从零配置react项目">
+      <i class="fa fa-chevron-left"></i> webpack4从零配置react项目
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/21/%E5%AE%B6%E5%9B%AD%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9(%E5%B7%A5%E4%BD%9C%E6%B5%81)-%E6%96%B0%E4%BA%BA%E5%BF%85%E8%AF%BB/" rel="next" title="家园工作室项目注意事项(工作流)-新人必读">
+      家园工作室项目注意事项(工作流)-新人必读 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E8%B0%88"><span class="nav-number">1.</span> <span class="nav-text">计算机杂谈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">计算机组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">1.2.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看本机基本配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E3%80%81%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E3%80%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看隐藏文件、修改文件扩展名。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">卸载软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.4.</span> <span class="nav-text">强制关闭程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window%E7%AE%80%E5%8D%95%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.2.5.</span> <span class="nav-text">window简单快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%9F%BA%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.6.</span> <span class="nav-text">推荐基本工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9C%B0%E5%9D%80%E6%A0%8F%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%EF%BC%8C%E5%88%B0%E7%BD%91%E9%A1%B5%E5%BD%BB%E5%BA%95%E6%89%93%E5%BC%80%EF%BC%8C%E4%B8%AD%E9%97%B4%E9%83%BD%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">从浏览器地址栏输入网址，到网页彻底打开，中间都发生了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%8B%AC%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">常见的浏览器软件包括：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E4%BD%BF%E7%94%A8-%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7"><span class="nav-number">2.3.</span> <span class="nav-text">搜索引擎使用(搜索技巧)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">Chrome浏览器使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.4.1.</span> <span class="nav-text">浏览器快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7"><span class="nav-number">2.4.2.</span> <span class="nav-text">开发者工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BD%91%E7%AB%99"><span class="nav-number">2.5.</span> <span class="nav-text">常用网站</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99"><span class="nav-number">2.5.1.</span> <span class="nav-text">技术学习网站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%97%AE%E7%AD%94"><span class="nav-number">2.5.2.</span> <span class="nav-text">技术问答</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.5.3.</span> <span class="nav-text">技术博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#github%E4%BB%93%E5%BA%93"><span class="nav-number">2.5.4.</span> <span class="nav-text">github仓库</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

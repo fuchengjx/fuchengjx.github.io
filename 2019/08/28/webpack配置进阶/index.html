@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.flura.cn","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这里介绍了清除上次打包后的dist文件夹，CopyWebpackPlugin的作用，减小打包出来的bundle.js文件的大小，从bundle里抽离出css，可视化分析打包文件的webpack插件，还有webpack sourceMap定位压缩前代码错误，与配置本地代理实现开发环境跨域。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack配置进阶">
+<meta property="og:url" content="http://www.flura.cn/2019/08/28/webpack%E9%85%8D%E7%BD%AE%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="flura的博客">
+<meta property="og:description" content="这里介绍了清除上次打包后的dist文件夹，CopyWebpackPlugin的作用，减小打包出来的bundle.js文件的大小，从bundle里抽离出css，可视化分析打包文件的webpack插件，还有webpack sourceMap定位压缩前代码错误，与配置本地代理实现开发环境跨域。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.flura.cn/1566905575202.png">
+<meta property="og:image" content="http://img.flura.cn/1566898744609.png">
+<meta property="og:image" content="http://img.flura.cn/1566896245883.png">
+<meta property="og:image" content="http://img.flura.cn/1566957203176.png">
+<meta property="og:image" content="http://img.flura.cn/1566957441342.png">
+<meta property="og:image" content="http://img.flura.cn/1566964434765.png">
+<meta property="article:published_time" content="2019-08-28T05:09:11.000Z">
+<meta property="article:modified_time" content="2021-10-23T15:31:22.493Z">
+<meta property="article:author" content="flura">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="前端工程化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.flura.cn/1566905575202.png">
+
+<link rel="canonical" href="http://www.flura.cn/2019/08/28/webpack%E9%85%8D%E7%BD%AE%E8%BF%9B%E9%98%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>webpack配置进阶 | flura的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">flura的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.flura.cn/2019/08/28/webpack%E9%85%8D%E7%BD%AE%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="flura">
+      <meta itemprop="description" content="flura的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flura的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack配置进阶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-28 13:09:11" itemprop="dateCreated datePublished" datetime="2019-08-28T13:09:11+08:00">2019-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-23 23:31:22" itemprop="dateModified" datetime="2021-10-23T23:31:22+08:00">2021-10-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">web前端</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">这里介绍了清除上次打包后的dist文件夹，CopyWebpackPlugin的作用，减小打包出来的bundle.js文件的大小，从bundle里抽离出css，可视化分析打包文件的webpack插件，还有webpack sourceMap定位压缩前代码错误，与配置本地代理实现开发环境跨域。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="清除上次打包的东西clean-webpack-plugin"><a href="#清除上次打包的东西clean-webpack-plugin" class="headerlink" title="清除上次打包的东西clean-webpack-plugin"></a>清除上次打包的东西clean-webpack-plugin</h2><h3 id="为什么要清理-dist文件夹？"><a href="#为什么要清理-dist文件夹？" class="headerlink" title="为什么要清理/dist文件夹？"></a>为什么要清理/dist文件夹？</h3><p>如果在多次打包后，   我们的 <code>/dist</code> 文件夹显得相当杂乱。webpack 将生成文件并放置在 <code>/dist</code> 文件夹中，但是它不会追踪哪些文件是实际在项目中用到的。</p>
+<p>通常比较推荐的做法是，在每次构建前清理 <code>/dist</code> 文件夹，这样只会生成用到的文件。让我们实现这个需求。</p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/clean-webpack-plugin"><code>clean-webpack-plugin</code></a> 是一个流行的清理插件，安装和配置它。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install clean-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack.config.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const &#123; CleanWebpackPlugin &#125; = require(&#x27;clean-webpack-plugin&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    //...other code</span><br><span class="line">    plugins: [</span><br><span class="line">        new CleanWebpackPlugin(&#123;</span><br><span class="line">  			cleanAfterEveryBuildPatterns: [&#x27;./dist&#x27;]</span><br><span class="line">	    &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new CleanWebpackPlugin(&#123;</span><br><span class="line">  cleanAfterEveryBuildPatterns: [&#x27;./dist&#x27;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>现在，执行 <code>npm run build</code>，检查 <code>/dist</code> 文件夹。如果一切顺利，现在只会看到构建后生成的文件，而没有旧文件！</p>
+<h2 id="CopyWebpackPlugin"><a href="#CopyWebpackPlugin" class="headerlink" title="CopyWebpackPlugin"></a>CopyWebpackPlugin</h2><p> <a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/copy-webpack-plugin">it is to copy files that already exist in the source tree, as part of the build process.</a></p>
+<p>将开发环境下的目录复制到生产环境下。因为如果你需要在代码中引入静态资源文件。如果你对url的引入是相对地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img class=&quot;logoIcon&quot;  src=&quot;../../assets/logo.png&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.flura.cn/1566905575202.png" alt="1566905575202"></p>
+<p>在打包后部署到线上环境(npm run build) 或者在开发环境(npm run dev)下 会找不到资源的路径。因为打包后的目录与开发时的目录将会发生很大的变化。所以不能找到资源路径。</p>
+<p><img src="http://img.flura.cn/1566898744609.png" alt="1566898744609"></p>
+<p><img src="http://img.flura.cn/1566896245883.png" alt="1566896245883"></p>
+<p><strong>webpack.config.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const CopyWebpackPlugin = require(&#x27;copy-webpack-plugin&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    //...other code</span><br><span class="line">    plugins: [</span><br><span class="line">        new CopyWebpackPlugin([&#123;</span><br><span class="line">      	   from: &#x27;./src/assets&#x27;,  // 将开发环境的目录</span><br><span class="line">      	   to: &#x27;./assets&#x27;		 // 复制到生产环境</span><br><span class="line">       &#125;], &#123;</span><br><span class="line">           ignore: [],</span><br><span class="line">           copyUnmodified: true</span><br><span class="line">       &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在所有静态资源只要通过/assets/xx就能访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img class=&quot;logoIcon&quot;  src=&quot;/assets/logo.png&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="vue打包抽离css"><a href="#vue打包抽离css" class="headerlink" title="vue打包抽离css"></a>vue打包抽离css</h2><p>如果嫌弃打包的bundle太大了，想要把css从里面抽离出来。就要用<a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/mini-css-extract-plugin">mini-css-extract-plugin</a>了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin -D</span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack.config.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const MiniCssExtractPlugin = require(&#x27;mini-css-extract-plugin&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">      test: /\.css$/,     //处理css</span><br><span class="line">      exclude: /node_modules/,</span><br><span class="line">      use: [</span><br><span class="line">        &quot;style-loader&quot;,  //将css写入到html中去</span><br><span class="line">        MiniCssExtractPlugin.loader,  // 这个必须放在两个loader之间。</span><br><span class="line">        &quot;css-loader&quot; // 处理css后 抛到上一层进行处理</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">  new MiniCssExtractPlugin(&#123;</span><br><span class="line">    filename: &#x27;[name].css&#x27;,</span><br><span class="line">    chunkFilename: &#x27;[id].css&#x27;,</span><br><span class="line">  &#125;)</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打包生成的文件 会发现.vue文件里的css被单独抽离出来了</p>
+<p><img src="http://img.flura.cn/1566957203176.png" alt="1566957203176"></p>
+<h2 id="可视化分析bundle-js资源的webpack插件"><a href="#可视化分析bundle-js资源的webpack插件" class="headerlink" title="可视化分析bundle.js资源的webpack插件"></a>可视化分析bundle.js资源的webpack插件</h2><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/webpack-bundle-analyzer">webpack-bundle-analyzer</a>，可以清晰的看到项目中一共有多少个包，包的体积是多少，里面加载了哪些东西，大小是多少。</p>
+<p>作用 ： 将bundle.js中捆绑的资源大小及关系，用交互式可缩放树形图直观的表示出来，从而有助于知道各资源的大小及关系，并进行优化。</p>
+<p>效果图如下：</p>
+<p><img src="http://img.flura.cn/1566957441342.png" alt="1566957441342"></p>
+<p><strong>webpack-bundle-analyzer安装和使用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-bundle-analyzer -D</span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack.config.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const BundleAnalyzerPlugin = require(&#x27;webpack-bundle-analyzer&#x27;).BundleAnalyzerPlugin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line"> 	   new BundleAnalyzerPlugin(),</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BundleAnalyzerPlugin构造函数中可配置的对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">new BundleAnalyzerPlugin(&#123;</span><br><span class="line">  //  可以是`server`，`static`或`disabled`。</span><br><span class="line">  //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。</span><br><span class="line">  //  在“静态”模式下，会生成带有报告的单个HTML文件。</span><br><span class="line">  //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。</span><br><span class="line">  analyzerMode: &#x27;server&#x27;,</span><br><span class="line">  //  将在“服务器”模式下使用的主机启动HTTP服务器。</span><br><span class="line">  analyzerHost: &#x27;127.0.0.1&#x27;,</span><br><span class="line">  //  将在“服务器”模式下使用的端口启动HTTP服务器。</span><br><span class="line">  analyzerPort: 8888, </span><br><span class="line">  //  路径捆绑，将在`static`模式下生成的报告文件。</span><br><span class="line">  //  相对于捆绑输出目录。</span><br><span class="line">  reportFilename: &#x27;report.html&#x27;,</span><br><span class="line">  //  模块大小默认显示在报告中。</span><br><span class="line">  //  应该是`stat`，`parsed`或者`gzip`中的一个。</span><br><span class="line">  //  有关更多信息，请参见“定义”一节。</span><br><span class="line">  defaultSizes: &#x27;parsed&#x27;,</span><br><span class="line">  //  在默认浏览器中自动打开报告</span><br><span class="line">  openAnalyzer: true,</span><br><span class="line">  //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成</span><br><span class="line">  generateStatsFile: false, </span><br><span class="line">  //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。</span><br><span class="line">  //  相对于捆绑输出目录。</span><br><span class="line">  statsFilename: &#x27;stats.json&#x27;,</span><br><span class="line">  //  stats.toJson（）方法的选项。</span><br><span class="line">  //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。</span><br><span class="line">  //  在这里查看更多选项：https：  //github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21</span><br><span class="line">  statsOptions: null,</span><br><span class="line">  logLevel: &#x27;info&#x27; 日志级别。可以是&#x27;信息&#x27;，&#x27;警告&#x27;，&#x27;错误&#x27;或&#x27;沉默&#x27;。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="sourceMap"><a href="#sourceMap" class="headerlink" title="sourceMap"></a>sourceMap</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/devtool/">Source map</a>就是一个信息文件，里面储存着位置信息。也就是说，转换后的代码的每一个位置，所对应的转换前的位置。</p>
+<p>在实际开发过程中，我们在使用webpack打包的时候，打包完成的bundle.js报错信息是很难Debug的，这时候就需要<code>Source Map</code>来还原真实的出错位置。</p>
+<p>有了<strong>sourceMap</strong>，出错的时候，除错工具将直接显示原始代码，而不是转换后的代码。这无疑给开发者带来了很大方便。</p>
+<p>不然浏览器会定位到压缩过后的代码。无法准确的定位到错误位置</p>
+<p>webpack.config.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	devtool: &#x27;cheap-module-eval-source-map&#x27;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.flura.cn/1566964434765.png" alt="1566964434765"></p>
+<p><strong>注意</strong></p>
+<p>以上选项通常用于开发环境中：</p>
+<p>在生产环境中最好关闭devtool，因为这样可以极大的减小打包的体积。</p>
+<p>生产环境下： <code>(none)</code>（省略 <code>devtool</code> 选项） - 不生成 source map。这是一个不错的选择。</p>
+<h2 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h2><p><strong>webpack开发配置API代理解决跨域问题-devServer</strong></p>
+<p>设置代理的前提条件：<br>1、需要使用本地开发插件：<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>。<br>2、webpack-dev-server使用的是<a target="_blank" rel="noopener" href="https://github.com/chimurai/http-proxy-middleware">http-proxy-middleware</a>来实现跨域代理的。 </p>
+<h2 id="1-一个webpack配置信息："><a href="#1-一个webpack配置信息：" class="headerlink" title="1.一个webpack配置信息："></a>1.一个webpack配置信息：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  //...</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      &#x27;/api&#x27;: &#123;</span><br><span class="line">        target: &#x27;http://www.baidu.com/&#x27;,</span><br><span class="line">        pathRewrite: &#123;&#x27;^/api&#x27; : &#x27;&#x27;&#125;,</span><br><span class="line">        changeOrigin: true,     // target是域名的话，需要这个参数，</span><br><span class="line">        secure: false,          // 设置支持https协议的代理</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-配置中主要的参数说明"><a href="#2-配置中主要的参数说明" class="headerlink" title="2. 配置中主要的参数说明"></a>2. 配置中主要的参数说明</h2><h3 id="2-1-‘-api’"><a href="#2-1-‘-api’" class="headerlink" title="2.1 ‘/api’"></a>2.1 ‘/api’</h3><p>捕获API的标志，如果API中有这个字符串，那么就开始匹配代理，<br>比如API请求<code>/api/users</code>, 会被代理到请求 <a target="_blank" rel="noopener" href="http://www.baidu.com/api/users">http://www.baidu.com/api/users</a> 。</p>
+<h3 id="2-2-target"><a href="#2-2-target" class="headerlink" title="2.2 target"></a>2.2 target</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">代理的API地址，就是需要跨域的API地址。 </span><br><span class="line">地址可以是域名,如：`http://www.baidu.com`</span><br><span class="line">也可以是IP地址：`http://127.0.0.1:3000`</span><br><span class="line">如果是域名需要额外添加一个参数`changeOrigin: true`，否则会代理失败。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-pathRewrite"><a href="#2-3-pathRewrite" class="headerlink" title="2.3 pathRewrite"></a>2.3 pathRewrite</h3><p>路径重写，也就是说会修改最终请求的API路径。<br>比如访问的API路径：<code>/api/users</code>,<br>设置<code>pathRewrite: &#123;&#39;^/api&#39; : &#39;&#39;&#125;,</code>后，<br>最终代理访问的路径：<code>http://www.baidu.com/users</code>，<br>这个参数的目的是给代理命名后，在访问时把命名删除掉。</p>
+<h3 id="2-4-changeOrigin"><a href="#2-4-changeOrigin" class="headerlink" title="2.4 changeOrigin"></a>2.4 changeOrigin</h3><p>这个参数可以让target参数是域名。</p>
+<h3 id="2-5-secure"><a href="#2-5-secure" class="headerlink" title="2.5 secure"></a>2.5 secure</h3><p><code>secure: false</code>,不检查安全问题。<br>设置后，可以接受运行在 HTTPS 上，可以使用无效证书的后端服务器</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016199721">参考博客</a></p>
+<h2 id="附完整的webpack-config-js"><a href="#附完整的webpack-config-js" class="headerlink" title="附完整的webpack.config.js"></a>附完整的webpack.config.js</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;)  //path是Nodejs中的基本包,用来处理路径</span><br><span class="line">const htmlWebpackPlugin = require(&#x27;html-webpack-plugin&#x27;)</span><br><span class="line">const VueLoaderPlugin = require(&#x27;vue-loader/lib/plugin&#x27;)</span><br><span class="line">const CopyWebpackPlugin = require(&#x27;copy-webpack-plugin&#x27;)</span><br><span class="line">const &#123; CleanWebpackPlugin &#125; = require(&#x27;clean-webpack-plugin&#x27;)</span><br><span class="line">const BundleAnalyzerPlugin = require(&#x27;webpack-bundle-analyzer&#x27;).BundleAnalyzerPlugin</span><br><span class="line">const MiniCssExtractPlugin = require(&#x27;mini-css-extract-plugin&#x27;)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &quot;./src/index.js&quot;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),  //打包生成文件地址    </span><br><span class="line">    filename: &#x27;bundle.js&#x27;,</span><br><span class="line">    // publicPath: &#x27;/dist/&#x27;  //文件输出的公共路径</span><br><span class="line">  &#125;,</span><br><span class="line">  devtool: &#x27;cheap-module-eval-source-map&#x27;,  // 在线上环境时最好关闭 可以极大程度减小体积</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [     //针对不同类型的文件,我们定义不同的识别规则,最终目的都是打包成js文件</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.vue$/,</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: [</span><br><span class="line">          &quot;vue-loader&quot;     //处理.vue文件</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.css$/,     //处理css</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: [</span><br><span class="line">          &quot;style-loader&quot;,</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          &quot;css-loader&quot;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js?$/,    //处理js</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: &#x27;babel-loader&#x27;,</span><br><span class="line">            options: &#123;</span><br><span class="line">              presets: [&#x27;@babel/preset-env&#x27;, &#x27;@babel/react&#x27;],</span><br><span class="line">              plugins: [</span><br><span class="line">                [require(&quot;@babel/plugin-proposal-decorators&quot;), &#123; &quot;legacy&quot;: true &#125;]</span><br><span class="line">              ]</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ],</span><br><span class="line">        include: path.resolve(__dirname, &#x27;src&#x27;),</span><br><span class="line">        exclude: /node_modules/</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.(png|gif|jpg|jpeg|svg)$/,     //处理图片</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        loader: &quot;url-loader&quot;,</span><br><span class="line">        options: &#123;</span><br><span class="line">          limit: 10000</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, </span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.(ttf|eot|woff|woff2)$/,</span><br><span class="line">        loader: &#x27;file-loader&#x27;,</span><br><span class="line">      &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      chunks: &quot;all&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new htmlWebpackPlugin(&#123;</span><br><span class="line">      template: &#x27;./index.html&#x27;</span><br><span class="line">    &#125;),</span><br><span class="line">    new BundleAnalyzerPlugin(),</span><br><span class="line">    new MiniCssExtractPlugin(&#123;</span><br><span class="line">      filename: &#x27;[name].css&#x27;,</span><br><span class="line">      chunkFilename: &#x27;[id].css&#x27;,</span><br><span class="line">    &#125;),</span><br><span class="line">    new VueLoaderPlugin(),  // vueLoader插件 允许你以一种名为单文件组件的格式撰写 Vue 组件</span><br><span class="line">    new CopyWebpackPlugin([&#123;</span><br><span class="line">      from: &#x27;./src/assets&#x27;,</span><br><span class="line">      to: &#x27;./assets&#x27;</span><br><span class="line">    &#125;], &#123;</span><br><span class="line">        ignore: [],</span><br><span class="line">        copyUnmodified: true</span><br><span class="line">    &#125;),</span><br><span class="line">    new CleanWebpackPlugin(&#123;</span><br><span class="line">      cleanAfterEveryBuildPatterns: [&#x27;./dist&#x27;]</span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    contentBase: path.join(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    host: &#x27;0.0.0.0&#x27;,  //  可以设置0.0.0.0 ,这样设置你可以通过127.0.0.1或则localhost去访问</span><br><span class="line">    // open: true,       //  项目启动时,会默认帮你打开浏览器</span><br><span class="line">    port: 8087,</span><br><span class="line">    // hot: true,        //在单页面应用开发中,我们修改了代码后是整个页面都刷新,开启hot后,将只刷新对应的组件</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      &#x27;/api&#x27;: &#123;</span><br><span class="line">        target: &#x27;http://xxxx.com&#x27;,</span><br><span class="line">        changeOrigin: true,</span><br><span class="line">        secure: false,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"># 前端工程化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/25/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B01px/" rel="prev" title="移动端实现1px">
+      <i class="fa fa-chevron-left"></i> 移动端实现1px
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/05/vue%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E8%AF%A6%E8%A7%A3/" rel="next" title="vue组件生命周期详解">
+      vue组件生命周期详解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E4%B8%8A%E6%AC%A1%E6%89%93%E5%8C%85%E7%9A%84%E4%B8%9C%E8%A5%BFclean-webpack-plugin"><span class="nav-number">1.</span> <span class="nav-text">清除上次打包的东西clean-webpack-plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B8%85%E7%90%86-dist%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要清理&#x2F;dist文件夹？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CopyWebpackPlugin"><span class="nav-number">2.</span> <span class="nav-text">CopyWebpackPlugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue%E6%89%93%E5%8C%85%E6%8A%BD%E7%A6%BBcss"><span class="nav-number">3.</span> <span class="nav-text">vue打包抽离css</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%88%86%E6%9E%90bundle-js%E8%B5%84%E6%BA%90%E7%9A%84webpack%E6%8F%92%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">可视化分析bundle.js资源的webpack插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sourceMap"><span class="nav-number">5.</span> <span class="nav-text">sourceMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy"><span class="nav-number">6.</span> <span class="nav-text">proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%80%E4%B8%AAwebpack%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">1.一个webpack配置信息：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E4%B8%AD%E4%B8%BB%E8%A6%81%E7%9A%84%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">8.</span> <span class="nav-text">2. 配置中主要的参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E2%80%98-api%E2%80%99"><span class="nav-number">8.1.</span> <span class="nav-text">2.1 ‘&#x2F;api’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-target"><span class="nav-number">8.2.</span> <span class="nav-text">2.2 target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-pathRewrite"><span class="nav-number">8.3.</span> <span class="nav-text">2.3 pathRewrite</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-changeOrigin"><span class="nav-number">8.4.</span> <span class="nav-text">2.4 changeOrigin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-secure"><span class="nav-number">8.5.</span> <span class="nav-text">2.5 secure</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%AE%8C%E6%95%B4%E7%9A%84webpack-config-js"><span class="nav-number">9.</span> <span class="nav-text">附完整的webpack.config.js</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">flura</p>
+  <div class="site-description" itemprop="description">flura的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flura</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
